@@ -26,7 +26,7 @@ db.connect((err)=>{
 });
 
 app.get("/getUser",(req,res)=>{
-    db.query('SELECT * FROM user', (err,rows)=>{
+    db.query('SELECT * FROM user where usr_Day=1', (err,rows)=>{
         if(err) console.log(err);
         else {
             console.log(res);
