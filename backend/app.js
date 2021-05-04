@@ -10,13 +10,11 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 var server = http.createServer(app);
 
-const db = mysql.createConnection({
-    host: "localhost",
-    port: '3306',
-    user: "root",
-    password: "tjwlsdl1!",
-    database: "refrigerator",
-});
+var indexRouter = require("./routes/index");
+var testRouter = require("./routes/test");
+
+var config = require("./config/database");
+const db = mysql.createConnection(config.mysql);
 
 db.connect((err)=>{
     if(err){
@@ -25,23 +23,9 @@ db.connect((err)=>{
     console.log("Mysql connected!!");
 });
 
-app.get("/getUser",(req,res)=>{
-    db.query('SELECT * FROM user', (err,rows)=>{
-        if(err) console.log(err);
-        else {
-            console.log(res);
-            console.log(rows);
-            res.json(rows);}
-    });
-});
 
-app.get('/', function(req,res){
-    res.send('root page');
-})
-
-app.get('/start', function(req,res){
-    res.send('start page');
-})
+app.use("/",indexRouter);
+app.use("/test",testRouter);
 
 
 server.listen(3344, ()=>{

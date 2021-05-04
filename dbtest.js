@@ -9,7 +9,7 @@ class Test extends Component{
     }
 click = async ()  => {
     this.setState(({clicked: true}));
- await fetch('http://localhost:3344/getUser',{
+ await fetch('http://localhost:3344/test/getUser',{
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
