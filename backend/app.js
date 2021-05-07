@@ -12,6 +12,7 @@ var server = http.createServer(app);
 
 var indexRouter = require("./routes/index");
 var testRouter = require("./routes/test");
+var loginRouter = require("./routes/login");
 
 var config = require("./config/database");
 const db = mysql.createConnection(config.mysql);
@@ -26,7 +27,7 @@ db.connect((err)=>{
 
 app.use("/",indexRouter);
 app.use("/test",testRouter);
-
+app.use("/login",loginRouter);
 
 server.listen(3344, ()=>{
     console.log('Server listen on port' + server.address().port);
