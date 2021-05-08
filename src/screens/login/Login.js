@@ -60,8 +60,8 @@ const Login = ({ navigation }) => {
     }
   };
   
-  login =  (Id, password)  => {
-     fetch('http://172.30.1.21:3344/login/Login',{
+  var login =  (Id, password)  => {
+     fetch('http://localhost:3344/login/Login',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
