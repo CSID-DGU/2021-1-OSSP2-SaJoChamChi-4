@@ -12,7 +12,7 @@ router.post("/insertBoard",(req,res)=>{
     var b_Time = req.body.b_Time;
     var b_Hits = req.body.b_Hits;
     var b_Writer = req.body.b_Writer;
-    
+    console.log('hihi');
 
     var sql = 'INSERT INTO Board VALUES(?,?,?,?, null,?)'
     db.query(sql,[b_Title,b_Content,b_Time,b_Hits,b_Writer], (err,rows)=>{
