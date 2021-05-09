@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Login, Signup } from '../screens/login';
+import { Login, Signup, Start } from '../screens/login';
 
 const Stack = createStackNavigator();
 
@@ -9,13 +9,18 @@ const AuthStack = () => {
   const theme = useContext(ThemeContext);
   return (
     <Stack.Navigator
-      initialRouteName="Login"
+      initialRouteName="Start"
       screenOptions={{
         headerTitleAlign: 'center',
         cardStyle: { backgroundColor: theme.backgroundColor },
         headerTintColor: theme.headerTintColor,
       }}
     >
+      <Stack.Screen
+        name="Start"
+        component={Start}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Login"
         component={Login}
