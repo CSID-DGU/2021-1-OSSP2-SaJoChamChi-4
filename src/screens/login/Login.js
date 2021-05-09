@@ -5,7 +5,7 @@ import { Input, Button } from '../../components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { validateEmail, removeWhitespace } from '../../utils/common';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Alert } from 'react-native';
+import { Alert, Text } from 'react-native';
 import { useCardAnimation } from '@react-navigation/stack';
 
 const Container = styled.View`
@@ -41,6 +41,10 @@ const Login = ({ navigation }) => {
     setDisabled(!(ID && password));
   }, [ID, password]);
 
+  useEffect(() => {
+    console.log("wait setting user");
+  }, [user]);
+
   const _handleIDChange = ID => {
     const changedID = removeWhitespace(ID);
     setID(changedID);
@@ -48,20 +52,21 @@ const Login = ({ navigation }) => {
   const _handlePasswordChange = password => {
     setPassword(removeWhitespace(password));
   };
-  const _handleLoginButtonPress = () => {
+
+  const _handleLoginButtonPress = async () => {
     try {
       spinner.start();
-      login(ID, password);
+      await login(ID, password);
       dispatch(user[0]);
     } catch (e) {
       Alert.alert('Login Error', e.message);
     } finally {
-      spinner.stop();
+      await spinner.stop();
     }
   };
   
-  login =  (Id, password)  => {
-     fetch('http://172.30.1.21:3344/login/Login',{
+  login = async (Id, password)  => {
+     await fetch('http://10.80.12.89:3344/login/Login',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -71,9 +76,10 @@ const Login = ({ navigation }) => {
             pwd : password,
         })
    }).then(response=>response.json()).then((response) => setUser(response));
-   console.log(user);
+    console.log(user);
 };
   
+
 
   return (
     <KeyboardAwareScrollView
@@ -81,6 +87,7 @@ const Login = ({ navigation }) => {
       extraScrollHeight={20}
     >
       <Container insets={insets}>
+        <Text style={{fontSize: 40, textAlign : 'center', paddingBottom:70}}onPress={() => navigation.navigate('Start')}>My Refrigerator</Text>
         <Input
           label="ID"
           value={ID}
