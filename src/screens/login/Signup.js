@@ -3,7 +3,7 @@ import { ProgressContext, UserContext } from '../../contexts';
 import styled from 'styled-components/native';
 import { Input, Button } from '../../components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { validateEmail, removeWhitespace } from '../../utils';
+import { validateEmail, removeWhitespace } from '../../utils/common';
 import { Alert } from 'react-native';
 
 const Container = styled.View`
@@ -25,8 +25,9 @@ const ErrorText = styled.Text`
 const Signup = ({navigation}) => {
   const { dispatch } = useContext(UserContext);
   const { spinner } = useContext(ProgressContext);
-
-  const [name, setName] = useState('');
+   
+  const [id, setId] = useState('');
+  const [name, setName] = useState();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -45,6 +46,7 @@ const Signup = ({navigation}) => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
+  const nameRef = useRef();
 
   const didMountRef = useRef();
 
@@ -77,22 +79,55 @@ const Signup = ({navigation}) => {
   const _handleSignupButtonPress = async () => {
     try {
       spinner.start();
-      const user = await signup({ email, password, name, photoUrl });
-      dispatch(user);
+      signUp(id, password, name, nickname, email, birth, address, day);
     } catch (e) {
       Alert.alert('Signup Error', e.message);
     } finally {
       spinner.stop();
+      alert("Success!\nLogin with new account!!");
+      navigation.navigate('Login');
     }
   };
+
+  signUp =  (Id, password, name, nickname, email, birth, address, day)  => {
+    fetch('http://172.30.1.21:3344/login/Signup',{
+      method: "post",
+      headers :{
+          "content-Type" : "application/json",
+      },
+      body : JSON.stringify({
+          id : Id,
+          pwd : password,
+          name : name,
+          nickname : nickname,
+          email : email,
+          birth : birth,
+          address : address,
+          day : day,    
+      })
+ }).then(response=>response.json()).then((response) => setUser(response));
+};
 
   return (
     <KeyboardAwareScrollView extraScrollHeight={20}>
       <Container>
+      <Input
+          label="Id"
+          value={id}
+          onChangeText={text => setId(removeWhitespace(text))}
+          onSubmitEditing={() => {
+            setId(id.trim());
+            nameRef.current.focus();
+          }}
+          onBlur={() => setId(id.trim())}
+          placeholder="Id"
+          returnKeyType="next"
+        />
         <Input
+          ref={nameRef}
           label="Name"
           value={name}
-          onChangeText={text => setName(text)}
+          onChangeText={text => setName(removeWhitespace(text))}
           onSubmitEditing={() => {
             setName(name.trim());
             emailRef.current.focus();
@@ -114,12 +149,12 @@ const Signup = ({navigation}) => {
           ref={nicknameRef}
           label="Nickname"
           value={nickname}
-          onChangeText={text => setNickname(text)}
+          onChangeText={text => setNickname(removeWhitespace(text))}
           onSubmitEditing={() => {
             setNickname(nickname.trim());
             birthRef.current.focus();
           }}
-          onBlur={() => setName(nickname.trim())}
+          onBlur={() => setNickname(nickname.trim())}
           placeholder="Nickname"
           returnKeyType="next"
         />
@@ -127,12 +162,12 @@ const Signup = ({navigation}) => {
           ref={birthRef}        
           label="Birth"
           value={birth}
-          onChangeText={text => setBirth(text)}
+          onChangeText={text => setBirth(removeWhitespace(text))}
           onSubmitEditing={() => {
             setBirth(birth.trim());
             addressRef.current.focus();
           }}
-          onBlur={() => setName(birth.trim())}
+          onBlur={() => setBirth(birth.trim())}
           placeholder="Birth"
           returnKeyType="next"
         />
@@ -140,7 +175,7 @@ const Signup = ({navigation}) => {
           ref={addressRef}
           label="Address"
           value={address}
-          onChangeText={text => setAddress(text)}
+          onChangeText={text => setAddress(removeWhitespace(text))}
           onSubmitEditing={() => {
             setAddress(address.trim());
             dayRef.current.focus();
@@ -153,7 +188,7 @@ const Signup = ({navigation}) => {
           ref={dayRef}
           label="Day"
           value={day}
-          onChangeText={text => setDay(text)}
+          onChangeText={text => setDay(removeWhitespace(text))}
           onSubmitEditing={() => {
             setDay(day.trim());
             passwordRef.current.focus();
@@ -168,7 +203,7 @@ const Signup = ({navigation}) => {
           value={password}
           onChangeText={text => setPassword(removeWhitespace(text))}
           onSubmitEditing={() => passwordConfirmRef.current.focus()}
-          placeholder="Password"
+          placeholder="7자리이상의 비밀번호"
           returnKeyType="done"
           isPassword
         />
@@ -178,7 +213,7 @@ const Signup = ({navigation}) => {
           value={passwordConfirm}
           onChangeText={text => setPasswordConfirm(removeWhitespace(text))}
           onSubmitEditing={_handleSignupButtonPress}
-          placeholder="Password"
+          placeholder="비밀번호 재확인"
           returnKeyType="done"
           isPassword
         />
