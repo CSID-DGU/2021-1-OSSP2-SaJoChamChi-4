@@ -5,6 +5,9 @@ import {Text, Button } from 'react-native'
 const Container = styled.View`
     flex : 1;
     background-color: ${({theme}) => theme.background};
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
 `;
 
 const MyRefri = ({navigation}) => {

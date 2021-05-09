@@ -53,20 +53,20 @@ const Login = ({ navigation }) => {
     setPassword(removeWhitespace(password));
   };
 
-  const _handleLoginButtonPress = async () => {
+  const _handleLoginButtonPress =  () => {
     try {
       spinner.start();
-      await login(ID, password);
+       login(ID, password);
       dispatch(user[0]);
     } catch (e) {
       Alert.alert('Login Error', e.message);
     } finally {
-      await spinner.stop();
+      spinner.stop();
     }
   };
   
-  login = async (Id, password)  => {
-     await fetch('http://10.80.12.89:3344/login/Login',{
+  login =  (Id, password)  => {
+      fetch('http://172.30.1.21:3344/login/Login',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
