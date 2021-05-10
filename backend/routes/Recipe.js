@@ -8,12 +8,12 @@ var fs = require('fs');
 var data = fs.readFileSync('testRecipe.json','utf8');
 var jsonData = JSON.parse(data);
 
-router.get('/',(req,res)=>{
-        jsonData.filter(function(element){
-            console.log(element);
-            if(element.name='닭똥집보다 맛있는 골뱅이튀김! 에어프라이어 만들어봐요! ')
-                res.send(element);
-        });
+router.post('/',(req,res)=>{
+    for(idx in jsonData){
+        console.log('hi : '+req.body.id);
+        if(jsonData[idx].id==req.body.id)
+                res.send(jsonData[idx]);
+    }
     //console.log(jsonData);
     //res.json(jsonData);
 });
