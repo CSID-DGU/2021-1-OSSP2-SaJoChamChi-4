@@ -15,6 +15,7 @@ var testRouter = require("./routes/test");
 var loginRouter = require("./routes/login");
 var boardRouter = require("./routes/board");
 var commentRouter = require("./routes/comment");
+var RecipeRouter = require("./routes/Recipe");
 
 var config = require("./config/database");
 const db = mysql.createConnection(config.mysql);
@@ -32,6 +33,7 @@ app.use("/test",testRouter);
 app.use("/login",loginRouter);
 app.use('/board',boardRouter);
 app.use('/comment',commentRouter);
+app.use('/recipe',RecipeRouter);
 
 server.listen(3344, ()=>{
     console.log('Server listen on port' + server.address().port);
