@@ -5,7 +5,7 @@ import { Input, Button } from '../../components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { validateEmail, removeWhitespace } from '../../utils/common';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Alert } from 'react-native';
+import { Alert, Text } from 'react-native';
 import { useCardAnimation } from '@react-navigation/stack';
 
 const Container = styled.View`
@@ -26,6 +26,10 @@ const ErrorText = styled.Text`
   color: ${({ theme }) => theme.errorText};
 `;
 
+
+
+
+
 const Login = ({ navigation }) => {
   const { dispatch } = useContext(UserContext);
   const { spinner } = useContext(ProgressContext);
@@ -38,6 +42,10 @@ const Login = ({ navigation }) => {
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
+    //console.log("user useEffect");
+  }, [user]);
+
+  useEffect(() => {
     setDisabled(!(ID && password));
   }, [ID, password]);
 
@@ -48,11 +56,18 @@ const Login = ({ navigation }) => {
   const _handlePasswordChange = password => {
     setPassword(removeWhitespace(password));
   };
-  const _handleLoginButtonPress = () => {
+
+  const _handleLoginButtonPress = async() => {
     try {
       spinner.start();
-      login(ID, password);
-      dispatch(user[0]);
+      
+      var res = await login(ID, password);
+      console.log('we are using setUser');
+      console.log("after login function : "+user[0]);
+  
+      setUser(res);
+      dispatch(user[0]);   
+      
     } catch (e) {
       Alert.alert('Login Error', e.message);
     } finally {
@@ -60,20 +75,23 @@ const Login = ({ navigation }) => {
     }
   };
   
-  var login =  (Id, password)  => {
-     fetch('http://localhost:3344/login/Login',{
-        method: "post",
-        headers :{
-            "content-Type" : "application/json",
-        },
-        body : JSON.stringify({
-            id : Id,
-            pwd : password,
-        })
-   }).then(response=>response.json()).then((response) => setUser(response));
-   console.log(user);
+  const login = async (Id, password)  => {
+    const response = await fetch('http://172.30.1.19:3344/login/Login',{
+      method: "post",
+      headers :{
+          "content-Type" : "application/json",
+      },
+      body : JSON.stringify({
+          id : Id,
+          pwd : password,
+      })
+  });
+
+  const data = response.json();
+//console.log(data);
+  return data;
 };
-  
+
 
   return (
     <KeyboardAwareScrollView
@@ -81,6 +99,7 @@ const Login = ({ navigation }) => {
       extraScrollHeight={20}
     >
       <Container insets={insets}>
+        <Text style={{fontSize: 40, textAlign : 'center', paddingBottom:70}}onPress={() => navigation.navigate('Start')}>My Refrigerator</Text>
         <Input
           label="ID"
           value={ID}

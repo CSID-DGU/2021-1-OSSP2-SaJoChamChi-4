@@ -10,13 +10,13 @@ const Container = styled.View`
     padding: 0 20px;
 `;
 
-const MyRefri = ({navigation}) => {
+const insertRecipe = ({navigation}) => {
     return(
         <Container>
-            <Text style={{fontSize: 24, textAlign : 'center'}}> MyRefri </Text>
+            <Text style={{fontSize: 24, textAlign : 'center'}}> insertRecipe </Text>
             <Button title="Home" onPress={()=>navigation.navigate('Home')}/>
         </Container>
     )
 }
 
-export default MyRefri;
+export default insertRecipe;

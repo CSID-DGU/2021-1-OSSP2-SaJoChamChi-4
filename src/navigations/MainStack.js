@@ -7,6 +7,7 @@ import { ReceiptList } from '../screens/receipt';
 import { MyRefri } from '../screens/refrigerator';
 import { Home } from '../screens'
 import {Test} from '../screens'
+import BoardStack from './BoardStack';
 // import MainTab from './MainTab';
 
 const Stack = createStackNavigator();
@@ -25,7 +26,7 @@ const MainStack = () => {
       }}
     >
       <Stack.Screen name="Home" component={Home}/>
-      <Stack.Screen name="BoardList" component={BoardList} />
+      <Stack.Screen name="Board" component={BoardStack} />
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="ReceiptList" component={ReceiptList} />
       <Stack.Screen name="MyRefri" component={MyRefri} />

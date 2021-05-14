@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import {StyleSheet, Text, View, Button} from 'react-native';
+import { Text, View, Button} from 'react-native';
+import styled from 'styled-components/native'
+
+const Container = styled.View`
+    flex : 1;
+    background-color: ${({theme}) => theme.background};
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+`;
 
 class Test extends Component{
 
@@ -10,7 +19,7 @@ class Test extends Component{
     
 click =  ()  => {
     this.setState(({clicked: true}));
-  fetch('http://172.30.1.21:3344/test/getUser',{
+  fetch('http://localhost:3344/test/getUser',{
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -22,7 +31,7 @@ console.log(this.state.data);
 
 click2 = ()  => {
     this.setState(({clicked2: true}));
-     fetch('http://172.30.1.21:3344/login/Login',{
+     fetch('http://localhost:3344/login/Login',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -56,7 +65,7 @@ renderCategories2(){
 
     render(){
         return(
-            <View >
+            <Container >
                 <Text>GET TEXT BUTTON </Text>
                 {
                     !this.state.clicked ? <Button title="get" onPress={this.click} /> : this.renderCategories()
@@ -67,10 +76,11 @@ renderCategories2(){
                 {
                     this.state.clicked ? <Button title="cancle" onPress={this.unclick} /> : <Text>PUSH BUTTON!</Text>
                 }
-            </View>
+            </Container>
         )
     }
-}
 
+    
+}
 
 export default Test;

@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 
 const UserContext = createContext({
   user: { usr_Id: null, usr_Name: null },
@@ -9,8 +9,9 @@ const UserProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const dispatch = ({usr_Id, usr_Name}) => {
     setUser({ usr_Id, usr_Name});
-    console.log("Test==========");
+    console.log("ProviderTest==========");
     console.log(user);
+    console.log("ProviderTest=====")
   };
   const value = { user, dispatch };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
