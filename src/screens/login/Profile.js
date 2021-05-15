@@ -45,8 +45,8 @@ const Profile = ({navigation}) => {
         } catch (e) {
           console.log('[Profile] logout: ', e.message);
         } finally {
-          dispatch({});
-          spinner.stop();
+          dispatch({usr_Id : null, usr_Name : null});
+         spinner.stop();
         }
       };
   
