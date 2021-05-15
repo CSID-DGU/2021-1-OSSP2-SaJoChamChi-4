@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Button} from 'react-native';
 import styled from 'styled-components/native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const Container = styled.View`
     flex : 1;
