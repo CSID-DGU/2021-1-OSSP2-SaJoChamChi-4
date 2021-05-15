@@ -6,7 +6,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { validateEmail, removeWhitespace } from '../../utils/common';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Alert, Text } from 'react-native';
-import { useCardAnimation } from '@react-navigation/stack';
 
 const Container = styled.View`
   flex: 1;
@@ -27,10 +26,10 @@ const ErrorText = styled.Text`
 `;
 
 const Login = ({ navigation }) => {
-  const { dispatch } = useContext(UserContext);
+  const { user, dispatch } = useContext(UserContext);
   const { spinner } = useContext(ProgressContext);
   const insets = useSafeAreaInsets();
-  const [user, setUser] = useState({})
+  const [user1, setUser] = useState({})
   const [ID, setID] = useState('');
   const [password, setPassword] = useState('');
   const passwordRef = useRef();
@@ -42,8 +41,10 @@ const Login = ({ navigation }) => {
   }, [ID, password]);
 
   useEffect(() => {
-    console.log("wait setting user");
-  }, [user]);
+    console.log("Login User useEffect : ", user1);
+    if(user1[0]!=undefined){    dispatch(user1[0]);
+    }
+  }, [user1]);
 
   const _handleIDChange = ID => {
     const changedID = removeWhitespace(ID);
@@ -53,20 +54,25 @@ const Login = ({ navigation }) => {
     setPassword(removeWhitespace(password));
   };
 
-  const _handleLoginButtonPress =  () => {
+  const _handleLoginButtonPress = async () => {
     try {
+     login(ID, password);
+        console.log("user state : ", user1);
+       console.log("context: ",user.usr_Id);
+      login(ID, password);
+      console.log("user state : ", user1);
+     console.log("context: ",user.usr_Id);
       spinner.start();
-       login(ID, password);
-      dispatch(user[0]);
-    } catch (e) {
-      Alert.alert('Login Error', e.message);
-    } finally {
+    console.log("userlog",user1);
+     console.log("context: ",user.usr_Id);
+    }catch (e) {Alert.alert('로그인되었습니다');_handleLoginButtonPress}
+  finally {
       spinner.stop();
-    }
+  }
   };
   
-  login =  (Id, password)  => {
-      fetch('http://172.30.1.21:3344/login/Login',{
+  login = async (Id, password)  => {
+     await fetch('http://172.30.1.21:3344/login/Login',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -75,8 +81,9 @@ const Login = ({ navigation }) => {
             id : Id,
             pwd : password,
         })
-   }).then(response=>response.json()).then((response) => setUser(response));
-    console.log(user);
+   }).then(response=>response.json()).then((response) => {setUser(response); console.log("response",user1);}
+   );
+    console.log("loginfunction : ", user1);
 };
   
 

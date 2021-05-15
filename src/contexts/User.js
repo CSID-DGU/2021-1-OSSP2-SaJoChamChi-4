@@ -9,8 +9,7 @@ const UserProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const dispatch = ({usr_Id, usr_Name}) => {
     setUser({ usr_Id, usr_Name});
-    console.log("Test==========");
-    console.log(user);
+    console.log("User Context : ", user);
   };
   const value = { user, dispatch };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

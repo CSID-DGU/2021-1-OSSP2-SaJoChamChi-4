@@ -13,7 +13,7 @@ router.post("/Login",(req,res)=>{
         if(err) console.log(err);
         else {
            // console.log(res);
-            console.log(rows);
+            console.log("Login res :", rows);
             res.json(rows);}
     });
 });
@@ -33,7 +33,7 @@ router.post("/Signup",(req,res)=>{
     db.query(sql,[ usr_Pwd,usr_Name,usr_Nickname, usr_Email, usr_Birth, usr_Address, usr_Day, user_Id], (err,rows)=>{
         if(err) console.log(err);
         else {
-            console.log(rows);
+            console.log("signup res info :", rows);
             res.json(rows);}
     });
 });
@@ -43,7 +43,7 @@ router.post("/Profile",(req,res)=>{
     db.query('SELECT * FROM user WHERE usr_Id=?',[usr_Id], (err,rows)=>{
         if(err) console.log(err);
         else {
-            console.log(rows);
+            console.log("profile res : ", rows);
             res.json(rows);}
     });
 });
