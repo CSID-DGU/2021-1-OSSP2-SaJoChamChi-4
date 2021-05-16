@@ -5,5 +5,6 @@ module.exports = {
         user: "root",
         password: "tjwlsdl1!",
         database: "refrigerator",
+        multipleStatements: true 
     }
 };

@@ -36,6 +36,17 @@ router.post("/getBoard",(req,res)=>{
     });
 });
 
+router.post("/allBoard",(req,res)=>{
+    //retrieve - b_Id로 찾는다.
+    db.query('SELECT * FROM Board', (err,rows)=>{
+        if(err) console.log(err);
+        else {
+            //console.log(res);
+            console.log(rows);
+            res.json(rows);}
+    });
+});
+
 router.post('/deleteBoard',(req,res)=>{
     //delete - b_Id로 삭제한다.
     const sql = "DELETE FROM Board WHERE b_Id = ?";

@@ -1,6 +1,14 @@
-import React from 'react';
-import styled from 'styled-components/native'
-import {Text, Button } from 'react-native'
+import React, { useState, useRef, useEffect, useContext } from 'react';
+import { ProgressContext, UserContext } from '../../contexts';
+import styled from 'styled-components/native';
+import { Input, Button } from '../../components';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { validateEmail, removeWhitespace } from '../../utils/common';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Alert, Text } from 'react-native';
+import { useCardAnimation } from '@react-navigation/stack';
+import {StyleSheet,View} from "react-native" ;
+import RecipePresenter from './RecipePresenter'
 
 const Container = styled.View`
     flex : 1;
@@ -10,13 +18,31 @@ const Container = styled.View`
     padding: 0 20px;
 `;
 
-const ReceiptList = ({navigation}) => {
+
+
+const RecipeList = async ({navigation}) => {
+    /*
+    const {data,setData} = useState([]);
+
+        await fetch('http://192.168.0.145:3344/recipe/getRecipe',{
+        method: "post",
+        headers :{
+            "content-Type" : "application/json",
+        },
+        body : JSON.stringify({
+            id : 3 
+        }),
+    }).then(response=>response.json()).then((response=>this.setState({data:response})));
+    
+    console.log('recipe data:');
+    */
     return(
         <Container>
-            <Text style={{fontSize: 24, textAlign : 'center'}}> ReceiptList </Text>
+            <Text style={{fontSize: 24, textAlign : 'center'}}> SimpleView </Text>
+            <RecipePresenter navigation = {navigation} />
             <Button title="Home" onPress={()=>navigation.navigate('Home')}/>
         </Container>
     )
 }
 
-export default ReceiptList;
+export default RecipeList;

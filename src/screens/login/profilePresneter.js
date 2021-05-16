@@ -20,13 +20,13 @@ class ProfilePresenter extends Component{
     }
 
 click =  ()  => {
-    fetch('http://192.168.0.5:3344/login/Profile',{
+    fetch('http://192.168.0.145:3344/login/Profile',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
         },
         body : JSON.stringify({
-            id : 1, 
+            id : 3, 
         }),
     }).then(response=>response.json()).then((response=>this.setState({data:response})));
     console.log(this.state.data);

@@ -43,6 +43,7 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     //console.log("user useEffect");
+    if(user[0]!= undefined) dispatch(user[0]);
   }, [user]);
 
   useEffect(() => {
@@ -57,40 +58,41 @@ const Login = ({ navigation }) => {
     setPassword(removeWhitespace(password));
   };
 
-  const _handleLoginButtonPress = async() => {
+  const _handleLoginButtonPress = async () => {
     try {
       spinner.start();
+      login(ID, password);
+        //console.log("user state : ", user1);
+       console.log("context: ",user.usr_Id);
+      //login(ID, password);
+      //console.log("user state : ", user1);
+     console.log("context: ",user.usr_Id);
+    //console.log("userlog",user1);
+     console.log("context: ",user.usr_Id);
+     spinner.stop();
+    }catch (e) {Alert.alert('로그인되었습니다');_handleLoginButtonPress}
+  finally {
       
-      var res = await login(ID, password);
-      console.log('we are using setUser');
-      console.log("after login function : "+user[0]);
-  
-      setUser(res);
-      dispatch(user[0]);   
-      
-    } catch (e) {
-      Alert.alert('Login Error', e.message);
-    } finally {
-      spinner.stop();
-    }
+  }
   };
+
   
   const login = async (Id, password)  => {
-    const response = await fetch('http://172.30.1.19:3344/login/Login',{
-      method: "post",
-      headers :{
-          "content-Type" : "application/json",
-      },
-      body : JSON.stringify({
-          id : Id,
-          pwd : password,
-      })
-  });
-
-  const data = response.json();
-//console.log(data);
-  return data;
+    await fetch('http://192.168.0.145:3344/login/Login',{
+       method: "post",
+       headers :{
+           "content-Type" : "application/json",
+       },
+       body : JSON.stringify({
+           id : Id,
+           pwd : password,
+       })
+  }).then(response=>response.json()).then((response) => {setUser(response);}
+  );
+   //console.log("loginfunction : ", user1);
 };
+ 
+
 
 
   return (
