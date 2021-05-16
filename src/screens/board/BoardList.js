@@ -15,6 +15,9 @@ const BoardList = ({navigation}) => {
         <Container>
             <Text style={{fontSize: 24, textAlign : 'center'}}> BoardList </Text>
             <Button title="Home" onPress={()=>navigation.navigate('Home')}/>
+            <Button title="DetailView" onPress={()=>navigation.navigate('Board',{screen:'DetailView'})}/>
+            <Button title="insertRecipe" onPress={()=>navigation.navigate('Board',{screen:'insertRecipe'})}/>
+            <Button title="SimpleView" onPress={()=>navigation.navigate('Board',{screen:'SimpleView'})}/>
         </Container>
     )
 }

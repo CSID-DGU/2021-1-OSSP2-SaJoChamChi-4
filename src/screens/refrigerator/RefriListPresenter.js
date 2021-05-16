@@ -22,7 +22,7 @@ class RefriListPresenter extends Component{
     }
 
 click =  (user)  => {
-    fetch('http://172.30.1.21:3344/refri/getList',{
+    fetch('http://192.168.0.143:3344/refri/getList',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -43,6 +43,7 @@ click =  (user)  => {
         <Text style={{fontSize: 15, width : '15%', textAlign: 'center'}}>{data.rf_Number}</Text>
         <Text style={{fontSize: 15, width : '25%', textAlign: 'center'}}>{this.ToDate(data.rf_Indate)}</Text>
         <Text style={{fontSize: 15, width : '25%', textAlign: 'center'}}>{this.ToDate(data.rf_Epdate)}</Text>
+        {console.log(data.rf_Epdate)}
         <Text style={{marginBottom : 30, fontSize : 15, width : '10%', textAlign: 'center'}}>{data.usr_Frozen==0 ? '냉장' : '냉동'}</Text>
         </View>)
     }

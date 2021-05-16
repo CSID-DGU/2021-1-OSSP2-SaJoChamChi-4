@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, Button} from 'react-native';
 import styled from 'styled-components/native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const Container = styled.View`
     flex : 1;
@@ -15,12 +14,12 @@ class Test extends Component{
 
     constructor(props){
         super(props);
-        this.state = {clicked:false, data: [], data2:[], clicked2:false};
+        this.state = {clicked:false, data: [], data2:[], clicked2:false, clicked3:false};
     }
     
 click =  ()  => {
     this.setState(({clicked: true}));
-  fetch('http://172.30.1.21:3344/test/getUser',{
+  fetch('http://192.168.0.143:3344/test/getUser',{
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -32,7 +31,7 @@ console.log(this.state.data);
 
 click2 = ()  => {
     this.setState(({clicked2: true}));
-     fetch('http://172.30.1.21:3344/login/Login',{
+     fetch('http://192.168.0.143:3344/login/Login',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -45,6 +44,21 @@ click2 = ()  => {
    console.log(this.state.data2);
 };
 
+click3 = ()  => {
+    this.setState(({clicked3: true}));
+
+     fetch('http://192.168.0.143:3344/test/jsontest',{
+        method: "post",
+        headers :{
+            "content-Type" : "application/json",
+        },
+        body : JSON.stringify({
+            id : "cajun7",
+            pwd : "1234",
+        })
+   }).then(response=>response.json()).then((response) => this.setState({data2:response}));
+   console.log(this.state.data2);
+};
 
 renderCategories(){
     return this.state.data.map((data)=> <View><Text>{data.usr_Name}</Text>

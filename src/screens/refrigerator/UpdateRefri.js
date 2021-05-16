@@ -10,10 +10,13 @@ const Container = styled.View`
     padding: 0 20px;
 `;
 
+
+
 const UpdateRefri = ({navigation}) => {
     return(
         <Container>
             <Text style={{fontSize: 24, textAlign : 'center'}}> UpdateRefri </Text>
+            <Button title="change" onPress={()=>navigation.navigate('Barcode')}/>
             <Button title="MyRefri" onPress={()=>navigation.navigate('MyRefri')}/>
         </Container>
     )
