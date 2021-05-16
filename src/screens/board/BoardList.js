@@ -1,6 +1,11 @@
-import React from 'react';
-import styled from 'styled-components/native'
-import {Text, Button } from 'react-native'
+import React, { useState, useRef, useEffect, useContext } from 'react';
+import { ProgressContext, UserContext } from '../../contexts';
+import styled from 'styled-components/native';
+import { Button } from '../../components';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Alert, Text, View } from 'react-native';
+
+import SimpleViewPresenter from './SimpleViewPresenter'
 
 const Container = styled.View`
     flex : 1;
@@ -10,14 +15,20 @@ const Container = styled.View`
     padding: 0 20px;
 `;
 
+
 const BoardList = ({navigation}) => {
     return(
         <Container>
-            <Text style={{fontSize: 24, textAlign : 'center'}}> BoardList </Text>
-            <Button title="Home" onPress={()=>navigation.navigate('Home')}/>
-            <Button title="DetailView" onPress={()=>navigation.navigate('Board',{screen:'DetailView'})}/>
-            <Button title="insertRecipe" onPress={()=>navigation.navigate('Board',{screen:'insertRecipe'})}/>
-            <Button title="SimpleView" onPress={()=>navigation.navigate('Board',{screen:'SimpleView'})}/>
+            <Text style={{fontSize: 24, textAlign : 'center', marginBottom : 30}}> BoardList </Text>
+            <View style={{flexDirection: 'row', width : '100%'}} >
+            <Text style={{fontSize: 15,width : '50%', textAlign: 'center'}}>제목</Text>
+            <Text style={{fontSize: 15, width : '20%', textAlign: 'center'}}>작성자</Text>
+            <Text style={{fontSize: 15, width : '20%', textAlign: 'center'}}>작성일자</Text>
+            <Text style={{fontSize: 15, width : '15%', textAlign: 'center',marginBottom : 20}}>추천</Text>
+            </View>
+            <SimpleViewPresenter navigation = {navigation} />
+            <Button title="insertRecipe" onPress={()=>navigation.navigate('Board',{screen:'insertRecipe'})}containerStyle={{width:250,marginBottom:15}}/>
+            <Button title="Home" onPress={()=>navigation.navigate('Home')}containerStyle={{width:250}}/>
         </Container>
     )
 }
