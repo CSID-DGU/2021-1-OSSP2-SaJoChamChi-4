@@ -38,7 +38,7 @@ router.post("/getBoard",(req,res)=>{
 
 router.post("/allBoard",(req,res)=>{
     //retrieve - b_Id로 찾는다.
-    db.query('SELECT * FROM Board', (err,rows)=>{
+    db.query('SELECT * FROM Board, user WHERE usr_Id=b_Writer', (err,rows)=>{
         if(err) console.log(err);
         else {
             //console.log(res);

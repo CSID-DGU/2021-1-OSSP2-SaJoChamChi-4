@@ -10,6 +10,8 @@ const Container = styled.View`
     padding: 0 20px;
 `;
 
+//delete function query Delete FROM refrigerator WHERE rf_Id=?
+
 const DeleteRefri = ({navigation}) => {
     return(
         <Container>
