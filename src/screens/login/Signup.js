@@ -90,7 +90,7 @@ const Signup = ({navigation}) => {
   };
 
   signUp =  (Id, password, name, nickname, email, birth, address, day)  => {
-    fetch('http://172.30.1.21:3344/login/Signup',{
+    fetch('http://192.168.0.143:3344/login/Signup',{
       method: "post",
       headers :{
           "content-Type" : "application/json",

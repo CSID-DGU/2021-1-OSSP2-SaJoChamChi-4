@@ -18,10 +18,10 @@ const Home = ({navigation}) => {
     return(
         <Container>
             <Text style={{fontSize: 24, textAlign : 'center'}}> HOME </Text>
-            <Button title="BoardList" onPress={()=>navigation.navigate('BoardList')}/>
+            <Button title="BoardList" onPress={()=>navigation.navigate('Board')}/>
             <Button title="Profile" onPress={()=>navigation.navigate('Profile')}/>
             <Button title="ReceiptList" onPress={()=>navigation.navigate('ReceiptList')}/>
-            <Button title="MyRefri" onPress={()=>navigation.navigate('MyRefri',{})}/>
+            <Button title="MyRefri" onPress={()=>navigation.navigate('MyRefri')}/>
             <Button title="Test" onPress={()=>navigation.navigate('Test')}/>
         </Container>
     )
