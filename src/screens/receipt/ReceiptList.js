@@ -1,6 +1,7 @@
-import React from 'react';
-import styled from 'styled-components/native'
-import {Text, Button } from 'react-native'
+import React, { useState, useRef, useEffect, useContext } from 'react';
+import styled from 'styled-components/native';
+import { Input, Button } from '../../components';
+import { Alert, Text } from 'react-native';
 
 const Container = styled.View`
     flex : 1;
@@ -10,13 +11,16 @@ const Container = styled.View`
     padding: 0 20px;
 `;
 
-const ReceiptList = ({navigation}) => {
+
+
+const RecipeList = async ({navigation}) => {
+
     return(
         <Container>
-            <Text style={{fontSize: 24, textAlign : 'center'}}> ReceiptList </Text>
+            <Text style={{fontSize: 24, textAlign : 'center'}}> RecipeList </Text>
             <Button title="Home" onPress={()=>navigation.navigate('Home')}/>
         </Container>
     )
 }
 
-export default ReceiptList;
+export default RecipeList;

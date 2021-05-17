@@ -4,7 +4,7 @@ import {Text,View, Alert } from 'react-native'
 import { Button } from '../../components';
 import RefriListPresenter from './RefriListPresenter'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {InsertItem, UpdateRefri} from '../refrigerator'
+
 const Container = styled.View`
     flex : 1;
     background-color: ${({theme}) => theme.background};

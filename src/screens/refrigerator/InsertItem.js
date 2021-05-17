@@ -204,7 +204,7 @@ const InsertItem = ({navigation}) => {
           disabled={disabled}
           containerStyle={{width:300}}
         />
-            <Button title="change" onPress={()=>navigation.navigate('Barcode')} containerStyle={{width:300}}/>
+            <Button title="바코드인식" onPress={()=>navigation.navigate('Barcode')} containerStyle={{width:300}}/>
             <Button title="MyRefri" onPress={()=>navigation.navigate('MyRefri')} containerStyle={{width:300}}/>
         </Container>
         </KeyboardAwareScrollView>

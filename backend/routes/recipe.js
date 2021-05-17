@@ -101,7 +101,7 @@ router.post('/getRecipe',(req,res)=>{
     db.query(sqls,[id], (err,rows)=>{
         if(err) console.log(err);
         else {
-         res.json(rows);
+         res.json([rows]);
          }
         });
     //console.log(ret);
