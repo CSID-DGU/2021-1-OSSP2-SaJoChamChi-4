@@ -28,7 +28,7 @@ const DetailView = ({route,navigation}) => {
             <Text style={{fontSize: 24, textAlign : 'center'}}>내용: {route.params.data.b_Content}{"\n"} </Text>
             
             <Button title="BoardList" onPress={()=>navigation.navigate('BoardList')} containerStyle={{width:250, marginBottom:20}}/>
-            <Button title="Home" onPress={()=>navigation.navigate('Board')} containerStyle={{width:250}}/>
+            <Button title="Home" onPress={()=>navigation.navigate('Home')} containerStyle={{width:250}}/>
         </Container>
     )
 }

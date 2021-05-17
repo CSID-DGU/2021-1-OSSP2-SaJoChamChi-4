@@ -1,3 +1,3 @@
-import ReceiptList from './ReceiptList';
+import RecipeList from './ReceiptList';
 
-export {ReceiptList};
+export {RecipeList};
