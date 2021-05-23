@@ -1,6 +1,6 @@
 import React, { useContext, Component } from 'react';
 import { Text, View, Button, Alert} from 'react-native';
-import { UserContext } from '../../contexts';
+import { UserContext, ProgressContext } from '../../contexts';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
@@ -26,7 +26,7 @@ class RefriListPresenter extends Component{
         }
       }
 click =  (user)  => {
-    fetch('http://172.30.1.21:3344/refri/getList',{
+    fetch('http://192.168.0.143:3344/refri/getList',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
