@@ -11,7 +11,7 @@ export default function Home({navigation}){
         
         { title : '게시판', name : 'Board', code : '#1abc9c'},
         { title : '내정보', name : 'Profile', code : '#2ecc71'},
-        { title : '레시피추천',name : 'RecipeList', code : '#3498db'},
+        { title : '레시피추천',name : 'RecipeMain', code : '#3498db'},
         { title : '냉장고',name : 'MyRefri', code : '#5498ab'},
         
     ]);

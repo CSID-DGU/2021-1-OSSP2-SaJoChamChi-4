@@ -1,3 +1,4 @@
 import RecipeList from './ReceiptList';
-
-export {RecipeList};
+import RecipeMain from './RecipeMain';
+import RecipeDetail from './RecipeDetail';
+export {RecipeMain, RecipeList,RecipeDetail};
