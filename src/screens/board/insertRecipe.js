@@ -3,7 +3,6 @@ import { ProgressContext, UserContext } from '../../contexts';
 import styled from 'styled-components/native';
 import { Input, Button } from '../../components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { validateEmail, removeWhitespace } from '../../utils/common';
 import { Alert } from 'react-native';
 import moment from 'moment';
 
@@ -79,7 +78,7 @@ const insertRecipe = ({navigation}) => {
       .utcOffset('+05:30')
       .format('YYYY-MM-DD hh:mm:ss');
       console.log('title : '+title);
-      fetch('http://192.168.0.145:3344/board/insertBoard',{
+      fetch('http://172.30.1.34:3344/board/insertBoard',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -96,7 +95,6 @@ const insertRecipe = ({navigation}) => {
   };
   
     return (
-      <KeyboardAwareScrollView extraScrollHeight={20}>
         <Container>
         <Input
             label="Title"
@@ -132,7 +130,6 @@ const insertRecipe = ({navigation}) => {
           />
           <Button title="GoBack" onPress={()=>navigation.navigate('Board',{screen:'BoardList'})}/>
         </Container>
-      </KeyboardAwareScrollView>
     );
   };
   

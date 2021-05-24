@@ -11,7 +11,7 @@ class SimpleViewPresenter extends Component{
         super(props);
         //this.state = {clicked:false, data: [], data2:[], clicked2:false, user:user};
         this.state = { data: []};
-        fetch('http://192.168.0.145:3344/board/allBoard',{
+        fetch('http://172.30.1.34:3344/board/allBoard',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -32,13 +32,19 @@ class SimpleViewPresenter extends Component{
         this.props.navigation.navigate('Board',{screen:'DetailView',params : {data : data}});
     }
 
-    render(){
-        return this.state.data.map((data)=> <View>
-        <Text style={{fontSize: 20}} onPress ={this.onPressHandle.bind(this,data)} >타이틀 : {data.b_Title}{"\n"}
-        닉네임 : {data.b_Writer}, 추천수 : {data.b_Hits}</Text>
-        </View>)
-    }
+    ToDate = text => {
+        return String(text).substr(2,8);
+      };
 
+    render(){
+        return this.state.data.map((data)=> <View style={{flexDirection: 'row', width : '100%'}} >
+         <Text style={{fontSize: 20,width : '50%', textAlign: 'center'}} onPress ={this.onPressHandle.bind(this,data)}>{data.b_Title}</Text>
+         <Text style={{fontSize: 15, width : '20%', textAlign: 'center'}} onPress ={this.onPressHandle.bind(this,data)}>{data.usr_Name}</Text>
+         <Text style={{fontSize: 15, width : '20%', textAlign: 'center'}} onPress ={this.onPressHandle.bind(this,data)}>{this.ToDate(data.b_Time)}</Text>
+         <Text style={{fontSize: 15, width : '13%', textAlign: 'center',marginBottom : 20}} onPress ={this.onPressHandle.bind(this,data)}>{data.b_Hits}</Text>
+         </View>)
+    }
+    
     
 }
 

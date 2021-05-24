@@ -113,4 +113,14 @@ router.post("/Profile",(req,res)=>{
 });
 
 
+
+router.post("/Profile",(req,res)=>{
+    var usr_Id = req.body.id;
+    db.query('SELECT * FROM user WHERE usr_Id=?',[usr_Id], (err,rows)=>{
+        if(err) console.log(err);
+        else {
+            console.log("profile res : ", rows);
+            res.json(rows);}
+    });
+});
 module.exports = router;

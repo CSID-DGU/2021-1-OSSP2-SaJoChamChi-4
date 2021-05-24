@@ -22,7 +22,7 @@ const ErrorText = styled.Text`
   color: ${({ theme }) => theme.errorText};
 `;
 
-const Signup = ({navigation}) => {
+const editProfile = ({navigation}) => {
   const { dispatch } = useContext(UserContext);
   const { spinner } = useContext(ProgressContext);
    
@@ -229,4 +229,4 @@ const Signup = ({navigation}) => {
   );
 };
 
-export default Signup;
+export default editProfile;

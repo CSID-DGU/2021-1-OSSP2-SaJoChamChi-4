@@ -14,7 +14,7 @@ class Test extends Component{
 
     constructor(props){
         super(props);
-        this.state = {clicked:false, data: [], data2:[], clicked2:false};
+        this.state = {clicked:false, data: [], data2:[], clicked2:false, clicked3:false};
     }
     
 click =  ()  => {
@@ -31,7 +31,7 @@ console.log(this.state.data);
 
 click2 = ()  => {
     this.setState(({clicked2: true}));
-     fetch('http://localhost:3344/login/Login',{
+     fetch('http://172.30.1.3:3344/login/Login',{
         method: "post",
         headers :{
             "content-Type" : "application/json",

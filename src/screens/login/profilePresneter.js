@@ -7,29 +7,29 @@ import { UserContext } from '../../contexts';
 class ProfilePresenter extends Component{
 
     static contextType = UserContext;
-    
+
     constructor(props){
         super(props);
-        const user = this.context;
-        this.state = {clicked:false, data: [], data2:[], clicked2:false, user:user};
-        console.log(user);
+        this.state = {clicked:false, data: [] };
     }
 
     componentDidMount(){
-        this.click();
+        const user = this.context;
+        console.log("didmount log",user.user);
+        this.click(user.user.usr_Id);
+        console.log("presenter user info : ", this.state.data);
     }
 
-click =  ()  => {
-    fetch('http://192.168.0.145:3344/login/Profile',{
+click =  (user)  => {
+    fetch('http://172.30.1.34:3344/login/Profile',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
         },
         body : JSON.stringify({
-            id : 3, 
+            id : user, 
         }),
     }).then(response=>response.json()).then((response=>this.setState({data:response})));
-    console.log(this.state.data);
 };
   ToDate = text => {
     return String(text).substr(0,10);

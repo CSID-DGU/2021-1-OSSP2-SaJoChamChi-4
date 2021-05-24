@@ -26,7 +26,6 @@ router.post("/insertBoard",(req,res)=>{
 
 
 router.post("/getBoard",(req,res)=>{
-    //retrieve - b_Id로 찾는다.
     db.query('SELECT * FROM Board where b_Id=?',[req.body.b_Id], (err,rows)=>{
         if(err) console.log(err);
         else {

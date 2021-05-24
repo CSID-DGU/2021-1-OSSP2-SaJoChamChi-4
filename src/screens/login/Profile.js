@@ -20,24 +20,6 @@ const Profile = ({navigation}) => {
     const user = useContext(UserContext);
     const { spinner } = useContext(ProgressContext);
     const [profile, setProfile] = useState([{user_Id : null, usr_Address : null, usr_Birth : null, usr_Day : null, usr_Email : null, usr_Id : null, usr_Name : null, usr_Nickname : null, usr_Pwd : null, usr_Rdate : null}]);
-  //   useEffect(() =>{
-  //     loadData();
-  //     console.log("change profile");
-  // },[]);
-
-
-  // const loadData = async ()  =>{
-  //  const response = await fetch('http://172.30.1.21:3344/login/Profile',{
-  //       method: "post",
-  //       headers :{
-  //           "content-Type" : "application/json",
-  //       },
-  //       body : JSON.stringify({
-  //           id : user.user.usr_Id, 
-  //       }),
-  //   }).then(response=>response.json()).then((response=>setProfile(response)));
-  // //  setProfile(response);
-  // }
   
     const _handleLogoutButtonPress = async () => {
         try {
@@ -45,8 +27,8 @@ const Profile = ({navigation}) => {
         } catch (e) {
           console.log('[Profile] logout: ', e.message);
         } finally {
-          dispatch({});
-          spinner.stop();
+          dispatch({usr_Id : null, usr_Name : null});
+         spinner.stop();
         }
       };
   
