@@ -45,6 +45,7 @@ const Home = ({navigation}) => {
     const [isToken,setToken] = useState([-1]);
     const notificationListener = useRef();
     const responseListener = useRef();
+    const [tvalue, setTvalue] = useState('');
 
     const getDDay = text=>{
         var Dday = new Date(text);  
@@ -58,7 +59,7 @@ const Home = ({navigation}) => {
     //const promise = getday();
     useEffect(() => {
       const  getday = () =>{
-        const d = fetch('http://172.30.1.34:3344/token',{
+        const d = fetch('http://172.30.1.26:3344/token',{
             method: "post",
             headers :{
                 "content-Type" : "application/json",
@@ -95,8 +96,11 @@ const Home = ({navigation}) => {
         //         isPush = true;
         // }
         // console.log('정답:'+isPush);
-            registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
-
+        
+        registerForPushNotificationsAsync().then(token => {setExpoPushToken(token)
+          setTvalue(token.data)});
+        
+        
         // This listener is fired whenever a notification is received while the app is foregrounded
             notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
           setNotification(notification);
@@ -119,8 +123,44 @@ const Home = ({navigation}) => {
         
       }, []);
     
+      async function registerForPushNotificationsAsync() {
+        let token;
+        if (Constants.isDevice) {
+          const { status: existingStatus } = await Notifications.getPermissionsAsync();
+          let finalStatus = existingStatus;
+          if (existingStatus !== 'granted') {
+            const { status } = await Notifications.requestPermissionsAsync();
+            finalStatus = status;
+          }
+          if (finalStatus !== 'granted') {
+            alert('Failed to get push token for push notification!');
+            return;
+          }
+          console.log('final status : '+finalStatus);
+           token = (await Notifications.getExpoPushTokenAsync()).data;
+           await setTvalue(token);
+          // Notifications.getExpoPushTokenAsync().then(response => {setTvalue(response.data)
+          // console.log('token : '+response.data)});
+          console.log('token : '+token);
+        } else {
+          alert('Must use physical device for Push Notifications!');
+        }
+      
+        if (Platform.OS === 'android') {
+          Notifications.setNotificationChannelAsync('default', {
+            name: 'default',
+            importance: Notifications.AndroidImportance.MAX,
+            vibrationPattern: [0, 250, 250, 250],
+            lightColor: '#FF231F7C',
+          });
+        }
+      
+        return token;
+      }
+
       useEffect(() =>{
-        if(isToken[0]!==-1 && isToken.length>0){
+        console.log('useeffect 호출!');
+        if(isToken[0]!==-1 && isToken.length>0&& expoPushToken!==undefined){
           console.log('보냄 ')
            var str = '';
            var idx;
@@ -131,14 +171,15 @@ const Home = ({navigation}) => {
            str = str.substr(0,str.length-2);
            str+= '의 유통기한이 얼마 남지 않았습니다!';
            console.log('tostring : '+str)
+           console.log('token value : '+expoPushToken);
            //const asdf = [];
             sendPushNotification(expoPushToken,str);
-          setToken(-1);
+          //setToken(-1);
         }
         else{
           console.log('is tokken is false!');
         }
-      },[isToken])
+      },[isToken,expoPushToken])
 
     return(
         <Container>
@@ -152,65 +193,34 @@ const Home = ({navigation}) => {
             <Button
         title="Press to Send Notification"
         onPress={async () => {
-          await sendPushNotification(expoPushToken,'forTest');
+          await sendPushNotification(expoPushToken,'nothing','fortest');
         }}
       />
         </Container>
     )
 }
 
-
 async function sendPushNotification(expoPushToken,data) {
+  const message = {
+    to: expoPushToken,
+    sound: 'default',
+    title: '광고',
+    body: data,
+    data: { someData: 'goes here' },
+  };
+
+  await fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Accept-encoding': 'gzip, deflate',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(message),
+  });
+}
+
   
-    const message = {
-      to: 'ExponentPushToken[t1mTpKObvpk1SWzYNnIr4L]',
-      sound: 'default',
-      title: '박서진',
-      body: data,
-      data: { someData: 'goes here' },
-    };
-  
-    await fetch('https://exp.host/--/api/v2/push/send', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Accept-encoding': 'gzip, deflate',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(message),
-    });
-  }
-  
-  async function registerForPushNotificationsAsync() {
-    let token;
-    if (Constants.isDevice) {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
-        return;
-      }
-      console.log('final status : '+finalStatus);
-      token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log('token : '+token);
-    } else {
-      alert('Must use physical device for Push Notifications');
-    }
-  
-    if (Platform.OS === 'android') {
-      Notifications.setNotificationChannelAsync('default', {
-        name: 'default',
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: '#FF231F7C',
-      });
-    }
-  
-    return token;
-  }
+
 
 export default Home;

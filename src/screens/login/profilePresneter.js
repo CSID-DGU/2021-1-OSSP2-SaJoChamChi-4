@@ -21,7 +21,7 @@ class ProfilePresenter extends Component{
     }
 
 click =  (user)  => {
-    fetch('http://172.30.1.34:3344/login/Profile',{
+    fetch('http://172.30.1.26:3344/login/Profile',{
         method: "post",
         headers :{
             "content-Type" : "application/json",

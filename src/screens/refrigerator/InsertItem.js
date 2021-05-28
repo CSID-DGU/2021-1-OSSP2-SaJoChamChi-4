@@ -24,8 +24,8 @@ const ErrorText = styled.Text`
 
 // input item -> fetch data + Barcode icon data to back with data with (barcode) + barcode matching with data 
 
-const InsertItem = ({navigation}) => {
-
+const InsertItem = ({route, navigation}) => {
+    
     const user = useContext(UserContext);
 
     const [id, setId] = useState(user.user.usr_Id);
@@ -47,6 +47,18 @@ const InsertItem = ({navigation}) => {
     const emailRef = useRef();
     const nameRef = useRef();
     const didMountRef = useRef();
+
+    useEffect(() =>{
+      //console.log('insertitem useeffect')
+      if(route.params!==undefined){
+      if(route.params.fkind !== undefined){
+        //console.log('insertitem useeffect : '+route.params.fkind);
+        setFkind(route.params.fkind)
+        setPname(route.params.fname)
+      }
+    }
+    })
+
 
     useEffect(() => {
         if (didMountRef.current) {
@@ -92,7 +104,7 @@ const InsertItem = ({navigation}) => {
       };
     
       Insert =  (Pname, Number, Epdate, Indate, Frozen, Foodid, Fkind, id)  => {
-        fetch('http://172.30.1.34:3344/refri/Insert',{
+        fetch('http://172.30.1.26:3344/refri/Insert',{
           method: "post",
           headers :{
               "content-Type" : "application/json",
@@ -204,7 +216,7 @@ const InsertItem = ({navigation}) => {
           disabled={disabled}
           containerStyle={{width:300}}
         />
-            <Button title="change" onPress={()=>navigation.navigate('Barcode')} containerStyle={{width:300}}/>
+            <Button title="바코드 인식" onPress={()=>navigation.navigate('Barcode')} containerStyle={{width:300}}/>
             <Button title="MyRefri" onPress={()=>navigation.navigate('MyRefri')} containerStyle={{width:300}}/>
         </Container>
         </KeyboardAwareScrollView>

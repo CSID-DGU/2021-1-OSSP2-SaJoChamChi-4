@@ -82,7 +82,7 @@ const Login = ({ navigation }) => {
 
   
   login = async (Id, password)  => {
-     await fetch('http://172.30.1.34:3344/login/Login',{
+     await fetch('http://172.30.1.26:3344/login/Login',{
         method: "post",
         headers :{
             "content-Type" : "application/json",

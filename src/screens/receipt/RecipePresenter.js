@@ -14,7 +14,7 @@ class SimpleViewPresenter extends Component{
         this.state = { data : []};
         
     
-        Promise.all(fetch('http://192.168.0.145:3344/recipe/getRecipe',{
+        Promise.all(fetch('http://172.30.1.26:3344/recipe/getRecipe',{
         method: "post",
         headers :{
             "content-Type" : "application/json",

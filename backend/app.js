@@ -22,6 +22,7 @@ var boardRouter = require("./routes/board");
 var commentRouter = require("./routes/comment");
 var RecipeRouter = require("./routes/Recipe");
 var refriRouter = require("./routes/refri");
+var barcodeRouter = require("./routes/barcode");
 
 var config = require("./config/database");
 const db = mysql.createConnection(config.mysql);
@@ -49,7 +50,8 @@ app.use("/login",loginRouter);
 app.use('/board',boardRouter);
 app.use('/comment',commentRouter);
 app.use('/recipe',RecipeRouter);
-app.use("/refri",refriRouter)
+app.use("/refri",refriRouter);
+app.use("/barcode",barcodeRouter);
 
 server.listen(3344, ()=>{
     console.log('Server listen on port' + server.address().port);
