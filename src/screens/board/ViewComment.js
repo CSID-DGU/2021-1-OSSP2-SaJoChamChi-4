@@ -14,19 +14,16 @@ class ViewComment extends Component{
         body : JSON.stringify({
             c_bid : this.props.route.params.data.b_Id
         }), 
-    }).then(response=>response.json()).then((response=>this.setState({data:response})));
-        //console.log(user);
+    }).then(response=>response.json()).then((response=>this.setState({data:response})));   
+    //console.log(user);
     }
 
-    ToDate = text => {
-        return String(text).substr(2,8);
-    };
 
     render(){
         return this.state.data.map((data)=> <View style={{flexDirection: 'row', width : '100%'}} >
          <Text style={{fontSize: 15, width : '20%', textAlign: 'center'}} >{this.props.route.params.data.usr_Nickname}</Text>
          <Text style={{fontSize: 15, width : '60%', marginBottom : 30}}>{data.co_Content}</Text>
-         <Text style={{fontSize: 15, width : '20%', textAlign: 'center'}} >{this.ToDate(data.co_Time)}</Text>
+         <Text style={{fontSize: 15, width : '20%', textAlign: 'center'}} >{data.co_Time}</Text>
          </View>)
     }
     

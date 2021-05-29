@@ -1,10 +1,11 @@
 import React, {useState, useRef, useEffect, useContext} from 'react';
 import { ProgressContext, UserContext } from '../../contexts';
 import styled from 'styled-components/native'
-import {ScrollView, Text } from 'react-native'
+import {ScrollView, Text, RefreshControl, View } from 'react-native'
 import { Button, Input } from '../../components';
 import {Alert} from 'react-native';
 import moment from 'moment';
+import {CommonActions} from "@react-navigation/native";
 
 import ViewComment from './ViewComment'
 
@@ -37,13 +38,12 @@ const DetailView = ({route,navigation}) => {
     const { spinner } = useContext(ProgressContext);
     const { user, dispatch } = useContext(UserContext);
     const [comment, setComment] = useState();
-    
     const [errorMessage, setErrorMessage] = useState('');
     const [disabled, setDisabled] = useState(true);
 
     const contentRef = useRef();
     const didMountRef = useRef();
-  
+
     useEffect(() => {
       if (didMountRef.current) {
         let _errorMessage = '';
@@ -73,13 +73,14 @@ const DetailView = ({route,navigation}) => {
         } finally {
           spinner.stop();
           alert("Success!\nNew comment!!");
+          navigation.dispatch(CommonActions.navigate({name : "DetailView",key:"DetailView"}));
         }
     };
 
     const postComment = (comment) => {
       var date = moment()
-      .utcOffset('+05:30')
-      .format('YYYY-MM-DD hh:mm:ss');
+      .utcOffset('+09:00')
+      .format('YYYY-MM-DD HH:mm:ss');
       console.log('comment : '+comment);
       fetch('http://192.168.0.184:3344/comment/insertComment',{
         method: "post",
@@ -112,16 +113,18 @@ const DetailView = ({route,navigation}) => {
               onSubmitEditing={() => {
                 console.log("comment: "+comment);
                 setComment(comment);
-                contentRef.current.focus();
+                //contentRef.current.focus();
               }}
               onBlur={() => setComment(comment)}
               placeholder="Comment"
               returnKeyType="done"
             />
             <ErrorText>{errorMessage}</ErrorText>
-            <Button title="AddComment" onPress={_handleSignupButtonPress} disabled={disabled} containerStyle={{width:250, marginBottom:20}}/>
-            <Button title="BoardList" onPress={()=>navigation.navigate('BoardList')} containerStyle={{width:250, marginBottom:20}}/>
-            <Button title="Home" onPress={()=>navigation.navigate('Home')} containerStyle={{width:250}}/>
+            <View>
+              <Button title="AddComment" onPress={_handleSignupButtonPress} disabled={disabled} containerStyle={{width:250, marginBottom:20}}/>
+              <Button title="BoardList" onPress={()=>navigation.navigate('BoardList')} containerStyle={{width:250, marginBottom:20}}/>
+              <Button title="Home" onPress={()=>navigation.navigate('Home')} containerStyle={{width:250}}/>
+            </View>
         </Container>
       </ScrollView>
     )

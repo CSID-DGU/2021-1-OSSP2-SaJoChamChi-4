@@ -26,7 +26,7 @@ router.post("/getComment",(req,res)=>{
     db.query(sql, [co_Bid], (err, rows)=>{
         if(err) console.log(err);
         else{
-            console.log(err);
+            console.log(rows);
             res.json(rows);
         }
     });
