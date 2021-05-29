@@ -1,45 +1,7 @@
-<<<<<<< HEAD
-// import React, { useContext, Component } from 'react';
-// import { Text, View} from 'react-native';
-
-
-// class RecipePresenter extends Component{
-
-
-//     constructor(props){
-//         super(props);
-//         this.state = {clicked:false, data: [] };
-//     }
-
-//     componentDidMount(){
-//         this.click(3);
-//         console.log("Test : ", this.state.data);
-//     }
-
-//   click = (num) =>{
-//     fetch('http://192.168.0.184:3344/recipe/getRecipe',{
-//         method: "post",
-//         headers :{
-//             "content-Type" : "application/json",
-//         },
-//         body : JSON.stringify({
-//             id : num, 
-//         }),
-//     }).then(response=>response.json()).then((response=>this.setState({data:response[0]})));
-//         //console.log(user);
-//   } 
-//     render(){
-//         console.log('recipe data:');
-//         return <Text>test</Text>
-        
-//     }
-=======
 import React, { useContext, Component } from 'react';
 import { Text, View, Image, Dimensions, TouchableOpacity} from 'react-native';
->>>>>>> 2fc263076ecb68585b9242fa1c9c200225438d11
 
 class RecipePresenter extends Component{
-
 
     constructor(props){
         super(props);
