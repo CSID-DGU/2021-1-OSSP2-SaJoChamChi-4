@@ -1,13 +1,13 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
-import { ProgressContext, UserContext } from '../../contexts';
-import styled from 'styled-components/native';
-import { Input, Button } from '../../components';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { validateEmail, removeWhitespace } from '../../utils/common';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Alert, Text, Image } from 'react-native';
+import React, { useState, useRef, useEffect, useContext } from "react";
+import { ProgressContext, UserContext } from "../../contexts";
+import styled from "styled-components/native";
+import { Input, Button } from "../../components";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { validateEmail, removeWhitespace } from "../../utils/common";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Alert, Text, Image } from "react-native";
 
-let imagepath = require('../../../assets/Myrefri.png')
+let imagepath = require("../../../assets/Myrefri.png");
 
 const Container = styled.View`
   flex: 1;
@@ -35,11 +35,11 @@ const Login = ({ navigation }) => {
   const { user, dispatch } = useContext(UserContext);
   const { spinner } = useContext(ProgressContext);
   const insets = useSafeAreaInsets();
-  const [user1, setUser] = useState({})
-  const [ID, setID] = useState('');
-  const [password, setPassword] = useState('');
+  const [user1, setUser] = useState({});
+  const [ID, setID] = useState("");
+  const [password, setPassword] = useState("");
   const passwordRef = useRef();
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
@@ -53,33 +53,36 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     console.log("Login User useEffect : ", user1);
-    if(user1[0]!=undefined){    dispatch(user1[0]);
+    if (user1[0] != undefined) {
+      dispatch(user1[0]);
     }
   }, [user1]);
 
-  const _handleIDChange = ID => {
+  const _handleIDChange = (ID) => {
     const changedID = removeWhitespace(ID);
     setID(changedID);
   };
-  const _handlePasswordChange = password => {
+  const _handlePasswordChange = (password) => {
     setPassword(removeWhitespace(password));
   };
 
   const _handleLoginButtonPress = async () => {
     try {
-     login(ID, password);
-        console.log("user state : ", user1);
-       console.log("context: ",user.usr_Id);
       login(ID, password);
       console.log("user state : ", user1);
-     console.log("context: ",user.usr_Id);
+      console.log("context: ", user.usr_Id);
+      login(ID, password);
+      console.log("user state : ", user1);
+      console.log("context: ", user.usr_Id);
       spinner.start();
-    console.log("userlog",user1);
-     console.log("context: ",user.usr_Id);
-    }catch (e) {Alert.alert('로그인되었습니다');_handleLoginButtonPress}
-  finally {
+      console.log("userlog", user1);
+      console.log("context: ", user.usr_Id);
+    } catch (e) {
+      Alert.alert("로그인되었습니다");
+      _handleLoginButtonPress;
+    } finally {
       spinner.stop();
-  }
+    }
   };
 
   
@@ -101,15 +104,28 @@ const Login = ({ navigation }) => {
 
 
 
-
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={{ flex: 1 }}
       extraScrollHeight={20}
     >
       <Container insets={insets}>
-      <Image source={imagepath} style={{ borderRadius: 8, width:100, height:100, marginBottom:50, marginLeft:30 }} />
-        <Text style={{fontSize: 40, textAlign : 'center', paddingBottom:70}}onPress={() => navigation.navigate('Start')}>My Refrigerator</Text>
+        <Image
+          source={imagepath}
+          style={{
+            borderRadius: 8,
+            width: 100,
+            height: 100,
+            marginBottom: 50,
+            marginLeft: 30,
+          }}
+        />
+        <Text
+          style={{ fontSize: 40, textAlign: "center", paddingBottom: 70 }}
+          onPress={() => navigation.navigate("Start")}
+        >
+          My Refrigerator
+        </Text>
         <Input
           label="ID"
           value={ID}
@@ -136,7 +152,7 @@ const Login = ({ navigation }) => {
         />
         <Button
           title="Sign up with email"
-          onPress={() => navigation.navigate('Signup')}
+          onPress={() => navigation.navigate("Signup")}
           isFilled={false}
         />
       </Container>

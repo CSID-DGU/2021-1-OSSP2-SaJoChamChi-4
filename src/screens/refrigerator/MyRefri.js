@@ -1,16 +1,16 @@
-import React from 'react';
-import styled from 'styled-components/native'
-import {Text,View, Alert } from 'react-native'
-import { Button } from '../../components';
-import RefriListPresenter from './RefriListPresenter'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import React from "react";
+import styled from "styled-components/native";
+import { Text, View, Alert } from "react-native";
+import { Button } from "../../components";
+import RefriListPresenter from "./RefriListPresenter";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const Container = styled.View`
-    flex : 1;
-    background-color: ${({theme}) => theme.background};
-    justify-content: center;
-    align-items: center;
-    padding: 0 20px;
+  flex: 1;
+  background-color: ${({ theme }) => theme.background};
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
 `;
 
 const MyRefri = ({navigation}) => {

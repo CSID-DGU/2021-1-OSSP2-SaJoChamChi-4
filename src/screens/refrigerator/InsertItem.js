@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
-import { ProgressContext, UserContext } from '../../contexts';
-import styled from 'styled-components/native'
-import {Text } from 'react-native'
-import { Input, Button } from '../../components';
-import { validateEmail, removeWhitespace } from '../../utils/common';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import React, { useState, useRef, useEffect, useContext } from "react";
+import { ProgressContext, UserContext } from "../../contexts";
+import styled from "styled-components/native";
+import { Text } from "react-native";
+import { Input, Button } from "../../components";
+import { validateEmail, removeWhitespace } from "../../utils/common";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const Container = styled.View`
   flex: 1;
@@ -22,31 +22,30 @@ const ErrorText = styled.Text`
   color: ${({ theme }) => theme.errorText};
 `;
 
-// input item -> fetch data + Barcode icon data to back with data with (barcode) + barcode matching with data 
+// input item -> fetch data + Barcode icon data to back with data with (barcode) + barcode matching with data
 
-const InsertItem = ({route, navigation}) => {
-    
-    const user = useContext(UserContext);
+const InsertItem = ({ route, navigation }) => {
+  const user = useContext(UserContext);
 
-    const [id, setId] = useState(user.user.usr_Id);
-    const [Pname, setPname] = useState('');
-    const [Number, setNumber] = useState('');
-    const [Epdate, setEpdate] = useState('');
-    const [Indate, setIndate] = useState('');
-    const [Frozen, setFrozen] = useState('');
-    const [Foodid, setFoodid] = useState('');
-    const [Fkind, setFkind] = useState('');
+  const [id, setId] = useState(user.user.usr_Id);
+  const [Pname, setPname] = useState("");
+  const [Number, setNumber] = useState("");
+  const [Epdate, setEpdate] = useState("");
+  const [Indate, setIndate] = useState("");
+  const [Frozen, setFrozen] = useState("");
+  const [Foodid, setFoodid] = useState("");
+  const [Fkind, setFkind] = useState("");
 
-    const [errorMessage, setErrorMessage] = useState('');
-    const [disabled, setDisabled] = useState(true);
-  
-    const dayRef = useRef();
-    const addressRef = useRef();
-    const birthRef = useRef();
-    const nicknameRef = useRef();
-    const emailRef = useRef();
-    const nameRef = useRef();
-    const didMountRef = useRef();
+  const [errorMessage, setErrorMessage] = useState("");
+  const [disabled, setDisabled] = useState(true);
+
+  const dayRef = useRef();
+  const addressRef = useRef();
+  const birthRef = useRef();
+  const nicknameRef = useRef();
+  const emailRef = useRef();
+  const nameRef = useRef();
+  const didMountRef = useRef();
 
     useEffect(() =>{
       //console.log('insertitem useeffect')
@@ -128,7 +127,7 @@ const InsertItem = ({route, navigation}) => {
             <Input
           label="Pname"
           value={Pname}
-          onChangeText={text => setPname(removeWhitespace(text))}
+          onChangeText={(text) => setPname(removeWhitespace(text))}
           onSubmitEditing={() => {
             setPname(Pname.trim());
             nameRef.current.focus();
@@ -141,7 +140,7 @@ const InsertItem = ({route, navigation}) => {
           ref={nameRef}
           label="Number"
           value={Number}
-          onChangeText={text => setNumber(removeWhitespace(text))}
+          onChangeText={(text) => setNumber(removeWhitespace(text))}
           onSubmitEditing={() => {
             setNumber(Number.trim());
             emailRef.current.focus();
@@ -154,7 +153,7 @@ const InsertItem = ({route, navigation}) => {
           ref={emailRef}
           label="Epdate"
           value={Epdate}
-          onChangeText={text => setEpdate(removeWhitespace(text))}
+          onChangeText={(text) => setEpdate(removeWhitespace(text))}
           onSubmitEditing={() => nicknameRef.current.focus()}
           placeholder="유통기한"
           returnKeyType="next"
@@ -163,7 +162,7 @@ const InsertItem = ({route, navigation}) => {
           ref={nicknameRef}
           label="Indate"
           value={Indate}
-          onChangeText={text => setIndate(removeWhitespace(text))}
+          onChangeText={(text) => setIndate(removeWhitespace(text))}
           onSubmitEditing={() => {
             setIndate(Indate.trim());
             birthRef.current.focus();
@@ -173,10 +172,10 @@ const InsertItem = ({route, navigation}) => {
           returnKeyType="next"
         />
         <Input
-          ref={birthRef}        
+          ref={birthRef}
           label="Frozen"
           value={Frozen}
-          onChangeText={text => setFrozen(removeWhitespace(text))}
+          onChangeText={(text) => setFrozen(removeWhitespace(text))}
           onSubmitEditing={() => {
             setFrozen(Frozen.trim());
             addressRef.current.focus();
@@ -189,7 +188,7 @@ const InsertItem = ({route, navigation}) => {
           ref={addressRef}
           label="Foodid"
           value={Foodid}
-          onChangeText={text => setFoodid(removeWhitespace(text))}
+          onChangeText={(text) => setFoodid(removeWhitespace(text))}
           onSubmitEditing={() => {
             setFoodid(Foodid.trim());
             dayRef.current.focus();
@@ -202,19 +201,29 @@ const InsertItem = ({route, navigation}) => {
           ref={dayRef}
           label="Fkind"
           value={Fkind}
-          onChangeText={text => setFkind(removeWhitespace(text))}
+          onChangeText={(text) => setFkind(removeWhitespace(text))}
           onSubmitEditing={() => {
             setFkind(Fkind.trim());
           }}
           onBlur={() => setFkind(Fkind.trim())}
           placeholder="식품군"
           returnKeyType="done"
-        /> 
+        />
         <Button
           title="추가"
           onPress={_handleSignupButtonPress}
           disabled={disabled}
-          containerStyle={{width:300}}
+          containerStyle={{ width: 300 }}
+        />
+        <Button
+          title="바코드인식"
+          onPress={() => navigation.navigate("Barcode")}
+          containerStyle={{ width: 300 }}
+        />
+        <Button
+          title="MyRefri"
+          onPress={() => navigation.navigate("MyRefri")}
+          containerStyle={{ width: 300 }}
         />
             <Button title="바코드 인식" onPress={()=>navigation.navigate('Barcode')} containerStyle={{width:300}}/>
             <Button title="MyRefri" onPress={()=>navigation.navigate('MyRefri')} containerStyle={{width:300}}/>

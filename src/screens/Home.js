@@ -1,6 +1,16 @@
 import React ,{useState, useContext} from 'react';
 import styled from 'styled-components/native'
-import {StyleSheet, Text,View, AppState, Button } from 'react-native'
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import {
+  StyleSheet,
+  ScrollView,
+  Text,
+  View,
+  Button,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
+import EpdatePresenter from "./HomePresenter";
 import { ProgressContext, UserContext } from '../contexts'
 import { useEffect,useRef } from 'react';
 import * as Notifications from 'expo-notifications';
@@ -8,35 +18,23 @@ import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import { bool } from 'prop-types';
 import {FlatGrid} from 'react-native-super-grid'
-import EpdatePresenter from './HomePresenter'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
-const PUSH_REGISTRATION_ENDPOINT = 'http://f3c8a471ccab.ngrok.io/token';
-const MESSAGE_ENDPOINT = 'http://f3c8a471ccab.ngrok.io/pushMessage';
 
 Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: false,
-      shouldSetBadge: false,
-    }),
-  });
-
-const Container = styled.View`
-    flex : 1;
-    background-color: ${({theme}) => theme.background};
-    justify-content: center;
-    align-items: center;
-    padding: 0 20px;
-`;
-
-
-
-
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 const Home = ({navigation}) => {
     
-    
+  const [items, setItems] = React.useState([
+    { title: "게시판", name: "Board", code: "#1abc9c" },
+    { title: "내정보", name: "Profile", code: "#2ecc71" },
+    { title: "레시피추천", name: "RecipeList", code: "#3498db" },
+    { title: "냉장고", name: "MyRefri", code: "#5498ab" },
+  ]);
 
     const { dispatch } = useContext(UserContext);
     //const theme = useContext(ThemeContext);
@@ -184,26 +182,47 @@ const Home = ({navigation}) => {
         }
       },[isToken,expoPushToken])
 
-    return(
-        <Container>
-            <Text style={{fontSize: 24, textAlign : 'center'}}> HOME </Text>
-            <Text style={{fontSize: 20, textAlign : 'center',marginBottom : 50}}>{user.user.usr_Id}님 반갑습니다.</Text>
-            <Button title="BoardList" onPress={()=>navigation.navigate('Board')}/>
-            <Button title="Profile" onPress={()=>navigation.navigate('Profile')}/>
-            <Button title="ReceiptList" onPress={()=>navigation.navigate('RecipeMain')}/>
-            <Button title="MyRefri" onPress={()=>navigation.navigate('MyRefri',{})}/>
-            <Button title="Test" onPress={()=>navigation.navigate('Test')}/>
-            <Button
-        title="Press to Send Notification"
-        onPress={async () => {
-          await sendPushNotification(expoPushToken,'nothing','fortest');
-        }}
-      />
-        </Container>
-    )
-}
+      return (
+        <View>
+          <View height={"70%"}>
+            <TouchableOpacity
+              style={[styles.container, { backgroundColor: "#1abc9c" }]}
+              onPress={() => navigation.navigate("MyRefri")}
+            >
+              <Text style={styles.buttonText}>냉장고</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.container, { backgroundColor: "#2ecc71" }]}
+              onPress={() => navigation.navigate("RecipeMain")}
+            >
+              <Text style={styles.buttonText}>레시피추천</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.container, { backgroundColor: "#3498db" }]}
+              onPress={() => navigation.navigate("Board")}
+            >
+              <Text style={styles.buttonText}>게시판</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.container, { backgroundColor: "#5498ab" }]}
+              onPress={() => navigation.navigate("Profile")}
+            >
+              <Text style={styles.buttonText}>내정보</Text>
+            </TouchableOpacity>
+          </View>
+          <View height={"5%"}>
+            <Text style={[styles.foodtitle]}>유통기한 임박식품</Text>
+          </View>
+          <ScrollView height={"25%"}>
+            <EpdatePresenter></EpdatePresenter>
+          </ScrollView>
+        </View>
+      );
+    }
+
 
 async function sendPushNotification(expoPushToken,data) {
+  console.log("message : "+expoPushToken);
   const message = {
     to: expoPushToken,
     sound: 'default',
@@ -224,6 +243,27 @@ async function sendPushNotification(expoPushToken,data) {
 }
 
   
+const styles = StyleSheet.create({
+  foodtitle: {
+    textAlign: "center",
+    color: "white",
+    backgroundColor: "#c0392b",
+    fontSize: 20,
+  },
+  buttonText: {
+    textAlign: "center",
+    color: "white",
+    padding: 40,
+    fontSize: 50,
+    margin: 5,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "#3143e8",
+  },
+});
+
 
 
 export default Home;
+  

@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
-import { ProgressContext, UserContext } from '../../contexts';
-import styled from 'styled-components/native'
-import {Text } from 'react-native'
-import { Input, Button } from '../../components';
-import { validateEmail, removeWhitespace } from '../../utils/common';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import React, { useState, useRef, useEffect, useContext } from "react";
+import { ProgressContext, UserContext } from "../../contexts";
+import styled from "styled-components/native";
+import { Text } from "react-native";
+import { Input, Button } from "../../components";
+import { validateEmail, removeWhitespace } from "../../utils/common";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const Container = styled.View`
   flex: 1;
@@ -22,20 +22,12 @@ const ErrorText = styled.Text`
   color: ${({ theme }) => theme.errorText};
 `;
 
-// input item -> fetch data + Barcode icon data to back with data with (barcode) + barcode matching with data 
+// input item -> fetch data + Barcode icon data to back with data with (barcode) + barcode matching with data
 
 const UpdateRefri = ({route,navigation}) => {
   console.log(route)
     const user = useContext(UserContext);
 
-    const [id, setId] = useState(user.user.usr_Id);
-    const [Pname, setPname] = useState('');
-    const [Number, setNumber] = useState('');
-    const [Epdate, setEpdate] = useState('');
-    const [Indate, setIndate] = useState('');
-    const [Frozen, setFrozen] = useState('');
-    const [Foodid, setFoodid] = useState('');
-    const [Fkind, setFkind] = useState('');
 
     const [errorMessage, setErrorMessage] = useState('');
     const [disabled, setDisabled] = useState(true);
@@ -159,7 +151,7 @@ const UpdateRefri = ({route,navigation}) => {
           returnKeyType="next"
         />
         <Input
-          ref={birthRef}        
+          ref={birthRef}
           label="Frozen"
           value={Frozen}
           onChangeText={text => setFrozen(text)}
@@ -195,18 +187,26 @@ const UpdateRefri = ({route,navigation}) => {
           onBlur={() => setFkind(Fkind)}
           placeholder="식품군"
           returnKeyType="done"
-        /> 
+        />
         <Button
           title="추가"
           onPress={_handleSignupButtonPress}
           disabled={disabled}
-          containerStyle={{width:300}}
+          containerStyle={{ width: 300 }}
         />
-            <Button title="change" onPress={()=>navigation.navigate('Barcode')} containerStyle={{width:300}}/>
-            <Button title="MyRefri" onPress={()=>navigation.navigate('MyRefri')} containerStyle={{width:300}}/>
-        </Container>
-        </KeyboardAwareScrollView>
-    )
-}
+        <Button
+          title="change"
+          onPress={() => navigation.navigate("Barcode")}
+          containerStyle={{ width: 300 }}
+        />
+        <Button
+          title="MyRefri"
+          onPress={() => navigation.navigate("MyRefri")}
+          containerStyle={{ width: 300 }}
+        />
+      </Container>
+    </KeyboardAwareScrollView>
+  );
+};
 
 export default UpdateRefri;
