@@ -241,7 +241,7 @@ async function sendPushNotification(expoPushToken,data) {
     body: JSON.stringify(message),
   });
 }
-
+//forgit
   
 const styles = StyleSheet.create({
   foodtitle: {
