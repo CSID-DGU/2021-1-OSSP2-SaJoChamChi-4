@@ -1,6 +1,6 @@
 import React, { useContext, Component } from 'react';
 import { Text, View, Button, Alert} from 'react-native';
-import { UserContext } from '../../contexts';
+import { UserContext, ProgressContext } from '../../contexts';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
