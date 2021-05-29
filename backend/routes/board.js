@@ -26,7 +26,7 @@ router.post("/insertBoard",(req,res)=>{
 
 
 router.post("/getBoard",(req,res)=>{
-    //retrieve - b_Id·Î Ã£´Â´Ù.
+    //retrieve - b_Idï¿½ï¿½ Ã£ï¿½Â´ï¿½.
     db.query('SELECT * FROM Board where b_Id=?',[req.body.b_Id], (err,rows)=>{
         if(err) console.log(err);
         else {
@@ -37,7 +37,7 @@ router.post("/getBoard",(req,res)=>{
 });
 
 router.post("/allBoard",(req,res)=>{
-    //retrieve - b_Id·Î Ã£´Â´Ù.
+    //retrieve - b_Idï¿½ï¿½ Ã£ï¿½Â´ï¿½.
     db.query('SELECT * FROM Board, user WHERE usr_Id=b_Writer', (err,rows)=>{
         if(err) console.log(err);
         else {
@@ -48,7 +48,7 @@ router.post("/allBoard",(req,res)=>{
 });
 
 router.post('/deleteBoard',(req,res)=>{
-    //delete - b_Id·Î »èÁ¦ÇÑ´Ù.
+    //delete - b_Idï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
     const sql = "DELETE FROM Board WHERE b_Id = ?";
     
     db.query(sql,[req.body.b_Id],(err,rows) =>{

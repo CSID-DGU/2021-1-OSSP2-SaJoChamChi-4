@@ -16,7 +16,7 @@
 //     }
 
 //   click = (num) =>{
-//     fetch('http://172.30.1.21:3344/recipe/getRecipe',{
+//     fetch('http://192.168.0.184:3344/recipe/getRecipe',{
 //         method: "post",
 //         headers :{
 //             "content-Type" : "application/json",
