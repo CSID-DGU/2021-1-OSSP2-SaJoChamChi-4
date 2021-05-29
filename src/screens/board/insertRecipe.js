@@ -78,7 +78,7 @@ const insertRecipe = ({navigation}) => {
       .utcOffset('+05:30')
       .format('YYYY-MM-DD hh:mm:ss');
       console.log('title : '+title);
-      fetch('http://172.30.1.34:3344/board/insertBoard',{
+      fetch('http://172.30.1.55:3344/board/insertBoard',{
         method: "post",
         headers :{
             "content-Type" : "application/json",

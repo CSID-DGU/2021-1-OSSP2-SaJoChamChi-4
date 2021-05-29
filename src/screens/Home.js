@@ -1,12 +1,15 @@
 import React ,{useState, useContext} from 'react';
 import styled from 'styled-components/native'
-import {AppState, Text, Button } from 'react-native'
+import {StyleSheet, Text,View, AppState, Button } from 'react-native'
 import { ProgressContext, UserContext } from '../contexts'
 import { useEffect,useRef } from 'react';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import { bool } from 'prop-types';
+import {FlatGrid} from 'react-native-super-grid'
+import EpdatePresenter from './HomePresenter'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const PUSH_REGISTRATION_ENDPOINT = 'http://f3c8a471ccab.ngrok.io/token';
 const MESSAGE_ENDPOINT = 'http://f3c8a471ccab.ngrok.io/pushMessage';
@@ -59,7 +62,7 @@ const Home = ({navigation}) => {
     //const promise = getday();
     useEffect(() => {
       const  getday = () =>{
-        const d = fetch('http://172.30.1.26:3344/token',{
+        const d = fetch('http://172.30.1.55:3344/token',{
             method: "post",
             headers :{
                 "content-Type" : "application/json",
@@ -187,7 +190,7 @@ const Home = ({navigation}) => {
             <Text style={{fontSize: 20, textAlign : 'center',marginBottom : 50}}>{user.user.usr_Id}님 반갑습니다.</Text>
             <Button title="BoardList" onPress={()=>navigation.navigate('Board')}/>
             <Button title="Profile" onPress={()=>navigation.navigate('Profile')}/>
-            <Button title="ReceiptList" onPress={()=>navigation.navigate('ReceiptList')}/>
+            <Button title="ReceiptList" onPress={()=>navigation.navigate('RecipeMain')}/>
             <Button title="MyRefri" onPress={()=>navigation.navigate('MyRefri',{})}/>
             <Button title="Test" onPress={()=>navigation.navigate('Test')}/>
             <Button

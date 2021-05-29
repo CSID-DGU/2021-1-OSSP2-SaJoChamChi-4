@@ -47,14 +47,14 @@ router.post("/delete",(req,res)=>{
 router.post("/Update",(req,res)=>{
     var rf_Pname = req.body.rf_Pname;
     var rf_Number = req.body.rf_Number;
-    var rf_EPdate = req.body.rf_EPdate;
+    var rf_Epdate = req.body.rf_Epdate;
     var rf_Indate = req.body.rf_Indate;
     var rf_Frozen = req.body.rf_Frozen;
     var rf_Foodid = req.body.rf_Foodid;
     var rf_FKind = req.body.rf_FKind;
     var rf_usr = req.body.rf_usr;
-    var sql = 'UPDATE refrigerator SET rf_Pname=?, rf_Number=?, rf_EPdate=?,rf_Indate=?, rf_Frozen=?, rf_Foodid=?,rf_FKind=? WHERE rf_Pname=? AND rf_usr=?;'
-    db.query(sql,[ rf_Pname,rf_Number,rf_EPdate, rf_Indate, rf_Frozen, rf_Foodid, rf_FKind, rf_Pname, rf_usr], (err,rows)=>{
+    var sql = 'UPDATE refrigerator SET rf_Number=?, rf_Epdate=?,rf_Indate=?, rf_Frozen=?, rf_Foodid=?,rf_FKind=? WHERE rf_Pname=?;'
+    db.query(sql,[rf_Number,rf_Epdate.substring(0,10), rf_Indate.substring(0,10), rf_Frozen, rf_Foodid, rf_FKind, rf_Pname], (err,rows)=>{
         if(err) console.log(err);
         else {
             console.log("Refri update log :", rows);

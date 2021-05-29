@@ -5,7 +5,9 @@ import { Input, Button } from '../../components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { validateEmail, removeWhitespace } from '../../utils/common';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Alert, Text } from 'react-native';
+import { Alert, Text, Image } from 'react-native';
+
+let imagepath = require('../../../assets/Myrefri.png')
 
 const Container = styled.View`
   flex: 1;
@@ -82,7 +84,7 @@ const Login = ({ navigation }) => {
 
   
   login = async (Id, password)  => {
-     await fetch('http://172.30.1.26:3344/login/Login',{
+     await fetch('http://172.30.1.55:3344/login/Login',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -106,6 +108,7 @@ const Login = ({ navigation }) => {
       extraScrollHeight={20}
     >
       <Container insets={insets}>
+      <Image source={imagepath} style={{ borderRadius: 8, width:100, height:100, marginBottom:50, marginLeft:30 }} />
         <Text style={{fontSize: 40, textAlign : 'center', paddingBottom:70}}onPress={() => navigation.navigate('Start')}>My Refrigerator</Text>
         <Input
           label="ID"

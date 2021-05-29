@@ -4,7 +4,7 @@ import {Text,View, Alert } from 'react-native'
 import { Button } from '../../components';
 import RefriListPresenter from './RefriListPresenter'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {InsertItem, UpdateRefri} from '../refrigerator'
+
 const Container = styled.View`
     flex : 1;
     background-color: ${({theme}) => theme.background};
@@ -25,7 +25,7 @@ const MyRefri = ({navigation}) => {
             <Text style={{fontSize: 15, width : '25%', textAlign: 'center'}}>유통기한</Text>
             <Text style={{marginBottom : 20, fontSize : 15, width : '10%', textAlign: 'center'}}>보관</Text>
             </View>
-            <RefriListPresenter/>
+            <RefriListPresenter navigation = {navigation}/>
             <View style={{flexDirection: 'row', width : '100%', marginBottom : 30}}>
             <Button title="추가" onPress={()=>navigation.navigate('InsertItem')} containerStyle={{ width:'33%', borderRadius : 20}} />
             <Button title="수정" onPress={()=>navigation.navigate('UpdateRefri')} containerStyle={{ width:'33%', borderRadius : 20}} />

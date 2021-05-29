@@ -1,6 +1,6 @@
 import React, { useContext, Component } from 'react';
 import { Text, View, Button, Alert} from 'react-native';
-import { UserContext } from '../../contexts';
+import { UserContext, ProgressContext } from '../../contexts';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
@@ -26,7 +26,7 @@ class RefriListPresenter extends Component{
         }
       }
 click =  (user)  => {
-    fetch('http://172.30.1.26:3344/refri/getList',{
+    fetch('http://172.30.1.55:3344/refri/getList',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -71,6 +71,9 @@ click =  (user)  => {
     render(){
         var date = new Date();
         return this.state.data.map((data)=> <View style={{flexDirection: 'row', width : '100%'}} >
+        <Button title="수정" onPress={()=>this.props.navigation.navigate('UpdateRefri', {
+              data : data
+          })} containerStyle={{ width:'33%', borderRadius : 20}}/>   
         <Text style={{fontSize: 15,width : '25%', textAlign: 'center'}}>{data.rf_Pname}</Text>
         <Text style={{fontSize: 15, width : '15%', textAlign: 'center'}}>{data.rf_Number}</Text>
         <Text style={{fontSize: 15, width : '25%', textAlign: 'center'}}>{this.ToDate(data.rf_Indate)}</Text>
