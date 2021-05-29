@@ -15,7 +15,6 @@ const Container = styled.View`
     padding: 0 20px;
 `;
 
-
 const BoardList = ({navigation}) => {
     return(
         <Container>
@@ -27,10 +26,14 @@ const BoardList = ({navigation}) => {
             <Text style={{fontSize: 15, width : '15%', textAlign: 'center',marginBottom : 20}}>추천</Text>
             </View>
             <SimpleViewPresenter navigation = {navigation} />
-            <Button title="insertRecipe" onPress={()=>navigation.navigate('Board',{screen:'insertRecipe'})}containerStyle={{width:250,marginBottom:15}}/>
-            <Button title="Home" onPress={()=>navigation.navigate('Home')}containerStyle={{width:250}}/>
+            <View style={{width: '100%', flexDirection: 'row', justifyContent: 'space-around', position: 'absolute', bottom : '10%',}}>
+                <Button title="insertRecipe" onPress={()=>navigation.navigate('Board',{screen:'insertRecipe'})}containerStyle={{width:'45%'}}/>
+                <Button title="Home" onPress={()=>navigation.navigate('Home')}containerStyle={{width:'45%'}}/>
+            </View>
         </Container>
     )
 }
+
+
 
 export default BoardList;

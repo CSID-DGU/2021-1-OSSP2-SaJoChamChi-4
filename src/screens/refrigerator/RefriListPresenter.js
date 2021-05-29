@@ -56,7 +56,7 @@ click =  (user)  => {
 
 // 삭제 임시 저장
 //  delItem = (item) => {
-//     fetch('http://172.30.1.21:3344/refri/delete',{
+//     fetch('http://192.168.0.184:3344/refri/delete',{
 //         method: "post",
 //         headers :{
 //             "content-Type" : "application/json",

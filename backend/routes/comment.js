@@ -11,7 +11,7 @@ router.post("/insertComment",(req,res)=>{
     var co_Time = req.body.co_Time;
     var co_Content = req.body.co_Content;
     var co_Bid = req.body.co_Bid;
-    
+    console.log('insert Comment : '+ co_Writer);
 
     var sql = 'INSERT INTO Comment VALUES(null,?,?,?,?)'
     db.query(sql,[co_Writer,co_Time,co_Content,co_Bid], (err,rows)=>{
@@ -23,31 +23,27 @@ router.post("/insertComment",(req,res)=>{
     });
 });
 
-
 router.post("/getComment",(req,res)=>{
-    //retrieve - co_Bid로 찾는다. 게시글에 달린 댓글을 보여주는 것.
-    db.query('SELECT * FROM Comment where co_Bid=?',[req.body.co_Bid], (err,rows)=>{
+    var co_Bid = req.body.c_bid;
+    var sql = 'SELECT * FROM COMMENT where co_Bid=?'
+    db.query(sql, [co_Bid], (err, rows)=>{
         if(err) console.log(err);
-        else {
-            //console.log(res);
+        else{
             console.log(rows);
-            res.json(rows);}
+            res.json(rows);
+        }
     });
 });
 
 router.post('/deleteComment',(req,res)=>{
-    //delete - co_Id로 삭제한다.
-    const sql = "DELETE FROM Comment WHERE co_Id = ?";
-    
-    db.query(sql,[req.body.co_Id],(err,rows) =>{
+    var co_Writer = req.body.c_writer;
+    var sql = "DELECT FROM COMMENT WHERE co_Writer = ?";
+    db.query(sql,[co_Writer],(err,rows)=>{
         if(err) console.log(err);
         else{
             res.json({state : "Delete done"});
         }
     });
 });
-
-
-
 
 module.exports = router;

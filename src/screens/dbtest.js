@@ -19,7 +19,7 @@ class Test extends Component{
     
 click =  ()  => {
     this.setState(({clicked: true}));
-  fetch('http://localhost:3344/test/getUser',{
+  fetch('http://172.30.1.55:3344/test/getUser',{
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',

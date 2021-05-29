@@ -3,7 +3,6 @@ import { Text, View, Image, Dimensions, TouchableOpacity} from 'react-native';
 
 class RecipePresenter extends Component{
 
-
     constructor(props){
         super(props);
         this.state = {clicked:false, data: [], info :[], ingre:[], recipedetail:[] };
