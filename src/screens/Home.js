@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {StyleSheet,Text, View, Button } from 'react-native'
 import {FlatGrid} from 'react-native-super-grid'
@@ -11,7 +11,7 @@ export default function Home({navigation}){
         
         { title : '게시판', name : 'Board', code : '#1abc9c'},
         { title : '내정보', name : 'Profile', code : '#2ecc71'},
-        { title : '레시피추천',name : 'RecipeMain', code : '#3498db'},
+        { title : '레시피',name : 'RecipeMain', code : '#3498db'},
         { title : '냉장고',name : 'MyRefri', code : '#5498ab'},
         
     ]);
@@ -36,7 +36,7 @@ export default function Home({navigation}){
         </FlatGrid>
         <Text style={{fontSize: 20,marginBottom:50, textAlign:'center',marginBottom :15}}>유통기한 임박 상품</Text>
             <View style={{flexDirection: 'row', width : '100%'}} >
-            <Text style={{fontSize: 15,width : '40%', textAlign: 'center'}}>식품명</Text>
+            <Text style={{fontSize: 15,width : '40%', textAlign: 'center'}}>상품명</Text>
             <Text style={{fontSize: 15, width : '20%', textAlign: 'center'}}>수량</Text>
             <Text style={{fontSize: 15, width : '40%', textAlign: 'center', marginBottom:10}}>유통기한</Text>
         </View>

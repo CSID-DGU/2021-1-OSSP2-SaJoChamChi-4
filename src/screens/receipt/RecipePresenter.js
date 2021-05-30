@@ -72,6 +72,7 @@ class RecipePresenter extends Component{
     detailrecipe = await this.getdetailrecipe(data);
     info = await this.getinfo(data);
     ingre = await this.getingre(data);
+    console.log("test",ingre);
     this.props.navigation.navigate('RecipeDetail', {params:{id:data, summary:data2, detailrecipe:detailrecipe, info:info, ingre:ingre}})
 }
 
