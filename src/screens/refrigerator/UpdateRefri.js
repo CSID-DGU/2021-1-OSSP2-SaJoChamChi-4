@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
-import { ProgressContext, UserContext } from '../../contexts';
-import styled from 'styled-components/native'
-import {Text } from 'react-native'
-import { Input, Button } from '../../components';
-import { validateEmail, removeWhitespace } from '../../utils/common';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import React, { useState, useRef, useEffect, useContext } from "react";
+import { ProgressContext, UserContext } from "../../contexts";
+import styled from "styled-components/native";
+import { Text } from "react-native";
+import { Input, Button } from "../../components";
+import { validateEmail, removeWhitespace } from "../../utils/common";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const Container = styled.View`
   flex: 1;
@@ -22,20 +22,20 @@ const ErrorText = styled.Text`
   color: ${({ theme }) => theme.errorText};
 `;
 
-// input item -> fetch data + Barcode icon data to back with data with (barcode) + barcode matching with data 
+// input item -> fetch data + Barcode icon data to back with data with (barcode) + barcode matching with data
 
-const UpdateRefri = ({navigation}) => {
-
+const UpdateRefri = ({route,navigation}) => {
+  console.log(route)
     const user = useContext(UserContext);
 
     const [id, setId] = useState(user.user.usr_Id);
-    const [Pname, setPname] = useState('');
-    const [Number, setNumber] = useState('');
-    const [Epdate, setEpdate] = useState('');
-    const [Indate, setIndate] = useState('');
-    const [Frozen, setFrozen] = useState('');
-    const [Foodid, setFoodid] = useState('');
-    const [Fkind, setFkind] = useState('');
+    const [Pname, setPname] = useState("");
+    const [Number, setNumber] = useState("");
+    const [Epdate, setEpdate] = useState("");
+    const [Indate, setIndate] = useState("");
+    const [Frozen, setFrozen] = useState("");
+    const [Foodid, setFoodid] = useState("");
+    const [Fkind, setFkind] = useState("");
 
     const [errorMessage, setErrorMessage] = useState('');
     const [disabled, setDisabled] = useState(true);
@@ -47,6 +47,16 @@ const UpdateRefri = ({navigation}) => {
     const emailRef = useRef();
     const nameRef = useRef();
     const didMountRef = useRef();
+    //route.params.rf_Epdate
+    useEffect(()=>{
+      setPname(route.params.data.rf_Pname);
+      setNumber(route.params.data.rf_Number);
+      setEpdate(route.params.data.rf_Epdate);
+      setIndate(route.params.data.rf_Indate);
+      setFrozen(route.params.data.rf_Frozen.toString());
+      setFoodid(route.params.data.rf_Foodid);
+      setFkind(route.params.data.rf_Fkind);
+    },[])
 
     useEffect(() => {
         if (didMountRef.current) {
@@ -92,7 +102,7 @@ const UpdateRefri = ({navigation}) => {
       };
     
       Insert =  (Pname, Number, Epdate, Indate, Frozen, Foodid, Fkind, id)  => {
-        fetch('http://192.168.0.143:3344/refri/Update',{
+        fetch('http://172.30.1.21:3344/refri/Update',{
           method: "post",
           headers :{
               "content-Type" : "application/json",
@@ -100,7 +110,7 @@ const UpdateRefri = ({navigation}) => {
           body : JSON.stringify({
               rf_Pname : Pname,
               rf_Number : Number,
-              rf_EPdate : Epdate,
+              rf_Epdate : Epdate,
               rf_Indate : Indate,
               rf_Frozen : Frozen,
               rf_Foodid : Foodid,
@@ -113,36 +123,24 @@ const UpdateRefri = ({navigation}) => {
         <KeyboardAwareScrollView extraScrollHeight={20}>
         <Container>
             <Text style={{fontSize: 24, textAlign : 'center'}}> 수정하기 </Text>
-            <Input
-          label="Pname"
-          value={Pname}
-          onChangeText={text => setPname(removeWhitespace(text))}
-          onSubmitEditing={() => {
-            setPname(Pname.trim());
-            nameRef.current.focus();
-          }}
-          onBlur={() => setPname(Pname.trim())}
-          placeholder="상품명"
-          returnKeyType="next"
-        />
+            
         <Input
           ref={nameRef}
           label="Number"
           value={Number}
-          onChangeText={text => setNumber(removeWhitespace(text))}
+          onChangeText={text => setNumber(text)}
           onSubmitEditing={() => {
-            setNumber(Number.trim());
+            setNumber(Number);
             emailRef.current.focus();
           }}
-          onBlur={() => setNumber(Number.trim())}
+          onBlur={() => setNumber(Number)}
           placeholder="수량"
           returnKeyType="next"
         />
         <Input
-          ref={emailRef}
           label="Epdate"
           value={Epdate}
-          onChangeText={text => setEpdate(removeWhitespace(text))}
+          onChangeText={text => setEpdate(text)}
           onSubmitEditing={() => nicknameRef.current.focus()}
           placeholder="유통기한"
           returnKeyType="next"
@@ -151,20 +149,20 @@ const UpdateRefri = ({navigation}) => {
           ref={nicknameRef}
           label="Indate"
           value={Indate}
-          onChangeText={text => setIndate(removeWhitespace(text))}
+          onChangeText={text => setIndate(text)}
           onSubmitEditing={() => {
             setIndate(Indate.trim());
             birthRef.current.focus();
           }}
-          onBlur={() => setIndate(Indate.trim())}
+          onBlur={() => setIndate(Indate)}
           placeholder="구매일자"
           returnKeyType="next"
         />
         <Input
-          ref={birthRef}        
+          ref={birthRef}
           label="Frozen"
           value={Frozen}
-          onChangeText={text => setFrozen(removeWhitespace(text))}
+          onChangeText={text => setFrozen(text)}
           onSubmitEditing={() => {
             setFrozen(Frozen.trim());
             addressRef.current.focus();
@@ -177,12 +175,12 @@ const UpdateRefri = ({navigation}) => {
           ref={addressRef}
           label="Foodid"
           value={Foodid}
-          onChangeText={text => setFoodid(removeWhitespace(text))}
+          onChangeText={text => setFoodid(text)}
           onSubmitEditing={() => {
-            setFoodid(Foodid.trim());
+            setFoodid(Foodid);
             dayRef.current.focus();
           }}
-          onBlur={() => setFoodid(Foodid.trim())}
+          onBlur={() => setFoodid(Foodid)}
           placeholder="음식분류"
           returnKeyType="next"
         />
@@ -190,25 +188,33 @@ const UpdateRefri = ({navigation}) => {
           ref={dayRef}
           label="Fkind"
           value={Fkind}
-          onChangeText={text => setFkind(removeWhitespace(text))}
+          onChangeText={text => setFkind(text)}
           onSubmitEditing={() => {
-            setFkind(Fkind.trim());
+            setFkind(Fkind);
           }}
-          onBlur={() => setFkind(Fkind.trim())}
+          onBlur={() => setFkind(Fkind)}
           placeholder="식품군"
           returnKeyType="done"
-        /> 
+        />
         <Button
           title="추가"
           onPress={_handleSignupButtonPress}
           disabled={disabled}
-          containerStyle={{width:300}}
+          containerStyle={{ width: 300 }}
         />
-            <Button title="change" onPress={()=>navigation.navigate('Barcode')} containerStyle={{width:300}}/>
-            <Button title="MyRefri" onPress={()=>navigation.navigate('MyRefri')} containerStyle={{width:300}}/>
-        </Container>
-        </KeyboardAwareScrollView>
-    )
-}
+        <Button
+          title="change"
+          onPress={() => navigation.navigate("Barcode")}
+          containerStyle={{ width: 300 }}
+        />
+        <Button
+          title="MyRefri"
+          onPress={() => navigation.navigate("MyRefri")}
+          containerStyle={{ width: 300 }}
+        />
+      </Container>
+    </KeyboardAwareScrollView>
+  );
+};
 
 export default UpdateRefri;

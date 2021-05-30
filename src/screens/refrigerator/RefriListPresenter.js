@@ -26,7 +26,7 @@ class RefriListPresenter extends Component{
         }
       }
 click =  (user)  => {
-    fetch('http://192.168.0.143:3344/refri/getList',{
+    fetch('http://172.30.1.21:3344/refri/getList',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -56,7 +56,7 @@ click =  (user)  => {
 
 // 삭제 임시 저장
 //  delItem = (item) => {
-//     fetch('http://172.30.1.21:3344/refri/delete',{
+//     fetch('http://192.168.0.184:3344/refri/delete',{
 //         method: "post",
 //         headers :{
 //             "content-Type" : "application/json",
@@ -71,6 +71,9 @@ click =  (user)  => {
     render(){
         var date = new Date();
         return this.state.data.map((data)=> <View style={{flexDirection: 'row', width : '100%'}} >
+        <Button title="수정" onPress={()=>this.props.navigation.navigate('UpdateRefri', {
+              data : data
+          })} containerStyle={{ width:'33%', borderRadius : 20}}/>   
         <Text style={{fontSize: 15,width : '25%', textAlign: 'center'}}>{data.rf_Pname}</Text>
         <Text style={{fontSize: 15, width : '15%', textAlign: 'center'}}>{data.rf_Number}</Text>
         <Text style={{fontSize: 15, width : '25%', textAlign: 'center'}}>{this.ToDate(data.rf_Indate)}</Text>

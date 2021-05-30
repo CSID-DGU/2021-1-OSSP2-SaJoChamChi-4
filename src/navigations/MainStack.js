@@ -34,7 +34,7 @@ const MainStack = () => {
       <Stack.Screen name="UpdateRefri" component={UpdateRefri}/>
       <Stack.Screen name="RecipeDetail" component={RecipeDetail}/>
       <Stack.Screen name="Barcode" component={Barcode}/>
-    </Stack.Navigator>
+       </Stack.Navigator>
   );
 };
 

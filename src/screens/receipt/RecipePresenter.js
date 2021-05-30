@@ -3,7 +3,6 @@ import { Text, View, Image, Dimensions, TouchableOpacity} from 'react-native';
 
 class RecipePresenter extends Component{
 
-
     constructor(props){
         super(props);
         this.state = {clicked:false, data: [], info :[], ingre:[], recipedetail:[] };
@@ -15,7 +14,7 @@ class RecipePresenter extends Component{
     }
 
   click = (num) =>{
-    fetch('http://192.168.0.143:3344/recipe/RecipeList',{
+    fetch('http://172.30.1.21:3344/recipe/RecipeList',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -28,7 +27,7 @@ class RecipePresenter extends Component{
   } 
   
   getinfo = async (num) =>{
-   res = await fetch('http://192.168.0.143:3344/recipe/getinfo',{
+   res = await fetch('http://172.30.1.21:3344/recipe/getinfo',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -41,7 +40,7 @@ class RecipePresenter extends Component{
         return res;
   } 
   getingre =  async (num) =>{
-   res2 = await fetch('http://192.168.0.143:3344/recipe/getingre',{
+   res2 = await fetch('http://172.30.1.21:3344/recipe/getingre',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -55,7 +54,7 @@ class RecipePresenter extends Component{
   } 
   
   getdetailrecipe = async (num) =>{
-   res3 = await fetch('http://192.168.0.143:3344/recipe/getdetailrecipe',{
+   res3 = await fetch('http://172.30.1.21:3344/recipe/getdetailrecipe',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
