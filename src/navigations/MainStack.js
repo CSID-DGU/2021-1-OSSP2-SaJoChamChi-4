@@ -6,7 +6,7 @@ import { RecipeList, RecipeMain ,RecipeDetail} from '../screens/receipt';
 import { MyRefri, InsertItem, UpdateRefri } from '../screens/refrigerator';
 import { Home } from '../screens';
 import {Test} from '../screens';
-import {Barcode} from '../screens/refrigerator'
+import {Barcode, OCR} from '../screens/refrigerator'
 import BoardStack from './BoardStack'
 const Stack = createStackNavigator();
 
@@ -34,6 +34,7 @@ const MainStack = () => {
       <Stack.Screen name="UpdateRefri" component={UpdateRefri}/>
       <Stack.Screen name="RecipeDetail" component={RecipeDetail}/>
       <Stack.Screen name="Barcode" component={Barcode}/>
+      <Stack.Screen name="OCR" component={OCR}/>
        </Stack.Navigator>
   );
 };

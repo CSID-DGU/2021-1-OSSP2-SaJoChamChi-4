@@ -1,5 +1,6 @@
 node_modules/
 .expo/
+config/environment.js
 npm-debug.*
 *.jks
 *.p8

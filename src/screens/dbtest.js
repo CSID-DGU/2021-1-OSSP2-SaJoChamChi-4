@@ -32,7 +32,7 @@ console.log(this.state.data);
 
 click2 = ()  => {
     this.setState(({clicked2: true}));
-     fetch('http://172.30.1.55:3344/login/Login',{
+     fetch('http://172.30.1.12:3344/login/Login',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -47,7 +47,7 @@ click2 = ()  => {
 
   click2 = () => {
     this.setState({ clicked2: true });
-    fetch("http://192.168.0.190:3344/login/Login", {
+    fetch("http://172.30.1.12:3344/login/Login", {
       method: "post",
       headers: {
         "content-Type": "application/json",

@@ -6,7 +6,7 @@ class ViewComment extends Component{
     constructor(props){
         super(props);
         this.state = { data: []};
-        fetch('http://172.30.1.55:3344/comment/getComment',{
+        fetch('http://172.30.1.12:3344/comment/getComment',{
         method: "post",
         headers :{
             "content-Type" : "application/json",

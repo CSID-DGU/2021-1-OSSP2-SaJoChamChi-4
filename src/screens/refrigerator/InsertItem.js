@@ -56,7 +56,7 @@ const InsertItem = ({ route, navigation }) => {
         setPname(route.params.fname)
       }
     }
-    },[])
+    })
 
 
     useEffect(() => {
@@ -103,7 +103,7 @@ const InsertItem = ({ route, navigation }) => {
       };
     
       Insert =  (Pname, Number, Epdate, Indate, Frozen, Foodid, Fkind, id)  => {
-        fetch('http://172.30.1.55:3344/refri/Insert',{
+        fetch('http://172.30.1.12:3344/refri/Insert',{
           method: "post",
           headers :{
               "content-Type" : "application/json",
@@ -215,17 +215,8 @@ const InsertItem = ({ route, navigation }) => {
           disabled={disabled}
           containerStyle={{ width: 300 }}
         />
-        <Button
-          title="바코드인식"
-          onPress={() => navigation.navigate("Barcode")}
-          containerStyle={{ width: 300 }}
-        />
-        <Button
-          title="MyRefri"
-          onPress={() => navigation.navigate("MyRefri")}
-          containerStyle={{ width: 300 }}
-        />
             <Button title="바코드 인식" onPress={()=>navigation.navigate('Barcode')} containerStyle={{width:300}}/>
+            <Button title="OCR" onPress={()=>navigation.navigate('OCR')}containerStyle={{width:300}}/>
             <Button title="MyRefri" onPress={()=>navigation.navigate('MyRefri')} containerStyle={{width:300}}/>
         </Container>
         </KeyboardAwareScrollView>
