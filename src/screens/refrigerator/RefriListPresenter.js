@@ -1,7 +1,8 @@
 import React, { useContext, Component } from 'react';
-import { Text, View, Button, Alert} from 'react-native';
+import { Text, View, Button, Alert, TouchableOpacity} from 'react-native';
 import { UserContext, ProgressContext } from '../../contexts';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {CommonActions} from "@react-navigation/native";
 
 
 
@@ -54,33 +55,40 @@ click =  (user)  => {
     return result;
  }
 
-// 삭제 임시 저장
-//  delItem = (item) => {
-//     fetch('http://192.168.0.184:3344/refri/delete',{
-//         method: "post",
-//         headers :{
-//             "content-Type" : "application/json",
-//         },
-//         body : JSON.stringify({
-//             Pname : item, 
-//         }),
-//     });
-//     Alert.alert(item,"이 삭제되었습니다!");
-//  };
+ delete =  (item, usr)  => {
+    fetch('http://172.30.1.21:3344/refri/deleteRefriItem',{
+        method: "post",
+        headers :{
+            "content-Type" : "application/json",
+        },
+        body : JSON.stringify({
+            Pname : item,
+            usr_Id : usr,
+        }),
+    });
+    Alert.alert(item,"이 삭제되었습니다!");
+    this.props.navigation.dispatch(CommonActions.navigate({name : "MyRefri",key:"MyRefri"}));
+};
 
     render(){
         var date = new Date();
+        const user = this.context;
+
         return this.state.data.map((data)=> <View style={{flexDirection: 'row', width : '100%'}} >
-        <Button title="수정" onPress={()=>this.props.navigation.navigate('UpdateRefri', {
+        <TouchableOpacity onPress={()=>this.props.navigation.navigate('UpdateRefri', {
               data : data
-          })} containerStyle={{ width:'33%', borderRadius : 20}}/>   
-        <Text style={{fontSize: 15,width : '25%', textAlign: 'center'}}>{data.rf_Pname}</Text>
-        <Text style={{fontSize: 15, width : '15%', textAlign: 'center'}}>{data.rf_Number}</Text>
-        <Text style={{fontSize: 15, width : '25%', textAlign: 'center'}}>{this.ToDate(data.rf_Indate)}</Text>
+          })} style={{width: '10%', backgroundColor:"white",borderRadius : 20}}>
+            <Text style={{fontSize:10, color:'blue', width:'100%', textAlign:'center'}}>수정</Text>
+        </TouchableOpacity>  
+        <Text style={{fontSize: 14,width : '40%', textAlign: 'center'}}>{data.rf_Pname}</Text>
+        <Text style={{fontSize: 14, width : '10%', textAlign: 'center'}}>{data.rf_Number}</Text>
         {this.getdate(data.rf_Epdate)<=5   ?      
-        <Text style={{fontSize: 15, width : '25%', textAlign: 'center', color:'red'}}>{this.getDDay(data.rf_Epdate)}</Text>
-        :  <Text style={{fontSize: 15, width : '25%', textAlign: 'center' }}>{this.getDDay(data.rf_Epdate)}</Text>}
-        <Text style={{marginBottom : 30, fontSize : 15, width : '10%', textAlign: 'center'}}>{data.rf_Frozen==0 ? '냉장' : '냉동'}</Text>
+        <Text style={{fontSize: 14, width : '20%', textAlign: 'center', color:'red', fontWeight:'bold'}}>{this.getDDay(data.rf_Epdate)}</Text>
+        :  <Text style={{fontSize: 14, width : '20%', textAlign: 'center' }}>{this.getDDay(data.rf_Epdate)}</Text>}
+        <Text style={{marginBottom : 30, fontSize : 14, width : '10%', textAlign: 'center'}}>{data.rf_Frozen==0 ? '냉장' : '냉동'}</Text>
+        <TouchableOpacity onPress={this.delete.bind(this,data.rf_Pname, user.user.usr_Id)} style={{width: '10%', backgroundColor:"white",borderRadius : 20}}>
+            <Text style={{fontSize:14, color:'blue', width:'100%', textAlign:'center'}}>삭제</Text>
+        </TouchableOpacity>  
         </View>)
     }
 

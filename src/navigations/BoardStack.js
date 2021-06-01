@@ -14,7 +14,9 @@ const BoardStack = () => {
         headerTitleAlign: 'center',
         cardStyle: { backgroundColor: theme.backgroundColor },
         headerTintColor: theme.headerTintColor,
+        headerShown: false
       }}
+
     >
       <BStack.Screen
         name="BoardList"

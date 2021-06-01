@@ -193,7 +193,7 @@ const Home = ({navigation}) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.container, { backgroundColor: "#2ecc71" }]}
-              onPress={() => navigation.navigate("RecipeMain")}
+              onPress={() => navigation.navigate("ToyouRecipe")}
             >
               <Text style={styles.buttonText}>레시피추천</Text>
             </TouchableOpacity>

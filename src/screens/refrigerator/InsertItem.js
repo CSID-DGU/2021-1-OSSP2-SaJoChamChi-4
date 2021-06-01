@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { ProgressContext, UserContext } from "../../contexts";
 import styled from "styled-components/native";
-import { Text } from "react-native";
+import { Text, StyleSheet } from "react-native";
 import { Input, Button } from "../../components";
 import { validateEmail, removeWhitespace } from "../../utils/common";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import RNPickerSelect from 'react-native-picker-select';
 
 const Container = styled.View`
   flex: 1;
@@ -13,6 +14,17 @@ const Container = styled.View`
   background-color: ${({ theme }) => theme.background};
   padding: 40px 20px;
 `;
+
+const Label = styled.Text`
+  align-items: flex-start;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  margin-bottom: 6px;
+  color: ${({ theme, isFocused }) => (isFocused ? theme.text : theme.label)};
+`;
+
 const ErrorText = styled.Text`
   align-items: flex-start;
   width: 100%;
@@ -21,7 +33,20 @@ const ErrorText = styled.Text`
   line-height: 20px;
   color: ${({ theme }) => theme.errorText};
 `;
-
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+      fontSize: 16,
+      paddingTop: 20,
+      paddingHorizontal: 10,
+      paddingBottom: 20,
+      borderWidth: 1,
+      borderColor: 'gray',
+      borderRadius: 4,
+      backgroundColor: 'white',
+      color: 'black',
+      marginBottom: 10,
+  },
+});
 // input item -> fetch data + Barcode icon data to back with data with (barcode) + barcode matching with data
 
 const InsertItem = ({ route, navigation }) => {
@@ -48,16 +73,15 @@ const InsertItem = ({ route, navigation }) => {
   const didMountRef = useRef();
 
     useEffect(() =>{
-      //console.log('insertitem useeffect')
+      console.log('insertitem useeffect')
       if(route.params!==undefined){
       if(route.params.fkind !== undefined){
-        //console.log('insertitem useeffect : '+route.params.fkind);
+      //  console.log('insertitem useeffect : '+route.params.fkind);
         setFkind(route.params.fkind)
         setPname(route.params.fname)
       }
     }
-    },[])
-
+    },);
 
     useEffect(() => {
         if (didMountRef.current) {
@@ -90,18 +114,7 @@ const InsertItem = ({ route, navigation }) => {
           !(Pname && Number && Epdate && Indate && !errorMessage)
         );
       }, [Pname, Number, Epdate, Indate, errorMessage]);
-    
-      const _handleSignupButtonPress = async () => {
-        try {
-          Insert(Pname, Number, Epdate, Indate, Frozen, Foodid, Fkind, id);
-        } catch (e) {
-          Alert.alert('Signup Error', e.message);
-        } finally {
-          alert("Success!\n추가되었습니다!");
-          navigation.navigate('MyRefri');
-        }
-      };
-    
+
       Insert =  (Pname, Number, Epdate, Indate, Frozen, Foodid, Fkind, id)  => {
         fetch('http://172.30.1.21:3344/refri/Insert',{
           method: "post",
@@ -120,6 +133,21 @@ const InsertItem = ({ route, navigation }) => {
           })
      })
     };
+
+
+
+      const _handleSignupButtonPress = async () => {
+        try {
+          Insert(Pname, Number, Epdate, Indate, Frozen, Foodid, Fkind, id);
+        } catch (e) {
+          Alert.alert('Signup Error', e.message);
+        } finally {
+          alert("Success!\n추가되었습니다!");
+          navigation.navigate('MyRefri');
+        }
+      };
+    
+
     return(
         <KeyboardAwareScrollView extraScrollHeight={20}>
         <Container>
@@ -171,62 +199,58 @@ const InsertItem = ({ route, navigation }) => {
           placeholder="구매일자"
           returnKeyType="next"
         />
-        <Input
-          ref={birthRef}
-          label="Frozen"
-          value={Frozen}
-          onChangeText={(text) => setFrozen(removeWhitespace(text))}
-          onSubmitEditing={() => {
-            setFrozen(Frozen.trim());
-            addressRef.current.focus();
-          }}
-          onBlur={() => setFrozen(Frozen.trim())}
-          placeholder="Frozen"
-          returnKeyType="next"
-        />
-        <Input
-          ref={addressRef}
-          label="Foodid"
-          value={Foodid}
-          onChangeText={(text) => setFoodid(removeWhitespace(text))}
-          onSubmitEditing={() => {
-            setFoodid(Foodid.trim());
-            dayRef.current.focus();
-          }}
-          onBlur={() => setFoodid(Foodid.trim())}
-          placeholder="음식분류"
-          returnKeyType="next"
-        />
-        <Input
-          ref={dayRef}
-          label="Fkind"
-          value={Fkind}
-          onChangeText={(text) => setFkind(removeWhitespace(text))}
-          onSubmitEditing={() => {
-            setFkind(Fkind.trim());
-          }}
-          onBlur={() => setFkind(Fkind.trim())}
-          placeholder="식품군"
-          returnKeyType="done"
-        />
+        <Label style={{textAlign : 'left'}}>냉동/냉장여부</Label>
+        <RNPickerSelect onValueChange={(value)=>setFrozen(value)}
+        placeholder={{
+          label: '냉동/냉장여부',
+          value: null,}}
+         style={{ ...pickerSelectStyles }}
+         items={[{label : '냉동', value:'0'},{label : '냉장', value:'1'}]}/>
+
+        <Label style={{textAlign : 'left'}}>음식분류</Label>
+        <RNPickerSelect onValueChange={(value)=>setFoodid(value)}
+        placeholder={{
+          label: '음식분류를 선택해주세요',
+          value: null,}}
+         style={{ ...pickerSelectStyles }}
+         items={[{label : '육류', value:'1'},{label : '수산물', value:'2'},{label : '계란/유제품', value:'3'},
+         {label : '주류/음류', value:'4'},{label : '냉동식품', value:'5'}, {label : '밀키트', value:'6'}, 
+         {label : '과일', value:'7'}, {label : '채소', value:'8'}, {label : '건해산물', value:'9'}, {label : '기타', value:'10'}]}/>
+        
+        
+        <Label style={{textAlign : 'left'}}>식품군</Label>
+        <RNPickerSelect onValueChange={(value)=>setFkind(value)}
+        placeholder={{
+          label: '식품군을 선택해주세요',
+          value: null,}}
+         style={{ ...pickerSelectStyles }}
+         
+         items={[{label : '한우등심', value:'1'},{label : '삼겹살', value:'2'},{label : '닭갈비', value:'3'},
+         {label : '햄', value:'4'},{label : '연어', value:'5'}, {label : '새우', value:'6'}, 
+         {label : '문어', value:'7'}, {label : '게', value:'8'}, {label : '낙지', value:'9'}, {label : '오징어', value:'10'},
+         {label : '새우', value:'11'}, {label : '생선', value:'12'}, {label : '우유', value:'13'}, {label : '두부', value:'14'},
+         {label : '치즈', value:'15'}, {label : '달걀', value:'16'}, {label : '맛살', value:'17'}, {label : '어묵', value:'18'},
+         {label : '냉동만두', value:'19'}, {label : '토마토', value:'20'}, {label : '베이컨', value:'21'}, {label : '불고기', value:'22'},
+         {label : '블루베리', value:'23'}, {label : '오이', value:'24'}, {label : '양파', value:'25'}, {label : '가지', value:'26'},
+         {label : '호박', value:'27'}, {label : '부추', value:'28'}, {label : '당근', value:'29'}, {label : '파', value:'30'},
+         {label : '소시지', value:'31'}, {label : '크림', value:'32'}, {label : '무', value:'33'}, {label : '삼겹살', value:'34'},
+         {label : '목살', value:'35'}, {label : '기타', value:'36'}, {label : '등심', value:'37'}, {label : '돈까스', value:'38'},
+         {label : '닭가슴살', value:'39'}, {label : '닭다리', value:'40'}, {label : '닭', value:'41'}, {label : '소고기', value:'42'},
+         {label : '오리고기', value:'43'}, {label : '돼지', value:'44'}]}/>
+                    
+        <Button title="바코드 인식" onPress={()=>navigation.navigate('Barcode')} containerStyle={{width:300,  marginBottom: 10}}/>
+
         <Button
           title="추가"
           onPress={_handleSignupButtonPress}
           disabled={disabled}
-          containerStyle={{ width: 300 }}
-        />
-        <Button
-          title="바코드인식"
-          onPress={() => navigation.navigate("Barcode")}
-          containerStyle={{ width: 300 }}
+          containerStyle={{ width: 300, marginBottom: 10 }}
         />
         <Button
           title="MyRefri"
           onPress={() => navigation.navigate("MyRefri")}
-          containerStyle={{ width: 300 }}
+          containerStyle={{ width: 300,  marginBottom: 10 }}
         />
-            <Button title="바코드 인식" onPress={()=>navigation.navigate('Barcode')} containerStyle={{width:300}}/>
-            <Button title="MyRefri" onPress={()=>navigation.navigate('MyRefri')} containerStyle={{width:300}}/>
         </Container>
         </KeyboardAwareScrollView>
     )
