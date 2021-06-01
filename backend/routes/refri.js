@@ -33,16 +33,7 @@ router.post("/Insert",(req,res)=>{
     });
 });
 
-router.post("/delete",(req,res)=>{
-    var item = req.body.Pname;
-    var sql = 'Delete FROM refrigerator WHERE rf_Pname=?;'
-    db.query(sql,[item], (err,rows)=>{
-        if(err) console.log(err);
-        else {
-            console.log("Refri Delete log :", rows);
-            res.json(rows);}
-    });
-});
+
 
 router.post("/Update",(req,res)=>{
     var rf_Pname = req.body.rf_Pname;
@@ -62,4 +53,38 @@ router.post("/Update",(req,res)=>{
     });
 });
 
+router.post("/getEpFood",(req,res)=>{
+    var rf_usr = req.body.rf_usr;
+    var sql = 'SELECT * FROM refrigerator.refrigerator WHERE DATEDIFF(rf_EPdate,now())<=5 AND rf_usr=?;'
+    db.query(sql,[rf_usr], (err,rows)=>{
+        if(err) console.log(err);
+        else {
+            console.log("유통기한안남은 data :", rows);
+            res.json(rows);}
+    });
+});
+
+router.post("/getRefriFood",(req,res)=>{
+    var rf_usr = req.body.rf_usr;
+    var sql = 'SELECT * FROM refrigerator.refrigerator WHERE rf_usr=? ORDER BY rf_Fkind ASC, rf_Epdate ASC limit 5;'
+    db.query(sql,[rf_usr], (err,rows)=>{
+        if(err) console.log(err);
+        else {
+            console.log("냉장고 안의 data :", rows);
+            res.json(rows);}
+    });
+});
+
+router.post("/deleteRefriItem",(req,res)=>{
+    var item = req.body.Pname;
+    var usr = req.body.usr_Id;
+
+    var sql = 'Delete FROM refrigerator WHERE rf_Pname=? AND rf_usr=?;'
+    db.query(sql,[item, usr], (err,rows)=>{
+        if(err) console.log(err);
+        else {
+            console.log("냉장고 안의 data :", usr,item);
+            res.json(rows);}
+    });
+});
 module.exports = router;

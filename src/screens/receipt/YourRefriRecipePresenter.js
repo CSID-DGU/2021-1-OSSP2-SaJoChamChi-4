@@ -1,30 +1,37 @@
+import { useAssets } from 'expo-asset';
 import React, { useContext, Component } from 'react';
+import { UserContext, ProgressContext } from '../../contexts';
 import { Text, View, Image, Dimensions, TouchableOpacity} from 'react-native';
 
-class RecipePresenter extends Component{
+class YourRefriRecipePresenter extends Component{
+
+    static contextType = UserContext;
 
     constructor(props){
         super(props);
-        this.state = {clicked:false, data: [], info :[], ingre:[], recipedetail:[] };
+        this.state = {clicked:false, data: [], data2: [], info :[], ingre:[], recipedetail:[] };
     }
 
     componentDidMount(){
-        this.click(3);
-        console.log("Test : ", this.state.data);
+        const user = this.context;
+        this.getRecommandRecipe(user.user.usr_Id);
+        console.log("yourRefri test login userID : ", user.user.usr_Id);
     }
 
-  click = (num) =>{
-    fetch('http://172.30.1.21:3344/recipe/RecipeList',{
+
+  getRecommandRecipe =  (user) =>{
+    fetch('http://172.30.1.21:3344/recipe/getRefriRecipeList',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
         },
         body : JSON.stringify({
-            id : num, 
+            usr : user,
         }),
     }).then(response=>response.json()).then((response=>this.setState({data:response})));
-        //console.log(user);
-  } 
+        console.log(this.state.data);
+  };
+
   
   getinfo = async (num) =>{
    res = await fetch('http://172.30.1.21:3344/recipe/getinfo',{
@@ -90,7 +97,4 @@ class RecipePresenter extends Component{
     }
     
 }
-// this.state.data[0][0].map((data)=> <View style={{flexDirection: 'row', width : '100%'}} >
-//         <Text style={{fontSize: 20,width : '50%', textAlign: 'center'}}>{data.name}</Text>
-//         </View>)
-export default RecipePresenter;
+export default YourRefriRecipePresenter;

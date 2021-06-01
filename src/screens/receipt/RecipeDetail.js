@@ -19,7 +19,7 @@ const RecipeDetail = ({route,navigation}) => {
     const detail = route.params.params.detailrecipe.map( data => 
             <View style={{ textAlign: 'center', marginBottom:15}}>
             <Image source={{uri:data.img}} style={{width:'100%',height:300}} ></Image>
-            <Text style={{fontSize: 15,height:20, textAlign: 'center', fontWeight:'bold'}}>{data.txt}</Text>
+            <Text style={{fontSize: 15, textAlign: 'center', fontWeight:'bold'}}>{data.txt}</Text>
             </View>
         );
 

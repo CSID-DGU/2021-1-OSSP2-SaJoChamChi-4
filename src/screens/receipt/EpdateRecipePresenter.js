@@ -1,26 +1,29 @@
 import React, { useContext, Component } from 'react';
 import { Text, View, Image, Dimensions, TouchableOpacity} from 'react-native';
+import { UserContext, ProgressContext } from '../../contexts';
 
-class RecipePresenter extends Component{
+class EpdateRecipePresenter extends Component{
 
+    static contextType = UserContext;
     constructor(props){
         super(props);
         this.state = {clicked:false, data: [], info :[], ingre:[], recipedetail:[] };
     }
 
     componentDidMount(){
-        this.click(3);
+        const user = this.context;
+        this.click(user.user.usr_Id);
         console.log("Test : ", this.state.data);
     }
 
-  click = (num) =>{
-    fetch('http://172.30.1.21:3344/recipe/RecipeList',{
+  click = (user) =>{
+    fetch('http://172.30.1.21:3344/recipe/getEpdatList',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
         },
         body : JSON.stringify({
-            id : num, 
+            usr : user, 
         }),
     }).then(response=>response.json()).then((response=>this.setState({data:response})));
         //console.log(user);
@@ -93,4 +96,4 @@ class RecipePresenter extends Component{
 // this.state.data[0][0].map((data)=> <View style={{flexDirection: 'row', width : '100%'}} >
 //         <Text style={{fontSize: 20,width : '50%', textAlign: 'center'}}>{data.name}</Text>
 //         </View>)
-export default RecipePresenter;
+export default EpdateRecipePresenter;

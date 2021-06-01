@@ -60,7 +60,7 @@ const Home = ({navigation}) => {
     //const promise = getday();
     useEffect(() => {
       const  getday = () =>{
-        const d = fetch('http://172.30.1.55:3344/token',{
+        const d = fetch('http://172.30.1.21:3344/token',{
             method: "post",
             headers :{
                 "content-Type" : "application/json",
@@ -193,7 +193,7 @@ const Home = ({navigation}) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.container, { backgroundColor: "#2ecc71" }]}
-              onPress={() => navigation.navigate("RecipeMain")}
+              onPress={() => navigation.navigate("ToyouRecipe")}
             >
               <Text style={styles.buttonText}>레시피추천</Text>
             </TouchableOpacity>

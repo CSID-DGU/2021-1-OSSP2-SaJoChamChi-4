@@ -90,7 +90,7 @@ const editProfile = ({navigation}) => {
   };
 
   signUp =  (Id, password, name, nickname, email, birth, address, day)  => {
-    fetch('http://172.30.1.55:3344/login/Signup',{
+    fetch('http://172.30.1.21:3344/login/Signup',{
       method: "post",
       headers :{
           "content-Type" : "application/json",

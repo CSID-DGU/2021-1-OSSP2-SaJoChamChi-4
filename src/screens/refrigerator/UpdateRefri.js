@@ -28,6 +28,14 @@ const UpdateRefri = ({route,navigation}) => {
   console.log(route)
     const user = useContext(UserContext);
 
+    const [id, setId] = useState(user.user.usr_Id);
+    const [Pname, setPname] = useState("");
+    const [Number, setNumber] = useState("");
+    const [Epdate, setEpdate] = useState("");
+    const [Indate, setIndate] = useState("");
+    const [Frozen, setFrozen] = useState("");
+    const [Foodid, setFoodid] = useState("");
+    const [Fkind, setFkind] = useState("");
 
     const [errorMessage, setErrorMessage] = useState('');
     const [disabled, setDisabled] = useState(true);
@@ -94,7 +102,7 @@ const UpdateRefri = ({route,navigation}) => {
       };
     
       Insert =  (Pname, Number, Epdate, Indate, Frozen, Foodid, Fkind, id)  => {
-        fetch('http://172.30.1.55:3344/refri/Update',{
+        fetch('http://172.30.1.21:3344/refri/Update',{
           method: "post",
           headers :{
               "content-Type" : "application/json",

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Profile } from '../screens/login';
-import { RecipeList, RecipeMain ,RecipeDetail} from '../screens/receipt';
+import { RecipeList, RecipeMain ,RecipeDetail, ToyouRecipe} from '../screens/receipt';
 import { MyRefri, InsertItem, UpdateRefri } from '../screens/refrigerator';
 import { Home } from '../screens';
 import {Test} from '../screens';
@@ -33,6 +33,7 @@ const MainStack = () => {
       <Stack.Screen name="InsertItem" component={InsertItem}/>
       <Stack.Screen name="UpdateRefri" component={UpdateRefri}/>
       <Stack.Screen name="RecipeDetail" component={RecipeDetail}/>
+      <Stack.Screen name="ToyouRecipe" component={ToyouRecipe}/>
       <Stack.Screen name="Barcode" component={Barcode}/>
        </Stack.Navigator>
   );

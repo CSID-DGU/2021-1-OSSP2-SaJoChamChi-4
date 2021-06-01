@@ -82,7 +82,7 @@ const DetailView = ({route,navigation}) => {
       .utcOffset('+09:00')
       .format('YYYY-MM-DD HH:mm:ss');
       console.log('post comment : '+user.usr_Id);
-      fetch('http://172.30.1.55:3344/comment/insertComment',{
+      fetch('http://172.30.1.21:3344/comment/insertComment',{
         method: "post",
         headers :{
           "content-Type" : "application/json",
