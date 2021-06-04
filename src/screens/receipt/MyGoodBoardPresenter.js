@@ -1,31 +1,35 @@
 import React, { useContext, Component } from 'react';
 import { Text, View, Button} from 'react-native';
 import { UserContext } from '../../contexts';
-import {CommonActions} from "@react-navigation/native";
-//import { withNavigation } from 'react-navigation';
-import DetailView from './DetailView'
-import { array } from 'prop-types';
-import { get } from 'react-native/Libraries/Utilities/PixelRatio';
 
-class SimpleViewPresenter extends Component{
+
+class MyGoodBoardPresenter extends Component{
 
     static contextType = UserContext;
 
     constructor(props){
         super(props);
+
         this.state = { data: [], data2 :[]};
-        fetch('http://172.30.1.21:3344/board/allBoard',{
+
+        //console.log(user);
+    }
+    componentDidMount(){
+        const user = this.context;
+        console.log("MYGOOD TEST", user);
+        this.click(user.user.usr_Id);
+    }
+   click = (user)=>{
+    fetch('http://172.30.1.21:3344/board/MygoodBoard',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
         },
         body : JSON.stringify({
-            //id : 3, 
+            usr_Id: user, 
         }),
     }).then(response=>response.json()).then((response=>this.setState({data:response})));
-        //console.log(user);
-    }
-
+   } 
     onPressHandle = async (data) => {
         //console.log("hi");
         //const navigation = useNavigation();
@@ -65,8 +69,7 @@ class SimpleViewPresenter extends Component{
          <Text style={{fontSize: 15, width : '13%', textAlign: 'center',marginBottom : 30}} onPress ={this.onPressHandle.bind(this,data)}>{data.b_Hits}</Text>
          </View>)
     }
-    
-    
+
 }
 
-export default SimpleViewPresenter;
+export default MyGoodBoardPresenter;

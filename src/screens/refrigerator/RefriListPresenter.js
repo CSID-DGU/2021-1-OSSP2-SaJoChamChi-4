@@ -31,7 +31,7 @@ class RefriListPresenter extends Component{
         }
       }
 click =  (user)  => {
-    fetch('http://192.168.0.143:3344/refri/getList',{
+    fetch('http://172.30.1.21:3344/refri/getList',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -60,7 +60,7 @@ click =  (user)  => {
  }
 
  delete =  (item, usr)  => {
-    fetch('http://192.168.0.143:3344/refri/deleteRefriItem',{
+    fetch('http://172.30.1.21:3344/refri/deleteRefriItem',{
         method: "post",
         headers :{
             "content-Type" : "application/json",

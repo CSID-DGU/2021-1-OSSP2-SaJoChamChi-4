@@ -6,7 +6,6 @@ import { Button, Input } from '../../components';
 import {Alert} from 'react-native';
 import moment from 'moment';
 import {CommonActions} from "@react-navigation/native";
-
 import ViewComment from './ViewComment'
 
 const Container = styled.View`
@@ -27,19 +26,14 @@ const ErrorText = styled.Text`
 `;
 
 const DetailView = ({route,navigation}) => {
-    //console.log(route);
-    //const {screen, data} = route.params;
-
-    //const data = navigation.getParam('screen','d');
-    //const {screen,data} = route.params;
-    //const data = navigation.getParam('data','');
-    //console.log(data);
 
     const { spinner } = useContext(ProgressContext);
     const { user, dispatch } = useContext(UserContext);
+
     const [comment, setComment] = useState();
     const [errorMessage, setErrorMessage] = useState('');
     const [disabled, setDisabled] = useState(true);
+    const [good, setGood] = useState('');
 
     const contentRef = useRef();
     const didMountRef = useRef();
@@ -73,16 +67,65 @@ const DetailView = ({route,navigation}) => {
         } finally {
           spinner.stop();
           alert("Success!\nNew comment!!");
-          navigation.dispatch(CommonActions.navigate({name : "DetailView",key:"DetailView"}));
+          navigation.dispatch(CommonActions.reset({index : 1, routes:[ {name : 'BoardList'}, {name : 'DetailView'}]}));
         }
     };
+    const like = () => {
+      fetch('http://172.30.1.21:3344/good/Insert',{
+        method: "post",
+        headers :{
+          "content-Type" : "application/json",
+        },
+        body : JSON.stringify({
+            usr_Id : user.usr_Id,
+            bno : route.params.data.b_Id,
+        }) 
+      });
+    };
+    
+    const unlike = () => {
+      fetch('http://172.30.1.21:3344/good/Delete',{
+        method: "post",
+        headers :{
+          "content-Type" : "application/json",
+        },
+        body : JSON.stringify({
+          usr_Id : user.usr_Id,
+          bno : route.params.data.b_Id,
+        }) 
+      });
+    };
+
+    const likePressed = async () => {
+      try {
+        like();
+      } catch (e) {
+        Alert.alert("Error", e.message);
+      }finally{
+        alert("Success!\n좋아요 성공")
+        setGood(true);
+        navigation.dispatch(CommonActions.reset({index : 1, routes:[ {name : 'BoardList'}, {name : 'DetailView', params:{data2 : true}}]}));
+      }
+    };
+    const unlikePressed = async () => {
+      try {
+        unlike();
+      } catch (e) {
+        Alert.alert("Error", e.message);
+      }finally{
+        alert("Success!\n좋아요 취소 성공")
+        setGood(false);
+        navigation.dispatch(CommonActions.reset({index : 1, routes:[ {name : 'BoardList'}, {name : 'DetailView', params:{data : route.params.data, data2 : null}}]}));
+      }
+    };
+    
 
     const postComment = (comment) => {
       var date = moment()
-      .utcOffset('+09:00')
+      .utcOffset('+18:00')
       .format('YYYY-MM-DD HH:mm:ss');
       console.log('post comment : '+user.usr_Id);
-      fetch('http://192.168.0.143:3344/comment/insertComment',{
+      fetch('http://172.30.1.21:3344/comment/insertComment',{
         method: "post",
         headers :{
           "content-Type" : "application/json",
@@ -105,7 +148,7 @@ const DetailView = ({route,navigation}) => {
             <Text style={{fontSize: 24, textAlign : 'center'}}>제목: {route.params.data.b_Title}{"\n"}  </Text>
             <Text style={{fontSize: 24, textAlign : 'center'}}>내용: {route.params.data.b_Content}{"\n"} </Text>
             <Text style={{fontSize: 24, textAlign : 'center'}}>댓글{"\n"} </Text>
-            <ViewComment route = {route}/>
+            <ViewComment route = {route} navigation = {navigation}/>
             <Input
               label="Comment"
               value={comment}
@@ -121,8 +164,21 @@ const DetailView = ({route,navigation}) => {
             />
             <ErrorText>{errorMessage}</ErrorText>
             <View>
+              {console.log("Detail View Frehsh", route)}
+            {route.params.data2 == null?  <Button
+            title="좋아요"
+            onPress={likePressed}
+            containerStyle={{ width: 250, marginBottom: 20, backgroundColor:`yellow`, text : 'black' }} 
+
+          /> :
+           <Button
+            title="좋아요취소"
+            onPress={unlikePressed}
+            containerStyle={{ width: 250, marginBottom: 20, backgroundColor:`red` }}
+          />
+            } 
               <Button title="AddComment" onPress={_handleSignupButtonPress} disabled={disabled} containerStyle={{width:250, marginBottom:20}}/>
-              <Button title="BoardList" onPress={()=>navigation.navigate('BoardList')} containerStyle={{width:250, marginBottom:20}}/>
+              <Button title="BoardList" onPress={()=>navigation.dispatch(CommonActions.reset({index : 1, routes:[ {name : 'BoardList'}]}))} containerStyle={{width:250, marginBottom:20}}/>
               <Button title="Home" onPress={()=>navigation.navigate('Home')} containerStyle={{width:250}}/>
             </View>
         </Container>
