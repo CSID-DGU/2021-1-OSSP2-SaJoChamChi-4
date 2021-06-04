@@ -27,10 +27,6 @@ const ErrorText = styled.Text`
   color: ${({ theme }) => theme.errorText};
 `;
 
-
-
-
-
 const Login = ({ navigation }) => {
   const { user, dispatch } = useContext(UserContext);
   const { spinner } = useContext(ProgressContext);
@@ -44,7 +40,7 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     //console.log("user useEffect");
-    if(user[0]!= undefined) dispatch(user[0]);
+    if (user[0] != undefined) dispatch(user[0]);
   }, [user]);
 
   useEffect(() => {
@@ -85,24 +81,24 @@ const Login = ({ navigation }) => {
     }
   };
 
-  
-  login = async (Id, password)  => {
-     await fetch('http://172.30.1.21:3344/login/Login',{
-        method: "post",
-        headers :{
-            "content-Type" : "application/json",
-        },
-        body : JSON.stringify({
-            id : Id,
-            pwd : password,
-        })
-   }).then(response=>response.json()).then((response) => {setUser(response); console.log("response",user1);}
-   );
+  login = async (Id, password) => {
+    await fetch("http://192.168.0.190:3344/login/Login", {
+      method: "post",
+      headers: {
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: Id,
+        pwd: password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        setUser(response);
+        console.log("response", user1);
+      });
     console.log("loginfunction : ", user1);
-};
- 
-
-
+  };
 
   return (
     <KeyboardAwareScrollView

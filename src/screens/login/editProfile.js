@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
-import { ProgressContext, UserContext } from '../../contexts';
-import styled from 'styled-components/native';
-import { Input, Button } from '../../components';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { validateEmail, removeWhitespace } from '../../utils/common';
-import { Alert } from 'react-native';
+import React, { useState, useRef, useEffect, useContext } from "react";
+import { ProgressContext, UserContext } from "../../contexts";
+import styled from "styled-components/native";
+import { Input, Button } from "../../components";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { validateEmail, removeWhitespace } from "../../utils/common";
+import { Alert } from "react-native";
 
 const Container = styled.View`
   flex: 1;
@@ -22,21 +22,21 @@ const ErrorText = styled.Text`
   color: ${({ theme }) => theme.errorText};
 `;
 
-const editProfile = ({navigation}) => {
+const editProfile = ({ navigation }) => {
   const { dispatch } = useContext(UserContext);
   const { spinner } = useContext(ProgressContext);
-   
-  const [id, setId] = useState('');
-  const [name, setName] = useState();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [birth, setBirth] = useState('');
-  const [address, setAddress] = useState('');
-  const [day, setDay] = useState('');
 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [id, setId] = useState("");
+  const [name, setName] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [birth, setBirth] = useState("");
+  const [address, setAddress] = useState("");
+  const [day, setDay] = useState("");
+
+  const [errorMessage, setErrorMessage] = useState("");
   const [disabled, setDisabled] = useState(true);
 
   const dayRef = useRef();
@@ -52,17 +52,17 @@ const editProfile = ({navigation}) => {
 
   useEffect(() => {
     if (didMountRef.current) {
-      let _errorMessage = '';
+      let _errorMessage = "";
       if (!name) {
-        _errorMessage = 'Please enter your name.';
+        _errorMessage = "Please enter your name.";
       } else if (!validateEmail(email)) {
-        _errorMessage = 'Please verify your email.';
+        _errorMessage = "Please verify your email.";
       } else if (password.length < 6) {
-        _errorMessage = 'The password must contain 6 characters at least.';
+        _errorMessage = "The password must contain 6 characters at least.";
       } else if (password !== passwordConfirm) {
-        _errorMessage = 'Passwords need to match.';
+        _errorMessage = "Passwords need to match.";
       } else {
-        _errorMessage = '';
+        _errorMessage = "";
       }
       setErrorMessage(_errorMessage);
     } else {
@@ -81,40 +81,42 @@ const editProfile = ({navigation}) => {
       spinner.start();
       signUp(id, password, name, nickname, email, birth, address, day);
     } catch (e) {
-      Alert.alert('Signup Error', e.message);
+      Alert.alert("Signup Error", e.message);
     } finally {
       spinner.stop();
       alert("Success!\nLogin with new account!!");
-      navigation.navigate('Login');
+      navigation.navigate("Login");
     }
   };
 
-  signUp =  (Id, password, name, nickname, email, birth, address, day)  => {
-    fetch('http://172.30.1.21:3344/login/Signup',{
+  signUp = (Id, password, name, nickname, email, birth, address, day) => {
+    fetch("http://192.168.0.190:3344/login/Signup", {
       method: "post",
-      headers :{
-          "content-Type" : "application/json",
+      headers: {
+        "content-Type": "application/json",
       },
-      body : JSON.stringify({
-          id : Id,
-          pwd : password,
-          name : name,
-          nickname : nickname,
-          email : email,
-          birth : birth,
-          address : address,
-          day : day,    
-      })
- }).then(response=>response.json()).then((response) => setUser(response));
-};
+      body: JSON.stringify({
+        id: Id,
+        pwd: password,
+        name: name,
+        nickname: nickname,
+        email: email,
+        birth: birth,
+        address: address,
+        day: day,
+      }),
+    })
+      .then((response) => response.json())
+      .then((response) => setUser(response));
+  };
 
   return (
     <KeyboardAwareScrollView extraScrollHeight={20}>
       <Container>
-      <Input
+        <Input
           label="Id"
           value={id}
-          onChangeText={text => setId(removeWhitespace(text))}
+          onChangeText={(text) => setId(removeWhitespace(text))}
           onSubmitEditing={() => {
             setId(id.trim());
             nameRef.current.focus();
@@ -127,7 +129,7 @@ const editProfile = ({navigation}) => {
           ref={nameRef}
           label="Name"
           value={name}
-          onChangeText={text => setName(removeWhitespace(text))}
+          onChangeText={(text) => setName(removeWhitespace(text))}
           onSubmitEditing={() => {
             setName(name.trim());
             emailRef.current.focus();
@@ -140,7 +142,7 @@ const editProfile = ({navigation}) => {
           ref={emailRef}
           label="Email"
           value={email}
-          onChangeText={text => setEmail(removeWhitespace(text))}
+          onChangeText={(text) => setEmail(removeWhitespace(text))}
           onSubmitEditing={() => nicknameRef.current.focus()}
           placeholder="Email"
           returnKeyType="next"
@@ -149,7 +151,7 @@ const editProfile = ({navigation}) => {
           ref={nicknameRef}
           label="Nickname"
           value={nickname}
-          onChangeText={text => setNickname(removeWhitespace(text))}
+          onChangeText={(text) => setNickname(removeWhitespace(text))}
           onSubmitEditing={() => {
             setNickname(nickname.trim());
             birthRef.current.focus();
@@ -159,10 +161,10 @@ const editProfile = ({navigation}) => {
           returnKeyType="next"
         />
         <Input
-          ref={birthRef}        
+          ref={birthRef}
           label="Birth"
           value={birth}
-          onChangeText={text => setBirth(removeWhitespace(text))}
+          onChangeText={(text) => setBirth(removeWhitespace(text))}
           onSubmitEditing={() => {
             setBirth(birth.trim());
             addressRef.current.focus();
@@ -175,7 +177,7 @@ const editProfile = ({navigation}) => {
           ref={addressRef}
           label="Address"
           value={address}
-          onChangeText={text => setAddress(removeWhitespace(text))}
+          onChangeText={(text) => setAddress(removeWhitespace(text))}
           onSubmitEditing={() => {
             setAddress(address.trim());
             dayRef.current.focus();
@@ -188,7 +190,7 @@ const editProfile = ({navigation}) => {
           ref={dayRef}
           label="Day"
           value={day}
-          onChangeText={text => setDay(removeWhitespace(text))}
+          onChangeText={(text) => setDay(removeWhitespace(text))}
           onSubmitEditing={() => {
             setDay(day.trim());
             passwordRef.current.focus();
@@ -201,7 +203,7 @@ const editProfile = ({navigation}) => {
           ref={passwordRef}
           label="Password"
           value={password}
-          onChangeText={text => setPassword(removeWhitespace(text))}
+          onChangeText={(text) => setPassword(removeWhitespace(text))}
           onSubmitEditing={() => passwordConfirmRef.current.focus()}
           placeholder="7자리이상의 비밀번호"
           returnKeyType="done"
@@ -211,7 +213,7 @@ const editProfile = ({navigation}) => {
           ref={passwordConfirmRef}
           label="Password Confirm"
           value={passwordConfirm}
-          onChangeText={text => setPasswordConfirm(removeWhitespace(text))}
+          onChangeText={(text) => setPasswordConfirm(removeWhitespace(text))}
           onSubmitEditing={_handleSignupButtonPress}
           placeholder="비밀번호 재확인"
           returnKeyType="done"
@@ -223,7 +225,7 @@ const editProfile = ({navigation}) => {
           onPress={_handleSignupButtonPress}
           disabled={disabled}
         />
-        <Button title="GoBack" onPress={()=>navigation.navigate('Login')}/>
+        <Button title="GoBack" onPress={() => navigation.navigate("Login")} />
       </Container>
     </KeyboardAwareScrollView>
   );

@@ -5,33 +5,33 @@ import { UserContext } from "../contexts";
 class EpdatePresenter extends Component {
   static contextType = UserContext;
 
-  
+  constructor(props) {
+    super(props);
+    this.state = { clicked: false, data: [], del: false, item: null };
+  }
 
-    constructor(props){
-        super(props);
-        this.state = {clicked:false, data: [], del:false, item:null };
-    }
+  componentDidMount() {
+    const user = this.context;
+    console.log("didmount log", user.user);
+    this.click(user.user.usr_Id);
+    console.log("presenter user info : ", this.state.data);
+  }
 
-    componentDidMount(){
-        const user = this.context;
-        console.log("didmount log",user.user);
-        this.click(user.user.usr_Id);
-        console.log("presenter user info : ", this.state.data);
-    }
-
-click =  (user)  => {
-    fetch('http://172.30.1.21:3344/refri/getList',{
-        method: "post",
-        headers :{
-            "content-Type" : "application/json",
-        },
-        body : JSON.stringify({
-            usr_id : user, 
-        }),
-    }).then(response=>response.json()).then((response=>this.setState({data:response})));
-};
-  ToDate = text => {
-    return String(text).substr(2,8);
+  click = (user) => {
+    fetch("http://192.168.0.190:3344/refri/getList", {
+      method: "post",
+      headers: {
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        usr_id: user,
+      }),
+    })
+      .then((response) => response.json())
+      .then((response) => this.setState({ data: response }));
+  };
+  ToDate = (text) => {
+    return String(text).substr(2, 8);
   };
   getDDay = (text) => {
     var Dday = new Date(text);

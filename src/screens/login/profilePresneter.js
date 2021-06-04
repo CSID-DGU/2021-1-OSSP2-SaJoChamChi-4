@@ -1,38 +1,37 @@
-import React, { useContext, Component } from 'react';
-import { Text, View} from 'react-native';
-import { UserContext } from '../../contexts';
+import React, { useContext, Component } from "react";
+import { Text, View } from "react-native";
+import { UserContext } from "../../contexts";
 
+class ProfilePresenter extends Component {
+  static contextType = UserContext;
 
+  constructor(props) {
+    super(props);
+    this.state = { clicked: false, data: [] };
+  }
 
-class ProfilePresenter extends Component{
+  componentDidMount() {
+    const user = this.context;
+    console.log("didmount log", user.user);
+    this.click(user.user.usr_Id);
+    console.log("presenter user info : ", this.state.data);
+  }
 
-    static contextType = UserContext;
-
-    constructor(props){
-        super(props);
-        this.state = {clicked:false, data: [] };
-    }
-
-    componentDidMount(){
-        const user = this.context;
-        console.log("didmount log",user.user);
-        this.click(user.user.usr_Id);
-        console.log("presenter user info : ", this.state.data);
-    }
-
-click =  (user)  => {
-    fetch('http://172.30.1.21:3344/login/Profile',{
-        method: "post",
-        headers :{
-            "content-Type" : "application/json",
-        },
-        body : JSON.stringify({
-            id : user, 
-        }),
-    }).then(response=>response.json()).then((response=>this.setState({data:response})));
-};
-  ToDate = text => {
-    return String(text).substr(0,10);
+  click = (user) => {
+    fetch("http://192.168.0.190:3344/login/Profile", {
+      method: "post",
+      headers: {
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: user,
+      }),
+    })
+      .then((response) => response.json())
+      .then((response) => this.setState({ data: response }));
+  };
+  ToDate = (text) => {
+    return String(text).substr(0, 10);
   };
 
   render() {
