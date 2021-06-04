@@ -2,6 +2,7 @@ const express = require('express');
 var mysql = require('mysql');
 const cors = require('cors');
 //import Expo from 'expo-server-sdk'
+var fs = require('fs');
 
 
 var http = require('http');
@@ -43,6 +44,14 @@ app.post("/token",(req,res)=>{
             res.json(rows);}
     });
 });
+
+app.post('/ocr',(req,res)=>{
+    var imageFile = fs.readFileSync(req.body.imagepath);
+
+    // Convert the image data to a Buffer and base64 encode it.
+    var encoded = Buffer.from(imageFile).toString('base64');    
+    res.json(encoded);
+})
 
 app.use("/",indexRouter);
 app.use("/test",testRouter);
