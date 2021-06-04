@@ -2,12 +2,13 @@ import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Profile } from '../screens/login';
-import { RecipeList, RecipeMain ,RecipeDetail, ToyouRecipe} from '../screens/receipt';
+import { RecipeList, RecipeMain ,RecipeDetail, ToyouRecipe, MyGoodBoard} from '../screens/receipt';
 import { MyRefri, InsertItem, UpdateRefri } from '../screens/refrigerator';
 import { Home } from '../screens';
 import {Test} from '../screens';
 import {Barcode} from '../screens/refrigerator'
 import BoardStack from './BoardStack'
+
 const Stack = createStackNavigator();
 
 const MainStack = () => {
@@ -21,6 +22,7 @@ const MainStack = () => {
         headerTintColor: theme.headerTintColor,
         cardStyle: { backgroundColor: theme.backgroundColor },
         headerBackTitleVisible: false,
+        headerLeft: null,
       }}
     >
       <Stack.Screen name="Home" component={Home}/>
@@ -34,6 +36,7 @@ const MainStack = () => {
       <Stack.Screen name="UpdateRefri" component={UpdateRefri}/>
       <Stack.Screen name="RecipeDetail" component={RecipeDetail}/>
       <Stack.Screen name="ToyouRecipe" component={ToyouRecipe}/>
+      <Stack.Screen name="MyGoodBoard" component={MyGoodBoard}/>
       <Stack.Screen name="Barcode" component={Barcode}/>
        </Stack.Navigator>
   );

@@ -59,7 +59,29 @@ router.post('/deleteBoard',(req,res)=>{
     });
 });
 
+router.post('/GoodUp',(req,res)=>{
+    //delete - b_Id로 삭제한다.
+    const sql = "INSERT INTO good VALUES(?,?,?,?, null,?) ";
+    
+    db.query(sql,[req.body.b_Id],(err,rows) =>{
+        if(err) console.log(err);
+        else{
+            res.json({state : "Delete done"});
+        }
+    });
+});
 
+router.post('/MygoodBoard',(req,res)=>{
+    var usr_Id = req.body.usr_Id;
+    const sql = 'SELECT * FROM Board, good where b_Id=g_Bno AND g_Uid=?';
+    
+    db.query(sql,[usr_Id],(err,rows) =>{
+        if(err) console.log(err);
+        else{
+            res.json(rows);
+        }
+    });
+});
 
 
 module.exports = router;

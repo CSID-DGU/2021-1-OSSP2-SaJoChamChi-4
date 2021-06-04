@@ -1,12 +1,13 @@
 import React, { useContext, Component } from 'react';
 import { Text, TouchableOpacity, View, Alert} from 'react-native';
 import {CommonActions} from "@react-navigation/native";
+
 class ViewComment extends Component{
 
     constructor(props){
         super(props);
         this.state = { data: []};
-        fetch('http://192.168.0.184:3344/comment/getComment',{
+        fetch('http://172.30.1.21:3344/comment/getComment',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -15,7 +16,7 @@ class ViewComment extends Component{
             c_bid : this.props.route.params.data.b_Id
         }), 
     }).then(response=>response.json()).then((response=>this.setState({data:response})));   
-    //console.log(user);
+    console.log("====================",this.props.route.params.data.b_Id);
     }
 
     ToDate = text => {
@@ -23,7 +24,7 @@ class ViewComment extends Component{
       };
 
     delete =  (cid)  => {
-        fetch('http://192.168.0.184:3344/comment/deleteComment',{
+        fetch('http://172.30.1.21:3344/comment/deleteComment',{
             method: "post",
             headers :{
                 "content-Type" : "application/json",
@@ -37,6 +38,7 @@ class ViewComment extends Component{
     };
 
     render(){
+
         return this.state.data.map((data)=> <View style={{flexDirection: 'row', width : '100%'}} >
          <Text style={{fontSize: 15, width : '10%', textAlign: 'center'}} >{this.props.route.params.data.usr_Nickname}</Text>
          <Text style={{fontSize: 15, width : '60%', marginBottom : 30}}>{data.co_Content}</Text>
@@ -51,3 +53,4 @@ class ViewComment extends Component{
 }
 
 export default ViewComment;
+    

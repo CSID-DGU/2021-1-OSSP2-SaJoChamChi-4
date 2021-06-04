@@ -36,9 +36,9 @@ router.post("/getComment",(req,res)=>{
 });
 
 router.post('/deleteComment',(req,res)=>{
-    var co_Writer = req.body.c_writer;
-    var sql = "DELECT FROM COMMENT WHERE co_Writer = ?";
-    db.query(sql,[co_Writer],(err,rows)=>{
+    var co_Id = req.body.c_id;
+    var sql = "DELETE FROM COMMENT WHERE co_Id=?";
+    db.query(sql,[co_Id],(err,rows)=>{
         if(err) console.log(err);
         else{
             res.json({state : "Delete done"});

@@ -43,6 +43,8 @@ const Profile = ({navigation}) => {
                 onPress={_handleLogoutButtonPress}
                 containerStyle={{ marginTop: 30, backgroundColor: theme.buttonLogout, width : 270 }}
             />
+            <Button title="좋아요게시물" onPress={()=>navigation.navigate('MyGoodBoard')} containerStyle={{marginTop: 50, width : 270}}/>
+            <Button title="좋아요레시피" containerStyle={{ marginTop: 30, backgroundColor: theme.buttonLogout, width : 270 }}/>
         </Container>
     )
 }

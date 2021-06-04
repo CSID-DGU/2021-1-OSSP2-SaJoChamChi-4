@@ -6,6 +6,7 @@ import { Input, Button } from "../../components";
 import { validateEmail, removeWhitespace } from "../../utils/common";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import RNPickerSelect from 'react-native-picker-select';
+import {CommonActions, StackActions } from "@react-navigation/native";
 
 const Container = styled.View`
   flex: 1;
@@ -77,11 +78,11 @@ const InsertItem = ({ route, navigation }) => {
       if(route.params!==undefined){
       if(route.params.fkind !== undefined){
       //  console.log('insertitem useeffect : '+route.params.fkind);
-        setFkind(route.params.fkind)
         setPname(route.params.fname)
       }
     }
     },);
+ 
 
     useEffect(() => {
         if (didMountRef.current) {
@@ -107,7 +108,7 @@ const InsertItem = ({ route, navigation }) => {
         } else {
           didMountRef.current = true;
         }
-      }, [Pname, Number, Epdate, Indate,Frozen,Foodid,Foodid,Fkind]);
+      }, [Pname, Number, Epdate, Indate,Frozen,Foodid,Fkind]);
     
       useEffect(() => {
         setDisabled(
@@ -143,7 +144,7 @@ const InsertItem = ({ route, navigation }) => {
           Alert.alert('Signup Error', e.message);
         } finally {
           alert("Success!\n추가되었습니다!");
-          navigation.navigate('MyRefri');
+          navigation.dispatch(CommonActions.reset({index : 0, routes:[ {name : 'MyRefri'}]}));
         }
       };
     
@@ -205,21 +206,21 @@ const InsertItem = ({ route, navigation }) => {
           label: '냉동/냉장여부',
           value: null,}}
          style={{ ...pickerSelectStyles }}
-         items={[{label : '냉동', value:'0'},{label : '냉장', value:'1'}]}/>
+         items={[{label : '냉장', value:'0'},{label : '냉동', value:'1'}]}/>
 
         <Label style={{textAlign : 'left'}}>음식분류</Label>
-        <RNPickerSelect onValueChange={(value)=>setFoodid(value)}
+        <RNPickerSelect onValueChange={(value)=>setFkind(value)}
         placeholder={{
           label: '음식분류를 선택해주세요',
           value: null,}}
          style={{ ...pickerSelectStyles }}
          items={[{label : '육류', value:'1'},{label : '수산물', value:'2'},{label : '계란/유제품', value:'3'},
-         {label : '주류/음류', value:'4'},{label : '냉동식품', value:'5'}, {label : '밀키트', value:'6'}, 
-         {label : '과일', value:'7'}, {label : '채소', value:'8'}, {label : '건해산물', value:'9'}, {label : '기타', value:'10'}]}/>
+         {label : '채소', value:'4'},{label : '과일', value:'5'}, {label : '밀키트', value:'6'}, 
+         {label : '냉동식품', value:'7'}, {label : '주류/음류', value:'8'}, {label : '건해산물', value:'9'}, {label : '기타', value:'10'}]}/>
         
         
         <Label style={{textAlign : 'left'}}>식품군</Label>
-        <RNPickerSelect onValueChange={(value)=>setFkind(value)}
+        <RNPickerSelect onValueChange={(value)=>setFoodid(value)}
         placeholder={{
           label: '식품군을 선택해주세요',
           value: null,}}
