@@ -12,7 +12,11 @@ class RefriListPresenter extends Component{
 
     constructor(props){
         super(props);
-        this.state = {clicked:false, data: [], del:false, item:null };
+        this.state = {clicked:false, data: [], del:false, item:null, update:false  };
+        console.log("GetParam", this.props.navigation.getParam)
+        if(this.props.navigation.getParam!=undefined){
+            this.state = {update :this.props.navigation.getParam.update }
+        }
     }
 
     componentDidMount(){
@@ -27,7 +31,7 @@ class RefriListPresenter extends Component{
         }
       }
 click =  (user)  => {
-    fetch('http://172.30.1.21:3344/refri/getList',{
+    fetch('http://192.168.0.143:3344/refri/getList',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -56,7 +60,7 @@ click =  (user)  => {
  }
 
  delete =  (item, usr)  => {
-    fetch('http://172.30.1.21:3344/refri/deleteRefriItem',{
+    fetch('http://192.168.0.143:3344/refri/deleteRefriItem',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -67,7 +71,9 @@ click =  (user)  => {
         }),
     });
     Alert.alert(item,"이 삭제되었습니다!");
-    this.props.navigation.dispatch(CommonActions.navigate({name : "MyRefri",key:"MyRefri"}));
+    //this.forceUpdate()
+   // this.props.navigation.navigate('MyRefri',{update:!this.state.update})
+   this.props.navigation.dispatch(CommonActions.reset({index : 1, routes:[ {name : 'MyRefri'}]}));
 };
 
     render(){

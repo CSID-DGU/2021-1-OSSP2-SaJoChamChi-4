@@ -6,7 +6,7 @@ var db = mysql.createConnection(config.mysql);
 
 const { resetWarningCache } = require("prop-types");
 var fs = require('fs');
-var data = fs.readFileSync('testRecipe.json','utf8');
+var data = fs.readFileSync('recipea.json','utf8');
 var jsonData = JSON.parse(data);
 
 router.post('/',(req,res)=>{

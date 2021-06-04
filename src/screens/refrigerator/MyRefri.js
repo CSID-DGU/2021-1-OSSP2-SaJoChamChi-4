@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useContext, Component } from "react";
 import styled from "styled-components/native";
 import { Text, View, Alert } from "react-native";
 import { Button } from "../../components";
@@ -14,6 +14,7 @@ const Container = styled.View`
 `;
 
 const MyRefri = ({navigation}) => {
+
     return(
         <KeyboardAwareScrollView extraScrollHeight={20} style={{marginBottom:30}}>
         <Container>

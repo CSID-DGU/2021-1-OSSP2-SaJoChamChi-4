@@ -21,6 +21,7 @@ const MainStack = () => {
         headerTintColor: theme.headerTintColor,
         cardStyle: { backgroundColor: theme.backgroundColor },
         headerBackTitleVisible: false,
+        headerLeft: null,
       }}
     >
       <Stack.Screen name="Home" component={Home}/>
