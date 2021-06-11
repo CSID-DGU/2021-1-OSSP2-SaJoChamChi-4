@@ -4,6 +4,7 @@ import {SliderComponent, Text} from 'react-native'
 import { UserContext, ProgressContext } from '../../contexts';
 import {Button} from '../../components'
 import ProfilePresenter from './profilePresneter'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const Container = styled.View`
   flex: 1;
@@ -33,6 +34,7 @@ const Profile = ({navigation}) => {
       };
   
     return(
+      <KeyboardAwareScrollView extraScrollHeight={20} style={{marginBottom:30, width:'100%'}}>
         <Container>
             <Text style={{fontSize: 50, textAlign : 'center',marginBottom : 50}}> Profile </Text>
             <Text style={{fontSize: 20, textAlign : 'center',marginBottom : 50}}>{user.user.usr_Name}님 반갑습니다.</Text>
@@ -43,9 +45,10 @@ const Profile = ({navigation}) => {
                 onPress={_handleLogoutButtonPress}
                 containerStyle={{ marginTop: 30, backgroundColor: theme.buttonLogout, width : 270 }}
             />
-            <Button title="좋아요게시물" onPress={()=>navigation.navigate('MyGoodBoard')} containerStyle={{marginTop: 50, width : 270}}/>
-            <Button title="좋아요레시피" containerStyle={{ marginTop: 30, backgroundColor: theme.buttonLogout, width : 270 }}/>
+            <Button title="좋아요게시물" onPress={()=>navigation.navigate('MyGoodBoard')} containerStyle={{marginTop: 50, backgroundColor:'green',width : 270}}/>
+            <Button title="좋아요레시피" onPress={()=>navigation.navigate('MyGoodRecipe')} containerStyle={{ marginTop: 30, backgroundColor:'green', width : 270 }}/>
         </Container>
+        </KeyboardAwareScrollView>
     )
 }
 

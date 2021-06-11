@@ -24,7 +24,9 @@ const BoardList = ({navigation}) => {
             <Text style={{fontSize: 15, width : '20%', textAlign: 'center'}}>작성일자</Text>
             <Text style={{fontSize: 15, width : '15%', textAlign: 'center',marginBottom : 20}}>추천</Text>
             </View>
+            <KeyboardAwareScrollView extraScrollHeight={20} style={{marginBottom:30, width:'100%'}}>
             <SimpleViewPresenter navigation = {navigation} />
+            </KeyboardAwareScrollView>
             <View style={{width: '100%', flexDirection: 'row', justifyContent: 'space-around', position: 'absolute', bottom : '10%',}}>
                 <Button title="insertRecipe" onPress={()=>navigation.navigate('Board',{screen:'insertRecipe'})}containerStyle={{width:'45%'}}/>
                 <Button title="Home" onPress={()=>navigation.navigate('Home')}containerStyle={{width:'45%'}}/>

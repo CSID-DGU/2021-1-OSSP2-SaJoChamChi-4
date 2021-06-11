@@ -20,7 +20,7 @@ class MyGoodBoardPresenter extends Component{
         this.click(user.user.usr_Id);
     }
    click = (user)=>{
-    fetch('http://192.168.0.143:3344/board/MygoodBoard',{
+    fetch('http://172.30.1.21:3344/board/MygoodBoard',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -46,7 +46,7 @@ class MyGoodBoardPresenter extends Component{
     getGoodInfo = async (data) =>{
         const user = this.context;
 
-     res = await fetch('http://192.168.0.143:3344/good/IsGood',{
+     res = await fetch('http://172.30.1.21:3344/good/IsGood',{
             method: "post",
             headers :{
                 "content-Type" : "application/json",

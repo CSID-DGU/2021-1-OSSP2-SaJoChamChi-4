@@ -8,6 +8,7 @@ import { Home } from '../screens';
 import {Test} from '../screens';
 import {Barcode} from '../screens/refrigerator'
 import BoardStack from './BoardStack'
+import { MyGoodRecipe } from '../screens/receipt';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,8 @@ const MainStack = () => {
       <Stack.Screen name="ToyouRecipe" component={ToyouRecipe}/>
       <Stack.Screen name="MyGoodBoard" component={MyGoodBoard}/>
       <Stack.Screen name="Barcode" component={Barcode}/>
+      <Stack.Screen name="MyGoodRecipe" component={MyGoodRecipe}/>
+
        </Stack.Navigator>
   );
 };

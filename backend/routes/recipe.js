@@ -199,4 +199,17 @@ router.post('/getEpdatList',(req,res)=>{
              }});    
 });
 
+
+router.post('/MygoodRecipe',(req,res)=>{
+    var usr_Id = req.body.usr_Id;
+    const sql = 'SELECT * FROM recipe, recipegood where id=rg_Rno AND rg_Uid=?';
+    
+    db.query(sql,[usr_Id],(err,rows) =>{
+        if(err) console.log(err);
+        else{
+            res.json(rows);
+        }
+    });
+});
+
 module.exports = router;
