@@ -47,6 +47,18 @@ const pickerSelectStyles = StyleSheet.create({
       color: 'black',
       marginBottom: 10,
   },
+  inputAndroid:{
+    fontSize: 16,
+    paddingTop: 20,
+    paddingHorizontal: 10,
+    paddingBottom: 20,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 4,
+    backgroundColor: 'white',
+    color: 'black',
+    marginBottom: 10,
+   }
 });
 // input item -> fetch data + Barcode icon data to back with data with (barcode) + barcode matching with data
 
@@ -117,7 +129,7 @@ const InsertItem = ({ route, navigation }) => {
       }, [Pname, Number, Epdate, Indate, errorMessage]);
 
       Insert =  (Pname, Number, Epdate, Indate, Frozen, Foodid, Fkind, id)  => {
-        fetch('http://172.30.1.21:3344/refri/Insert',{
+        fetch('http://192.168.0.143:3344/refri/Insert',{
           method: "post",
           headers :{
               "content-Type" : "application/json",

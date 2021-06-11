@@ -71,7 +71,7 @@ const DetailView = ({route,navigation}) => {
         }
     };
     const like = () => {
-      fetch('http://172.30.1.21:3344/good/Insert',{
+      fetch('http://192.168.0.143:3344/good/Insert',{
         method: "post",
         headers :{
           "content-Type" : "application/json",
@@ -84,7 +84,7 @@ const DetailView = ({route,navigation}) => {
     };
     
     const unlike = () => {
-      fetch('http://172.30.1.21:3344/good/Delete',{
+      fetch('http://192.168.0.143:3344/good/Delete',{
         method: "post",
         headers :{
           "content-Type" : "application/json",
@@ -125,7 +125,7 @@ const DetailView = ({route,navigation}) => {
       .utcOffset('+18:00')
       .format('YYYY-MM-DD HH:mm:ss');
       console.log('post comment : '+user.usr_Id);
-      fetch('http://172.30.1.21:3344/comment/insertComment',{
+      fetch('http://192.168.0.143:3344/comment/insertComment',{
         method: "post",
         headers :{
           "content-Type" : "application/json",

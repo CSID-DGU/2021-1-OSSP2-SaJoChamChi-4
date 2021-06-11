@@ -20,7 +20,7 @@ class MyGoodBoardPresenter extends Component{
         this.click(user.user.usr_Id);
     }
    click = (user)=>{
-    fetch('http://172.30.1.21:3344/board/MygoodBoard',{
+    fetch('http://192.168.0.143:3344/board/MygoodBoard',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -37,13 +37,16 @@ class MyGoodBoardPresenter extends Component{
         //console.log(title);
         console.log(data);
         res = await this.getGoodInfo(data)
-        this.props.navigation.navigate('Board',{screen:'DetailView',params : {data : data, good : res}});
+        if(this.state.data2.length==0){
+            this.props.navigation.navigate('Board',{screen:'DetailView',params : {data : data, data2 : null}});
+        }
+        else this.props.navigation.navigate('Board',{screen:'DetailView',params : {data : data, data2 : this.state.data2}});
     }
 
     getGoodInfo = async (data) =>{
         const user = this.context;
 
-     res = await fetch('http://172.30.1.21:3344/good/IsGood',{
+     res = await fetch('http://192.168.0.143:3344/good/IsGood',{
             method: "post",
             headers :{
                 "content-Type" : "application/json",

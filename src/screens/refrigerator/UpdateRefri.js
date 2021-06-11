@@ -128,7 +128,7 @@ const UpdateRefri = ({route,navigation}) => {
       };
     
       Insert =  (Pname, Number, Epdate, Indate, Frozen, Foodid, Fkind, id)  => {
-        fetch('http://172.30.1.21:3344/refri/Update',{
+        fetch('http://192.168.0.143:3344/refri/Update',{
           method: "post",
           headers :{
               "content-Type" : "application/json",
