@@ -47,6 +47,18 @@ const pickerSelectStyles = StyleSheet.create({
       color: 'black',
       marginBottom: 10,
   },
+  inputAndroid:{
+    fontSize: 16,
+    paddingTop: 20,
+    paddingHorizontal: 10,
+    paddingBottom: 20,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 4,
+    backgroundColor: 'white',
+    color: 'black',
+    marginBottom: 10,
+   }
 });
 // input item -> fetch data + Barcode icon data to back with data with (barcode) + barcode matching with data
 

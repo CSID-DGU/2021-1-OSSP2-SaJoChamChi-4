@@ -24,7 +24,7 @@ var RecipeRouter = require("./routes/Recipe");
 var refriRouter = require("./routes/refri");
 var barcodeRouter = require("./routes/barcode");
 var goodRouter = require("./routes/good");
-
+var recipegoodRouter = require("./routes/recipegood")
 
 var config = require("./config/database");
 const db = mysql.createConnection(config.mysql);
@@ -55,6 +55,7 @@ app.use('/recipe',RecipeRouter);
 app.use("/refri",refriRouter);
 app.use("/barcode",barcodeRouter);
 app.use("/good", goodRouter);
+app.use("/recipegood", recipegoodRouter);
 
 server.listen(3344, ()=>{
     console.log('Server listen on port' + server.address().port);

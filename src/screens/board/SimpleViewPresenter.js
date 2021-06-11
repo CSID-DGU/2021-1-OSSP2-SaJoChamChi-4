@@ -6,6 +6,7 @@ import {CommonActions} from "@react-navigation/native";
 import DetailView from './DetailView'
 import { array } from 'prop-types';
 import { get } from 'react-native/Libraries/Utilities/PixelRatio';
+import { ThemeConsumer } from 'styled-components';
 
 class SimpleViewPresenter extends Component{
 
@@ -33,7 +34,11 @@ class SimpleViewPresenter extends Component{
         //console.log(title);
         console.log(data);
         res = await this.getGoodInfo(data)
-        this.props.navigation.navigate('Board',{screen:'DetailView',params : {data : data, good : res}});
+        console.log("isgoodInfo check", res);
+        if(this.state.data2.length==0){
+            this.props.navigation.navigate('Board',{screen:'DetailView',params : {data : data, data2 : null}});
+        }
+        else this.props.navigation.navigate('Board',{screen:'DetailView',params : {data : data, data2 : this.state.data2}});
     }
 
     getGoodInfo = async (data) =>{
@@ -50,7 +55,8 @@ class SimpleViewPresenter extends Component{
             }),
         }).then(response=>response.json()).then((response=>this.setState({data2:response})));
         console.log("getGoodInfo check", res)
-        return res;
+        if(res===undefined) return null;
+        else return true;
     }
 
     ToDate = text => {

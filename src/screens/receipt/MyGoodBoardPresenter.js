@@ -37,7 +37,10 @@ class MyGoodBoardPresenter extends Component{
         //console.log(title);
         console.log(data);
         res = await this.getGoodInfo(data)
-        this.props.navigation.navigate('Board',{screen:'DetailView',params : {data : data, good : res}});
+        if(this.state.data2.length==0){
+            this.props.navigation.navigate('Board',{screen:'DetailView',params : {data : data, data2 : null}});
+        }
+        else this.props.navigation.navigate('Board',{screen:'DetailView',params : {data : data, data2 : this.state.data2}});
     }
 
     getGoodInfo = async (data) =>{

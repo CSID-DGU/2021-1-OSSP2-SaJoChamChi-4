@@ -1,29 +1,31 @@
 import React, { useContext, Component } from 'react';
-import { Text, View, Image, Dimensions, TouchableOpacity} from 'react-native';
-import { UserContext, ProgressContext } from '../../contexts';
+import { Text, View, Button, Dimensions ,TouchableOpacity, Image} from 'react-native';
+import { UserContext } from '../../contexts';
 
-class EpdateRecipePresenter extends Component{
+
+class MyGoodRecipePresenter extends Component{
 
     static contextType = UserContext;
+
     constructor(props){
         super(props);
-        this.state = {clicked:false, data: [], info :[], ingre:[], recipedetail:[] };
+        this.state = {clicked:false, data: [], info :[], ingre:[], recipedetail:[], good:[] };
     }
 
     componentDidMount(){
         const user = this.context;
+        console.log("MYGOOD TEST", user);
         this.click(user.user.usr_Id);
-        console.log("Test : ", this.state.data);
     }
 
-  click = (user) =>{
-    fetch('http://172.30.1.21:3344/recipe/getEpdatList',{
+  click = (num) =>{
+    fetch('http://172.30.1.21:3344/recipe/MyGoodRecipe',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
         },
         body : JSON.stringify({
-            usr : user, 
+            usr_Id : num, 
         }),
     }).then(response=>response.json()).then((response=>this.setState({data:response})));
         //console.log(user);
@@ -72,7 +74,7 @@ class EpdateRecipePresenter extends Component{
 
   getGoodInfo = async (data) =>{
     const user = this.context;
-     res = await fetch('http://172.30.1.21:3344/recipegood/IsGood',{
+    await fetch('http://172.30.1.21:3344/recipegood/IsGood',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -82,12 +84,10 @@ class EpdateRecipePresenter extends Component{
             usr_Id : user.user.usr_Id  
         }),
     }).then(response=>response.json()).then((response=>this.setState({good:response})));
-    console.log("getRecipeGoodInfo check", res)
-    return res;
 }
 
   onPressHandle = async (data, data2) => {
-    res = await this.getGoodInfo(data);
+    await this.getGoodInfo(data)
     detailrecipe = await this.getdetailrecipe(data);
     info = await this.getinfo(data);
     ingre = await this.getingre(data);
@@ -111,9 +111,13 @@ class EpdateRecipePresenter extends Component{
 )
 
     }
-    
+   
+
+    ToDate = text => {
+        return String(text).substr(2,8);
+      };
+
+
 }
-// this.state.data[0][0].map((data)=> <View style={{flexDirection: 'row', width : '100%'}} >
-//         <Text style={{fontSize: 20,width : '50%', textAlign: 'center'}}>{data.name}</Text>
-//         </View>)
-export default EpdateRecipePresenter;
+
+export default MyGoodRecipePresenter;
