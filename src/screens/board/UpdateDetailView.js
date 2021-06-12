@@ -25,13 +25,13 @@ const ErrorText = styled.Text`
 `;
 
 
-const insertRecipe = ({navigation}) => {
+const UpdateDetailView = ({navigation, route}) => {
     //const { dispatch } = useContext(UserContext);
     const { spinner } = useContext(ProgressContext);
      
     const { user, dispatch } = useContext(UserContext);
-    const [title, setTitle] = useState();
-    const [content, setContent] = useState();
+    const [title, setTitle] = useState(route.params.data.b_Title);
+    const [content, setContent] = useState(route.params.data.b_Content);
     
     const [errorMessage, setErrorMessage] = useState('');
     const [disabled, setDisabled] = useState(true);
@@ -64,35 +64,28 @@ const insertRecipe = ({navigation}) => {
     const _handleSignupButtonPress = async () => {
       try {
         spinner.start();
-        postBoard(title,content);
+        updateBoard(title,content);
       } catch (e) {
         Alert.alert('Signup Error', e.message);
       } finally {
         spinner.stop();
-        alert("Success!\nLogin with new account!!");
+        alert("Success!\n 게시글이 수정되었습니다");
         //navigation.navigate('Board',{screen:'BoardList'});
         navigation.dispatch(CommonActions.reset({index : 1, routes:[ {name : 'BoardList'}]}));
-
       }
     };
   
-  const postBoard =  (title,content)  => {
-    var date = moment()
-      .utcOffset('+05:30')
-      .format('YYYY-MM-DD hh:mm:ss');
-      console.log('title : '+title);
-      fetch('http://172.30.1.21:3344/board/insertBoard',{
+  const updateBoard =  (title,content)  => {
+      fetch('http://172.30.1.21:3344/board/updateBoard',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
         },
         body : JSON.stringify({
-            b_Title : title,
-            b_Content : content,
-            b_Time : date,
-            b_Hits : 0,
+            title : title,
+            content : content,
+            b_Id : route.params.data.b_Id,
             b_Writer : user.usr_Id
-
         })
    });
   };
@@ -149,4 +142,4 @@ const insertRecipe = ({navigation}) => {
 */
 
 
-export default insertRecipe;
+export default UpdateDetailView;

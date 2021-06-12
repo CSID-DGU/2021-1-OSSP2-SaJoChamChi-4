@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { BoardList, DetailView, insertRecipe } from '../screens/board';
+import { BoardList, DetailView, insertRecipe, UpdateDetailView} from '../screens/board';
 
 const BStack = createStackNavigator();
 
@@ -28,10 +28,14 @@ const BoardStack = () => {
         component={DetailView}
         options={{ headerBackTitleVisible: false }}
       />
-      
       <BStack.Screen
         name="insertRecipe"
         component={insertRecipe}
+        options={{ headerBackTitleVisible: false }}
+      />
+      <BStack.Screen
+        name="UpdateDetailView"
+        component={UpdateDetailView}
         options={{ headerBackTitleVisible: false }}
       />
     </BStack.Navigator>

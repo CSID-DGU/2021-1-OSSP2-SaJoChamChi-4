@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Profile } from '../screens/login';
+import { Profile, editProfile } from '../screens/login';
 import { RecipeList, RecipeMain ,RecipeDetail, ToyouRecipe, MyGoodBoard} from '../screens/receipt';
 import { MyRefri, InsertItem, UpdateRefri } from '../screens/refrigerator';
 import { Home } from '../screens';
@@ -40,6 +40,7 @@ const MainStack = () => {
       <Stack.Screen name="MyGoodBoard" component={MyGoodBoard}/>
       <Stack.Screen name="Barcode" component={Barcode}/>
       <Stack.Screen name="MyGoodRecipe" component={MyGoodRecipe}/>
+      <Stack.Screen name="editProfile" component={editProfile}/>
 
        </Stack.Navigator>
   );
