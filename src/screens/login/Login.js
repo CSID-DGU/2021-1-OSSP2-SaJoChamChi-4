@@ -5,7 +5,7 @@ import { Input, Button } from "../../components";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { validateEmail, removeWhitespace } from "../../utils/common";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Alert, Text, Image } from "react-native";
+import { Alert, Text, Image, View } from "react-native";
 
 let imagepath = require("../../../assets/Myrefri.png");
 
@@ -71,7 +71,7 @@ const Login = ({ navigation }) => {
       login(ID, password);
       console.log("user state : ", user1);
       console.log("context: ", user.usr_Id);
-      login(ID, password);
+     // login(ID, password);
       console.log("user state : ", user1);
       console.log("context: ", user.usr_Id);
       spinner.start();
@@ -96,8 +96,13 @@ const Login = ({ navigation }) => {
             id : Id,
             pwd : password,
         })
-   }).then(response=>response.json()).then((response) => {setUser(response); console.log("response",user1);}
+   }).then(response=>response.json()).then((response) => {
+    if(response.length==0){
+      Alert.alert("정보가 틀립니다.\n 아이디와 비밀번호를 확인해주세요.")
+    } 
+    setUser(response); console.log("response",user1);}
    );
+
     console.log("loginfunction : ", user1);
 };
  
@@ -150,11 +155,29 @@ const Login = ({ navigation }) => {
           onPress={_handleLoginButtonPress}
           disabled={disabled}
         />
+        <View style={{flexDirection: 'row'}}>
         <Button
-          title="Sign up with email"
+          title="아이디 찾기"
+          onPress={() => navigation.navigate("findId")}
+          isFilled={false}
+          containerStyle={{width:100}}
+        />
+        <Text>       </Text>
+        <Button
+          title="회원가입"
           onPress={() => navigation.navigate("Signup")}
           isFilled={false}
+          containerStyle={{width:100}}
         />
+        <Text>       </Text>
+        <Button
+          title="비밀번호 찾기"
+          onPress={() => navigation.navigate("findPwd")}
+          isFilled={false}
+          containerStyle={{width:110}}
+        />        
+        </View>
+       
       </Container>
     </KeyboardAwareScrollView>
   );

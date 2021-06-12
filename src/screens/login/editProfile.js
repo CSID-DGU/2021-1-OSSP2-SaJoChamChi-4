@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import { Input, Button } from '../../components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { validateEmail, removeWhitespace } from '../../utils/common';
-import { Alert } from 'react-native';
+import { Alert, Text } from 'react-native';
 
 const Container = styled.View`
   flex: 1;
@@ -22,19 +22,19 @@ const ErrorText = styled.Text`
   color: ${({ theme }) => theme.errorText};
 `;
 
-const editProfile = ({navigation}) => {
+const editProfile = ({navigation, route}) => {
   const { dispatch } = useContext(UserContext);
   const { spinner } = useContext(ProgressContext);
-   
-  const [id, setId] = useState('');
-  const [name, setName] = useState();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const {user} = useContext(UserContext);
+  const [id, setId] = useState(route.params.data.user_Id);
+  const [name, setName] = useState(route.params.data.usr_Name);
+  const [email, setEmail] = useState(route.params.data.usr_Email);
+  const [password, setPassword] = useState(route.params.data.usr_Pwd);
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [birth, setBirth] = useState('');
-  const [address, setAddress] = useState('');
-  const [day, setDay] = useState('');
+  const [nickname, setNickname] = useState(route.params.data.usr_Nickname);
+  const [birth, setBirth] = useState(route.params.data.usr_Birth);
+  const [address, setAddress] = useState(route.params.data.usr_Address);
+  const [day, setDay] = useState(route.params.data.usr_Day);
 
   const [errorMessage, setErrorMessage] = useState('');
   const [disabled, setDisabled] = useState(true);
@@ -79,18 +79,18 @@ const editProfile = ({navigation}) => {
   const _handleSignupButtonPress = async () => {
     try {
       spinner.start();
-      signUp(id, password, name, nickname, email, birth, address, day);
+      signUp(id, password, name, nickname, email, birth, address, day, user.usr_Id);
     } catch (e) {
       Alert.alert('Signup Error', e.message);
     } finally {
       spinner.stop();
       alert("Success!\nLogin with new account!!");
-      navigation.navigate('Login');
+      navigation.navigate('Home');
     }
   };
 
-  signUp =  (Id, password, name, nickname, email, birth, address, day)  => {
-    fetch('http://172.30.1.21:3344/login/Signup',{
+  signUp =  (Id, password, name, nickname, email, birth, address, day, usr_Id)  => {
+    fetch('http://172.30.1.21:3344/login/updateProfile',{
       method: "post",
       headers :{
           "content-Type" : "application/json",
@@ -103,7 +103,8 @@ const editProfile = ({navigation}) => {
           email : email,
           birth : birth,
           address : address,
-          day : day,    
+          day : day,
+          usr_Id : usr_Id,
       })
  }).then(response=>response.json()).then((response) => setUser(response));
 };
@@ -111,20 +112,8 @@ const editProfile = ({navigation}) => {
   return (
     <KeyboardAwareScrollView extraScrollHeight={20}>
       <Container>
-      <Input
-          label="Id"
-          value={id}
-          onChangeText={text => setId(removeWhitespace(text))}
-          onSubmitEditing={() => {
-            setId(id.trim());
-            nameRef.current.focus();
-          }}
-          onBlur={() => setId(id.trim())}
-          placeholder="Id"
-          returnKeyType="next"
-        />
+        <Text>{id}님 회원정보 수정화면</Text>
         <Input
-          ref={nameRef}
           label="Name"
           value={name}
           onChangeText={text => setName(removeWhitespace(text))}
@@ -190,11 +179,11 @@ const editProfile = ({navigation}) => {
           value={day}
           onChangeText={text => setDay(removeWhitespace(text))}
           onSubmitEditing={() => {
-            setDay(day.trim());
+            setDay(day);
             passwordRef.current.focus();
           }}
-          onBlur={() => setDay(day.trim())}
-          placeholder="Day"
+          onBlur={() => setDay(day)}
+          placeholder="마트가는요일 : 1~7숫자입력 (월요일1)"
           returnKeyType="next"
         />
         <Input
@@ -219,11 +208,11 @@ const editProfile = ({navigation}) => {
         />
         <ErrorText>{errorMessage}</ErrorText>
         <Button
-          title="Signup"
+          title="정보변경"
           onPress={_handleSignupButtonPress}
           disabled={disabled}
         />
-        <Button title="GoBack" onPress={()=>navigation.navigate('Login')}/>
+        <Button title="GoBack" onPress={()=>navigation.navigate('Home')}/>
       </Container>
     </KeyboardAwareScrollView>
   );

@@ -57,8 +57,8 @@ const Signup = ({ navigation }) => {
         _errorMessage = "Please enter your name.";
       } else if (!validateEmail(email)) {
         _errorMessage = "Please verify your email.";
-      } else if (password.length < 6) {
-        _errorMessage = "The password must contain 6 characters at least.";
+      } else if (password.length < 7) {
+        _errorMessage = "The password must contain 7 characters at least.";
       } else if (password !== passwordConfirm) {
         _errorMessage = "Passwords need to match.";
       } else {
@@ -196,7 +196,7 @@ const Signup = ({ navigation }) => {
             passwordRef.current.focus();
           }}
           onBlur={() => setDay(day.trim())}
-          placeholder="Day"
+          placeholder="마트가는요일 : 1~7숫자입력 (월요일1)"
           returnKeyType="next"
         />
         <Input

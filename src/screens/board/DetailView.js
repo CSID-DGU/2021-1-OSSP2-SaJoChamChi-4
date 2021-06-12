@@ -30,6 +30,7 @@ const DetailView = ({route,navigation}) => {
     const { spinner } = useContext(ProgressContext);
     const { user, dispatch } = useContext(UserContext);
 
+    const [data, setData] = useState();
     const [comment, setComment] = useState();
     const [errorMessage, setErrorMessage] = useState('');
     const [disabled, setDisabled] = useState(true);
@@ -70,7 +71,21 @@ const DetailView = ({route,navigation}) => {
           navigation.dispatch(CommonActions.reset({index : 1, routes:[ {name : 'BoardList'}, {name : 'DetailView'}]}));
         }
     };
-    const like = () => {
+
+    const getnewData = async () =>{
+    res = await fetch('http://172.30.1.21:3344/board/Detail',{
+        method: "post",
+        headers :{
+            "content-Type" : "application/json",
+        },
+        body : JSON.stringify({
+          b_Id : route.params.data.b_Id, 
+        })
+    }).then(response=>response.json());
+    return res[0];
+    }
+
+    const like = async () => {
       fetch('http://172.30.1.21:3344/good/Insert',{
         method: "post",
         headers :{
@@ -83,7 +98,7 @@ const DetailView = ({route,navigation}) => {
       });
     };
     
-    const unlike = () => {
+    const unlike = async () => {
       fetch('http://172.30.1.21:3344/good/Delete',{
         method: "post",
         headers :{
@@ -98,24 +113,28 @@ const DetailView = ({route,navigation}) => {
 
     const likePressed = async () => {
       try {
-        like();
+        await like();
       } catch (e) {
         Alert.alert("Error", e.message);
       }finally{
         alert("Success!\n좋아요 성공")
         setGood(true);
-        navigation.dispatch(CommonActions.reset({index : 1, routes:[ {name : 'BoardList'}, {name : 'DetailView', params:{data2 : true}}]}));
+        res = await getnewData();
+        console.log("DBTEST",res);
+        navigation.dispatch(CommonActions.reset({index : 1, routes:[ {name : 'BoardList'}, {name : 'DetailView', params:{data: res, data2 : true}}]}));
       }
     };
     const unlikePressed = async () => {
       try {
-        unlike();
+        await unlike();
       } catch (e) {
         Alert.alert("Error", e.message);
       }finally{
         alert("Success!\n좋아요 취소 성공")
         setGood(false);
-        navigation.dispatch(CommonActions.reset({index : 1, routes:[ {name : 'BoardList'}, {name : 'DetailView', params:{data : route.params.data, data2 : null}}]}));
+        res = await getnewData();
+        console.log("DBTEST",res);
+        navigation.dispatch(CommonActions.reset({index : 1, routes:[ {name : 'BoardList'}, {name : 'DetailView', params:{data : res, data2 : null}}]}));
       }
     };
     
@@ -137,6 +156,41 @@ const DetailView = ({route,navigation}) => {
             co_Bid : route.params.data.b_Id
         }) 
       });
+    };
+
+    const deleteBoard = () => {
+      fetch('http://172.30.1.21:3344/board/deleteBoard',{
+        method: "post",
+        headers :{
+          "content-Type" : "application/json",
+        },
+        body : JSON.stringify({
+            usr_Id : user.usr_Id,
+            bno : route.params.data.b_Id,
+        }) 
+      });
+    };
+
+    const deletePressed = async () => {
+      try {
+        deleteBoard();
+      } catch (e) {
+        Alert.alert("Error", e.message);
+      }finally{
+        alert("Success!\n 게시글삭제 성공")
+        navigation.dispatch(CommonActions.reset({index : 1, routes:[ {name : 'BoardList'}]}));
+      }
+    };
+    
+    const updatePressed = async () => {
+      try {
+        like();
+      } catch (e) {
+        Alert.alert("Error", e.message);
+      }finally{
+        navigation.dispatch(CommonActions.reset({index : 1, routes:[ {name : 'BoardList'}, {name : 'UpdateDetailView',
+         params:{data:route.params.data, data2 : true}}]}));
+      }
     };
     
     return(
@@ -163,8 +217,20 @@ const DetailView = ({route,navigation}) => {
               returnKeyType="done"
             />
             <ErrorText>{errorMessage}</ErrorText>
-            <View>
-              {console.log("Detail View Frehsh", route)}
+            <View style={{justifyContent:'center'}}>
+            <Button title="AddComment" onPress={_handleSignupButtonPress} disabled={disabled} containerStyle={{width:250, marginBottom:20}}/>
+            {route.params.data.b_Writer === user.usr_Id ?
+            <View style={{flexDirection:'row'}}><Button
+            title="게시글 수정"
+            onPress={updatePressed}
+            containerStyle={{ width: 125, marginBottom: 20, backgroundColor:`red`, text : 'black' }} />
+          <Button
+          title="게시글 삭제"
+          onPress={deletePressed}
+          containerStyle={{ width: 125, marginBottom: 20, backgroundColor:`red`, text : 'black' }}/>
+          </View> : null}
+
+            {console.log("Detail View Frehsh", route)}
             {route.params.data2 == null?  <Button
             title="좋아요"
             onPress={likePressed}
@@ -177,7 +243,6 @@ const DetailView = ({route,navigation}) => {
             containerStyle={{ width: 250, marginBottom: 20, backgroundColor:`red` }}
           />
             } 
-              <Button title="AddComment" onPress={_handleSignupButtonPress} disabled={disabled} containerStyle={{width:250, marginBottom:20}}/>
               <Button title="BoardList" onPress={()=>navigation.dispatch(CommonActions.reset({index : 1, routes:[ {name : 'BoardList'}]}))} containerStyle={{width:250, marginBottom:20}}/>
               <Button title="Home" onPress={()=>navigation.navigate('Home')} containerStyle={{width:250}}/>
             </View>
