@@ -10,7 +10,7 @@ class SimpleViewPresenter extends Component {
     super(props);
     //this.state = {clicked:false, data: [], data2:[], clicked2:false, user:user};
     this.state = { data: [] };
-    fetch("http://172.30.1.34:3344/board/allBoard", {
+    fetch("http://192.168.0.190:3344/board/allBoard", {
       method: "post",
       headers: {
         "content-Type": "application/json",

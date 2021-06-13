@@ -87,7 +87,7 @@ const DetailView = ({ route, navigation }) => {
   const postComment = (comment) => {
     var date = moment().utcOffset("+09:00").format("YYYY-MM-DD HH:mm:ss");
     console.log("post comment : " + user.usr_Id);
-    fetch("http://172.30.1.34:3344/comment/insertComment", {
+    fetch("http://192.168.0.190:3344/comment/insertComment", {
       method: "post",
       headers: {
         "content-Type": "application/json",
