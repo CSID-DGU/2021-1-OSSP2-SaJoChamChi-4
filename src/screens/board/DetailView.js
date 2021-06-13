@@ -262,12 +262,12 @@ const DetailView = ({route,navigation}) => {
           <View style={{flex:1,flexDirection:'row', width:'100%', justifyContent:"space-between"}}>
             {console.log("Detail View Frehsh", route)}
             {route.params.data2 == null?  <Button
-            title="unlike"
+            title="like"
             onPress={likePressed}
             containerStyle={{ width: 100, marginBottom: 20, backgroundColor:`yellow`, text : 'black' }} 
           /> :
            <Button
-            title="like"
+            title="unlike"
             onPress={unlikePressed}
             containerStyle={{ width: 100, marginBottom: 20, backgroundColor:`red` }}
           />

@@ -47,7 +47,7 @@ const Profile = ({ navigation }) => {
   };
 
   click = (user) => {
-    fetch("http://192.168.0.190:3344/login/Goodbye", {
+    fetch("http://34.64.235.196:3344/login/Goodbye", {
       method: "post",
       headers: {
         "content-Type": "application/json",
@@ -73,7 +73,7 @@ const Profile = ({ navigation }) => {
   };
 
   click3 = (user) => {
-    fetch("http://192.168.0.190:3344/login/Profile", {
+    fetch("http://34.64.235.196:3344/login/Profile", {
       method: "post",
       headers: {
         "content-Type": "application/json",

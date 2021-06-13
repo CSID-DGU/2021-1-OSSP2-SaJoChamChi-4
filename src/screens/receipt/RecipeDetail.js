@@ -75,7 +75,7 @@ const RecipeDetail = ({ route, navigation }) => {
     </View>
   ));
   const like = () => {
-    fetch("http://192.168.0.190:3344/recipegood/Insert", {
+    fetch("http://34.64.235.196:3344/recipegood/Insert", {
       method: "post",
       headers: {
         "content-Type": "application/json",
@@ -88,7 +88,7 @@ const RecipeDetail = ({ route, navigation }) => {
   };
 
   const unlike = () => {
-    fetch("http://192.168.0.190:3344/recipegood/Delete", {
+    fetch("http://34.64.235.196:3344/recipegood/Delete", {
       method: "post",
       headers: {
         "content-Type": "application/json",

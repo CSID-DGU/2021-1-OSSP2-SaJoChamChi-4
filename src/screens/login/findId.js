@@ -46,6 +46,8 @@ const findId = ({ navigation }) => {
         _errorMessage = "Please enter your name.";
       } else if (!validateEmail(email)) {
         _errorMessage = "Please verify your email.";
+      }else{
+        _errorMessage ="";
       }
       setErrorMessage(_errorMessage);
     } else {

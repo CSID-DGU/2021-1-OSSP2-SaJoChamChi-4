@@ -78,9 +78,7 @@ const UpdateRefri = ({route,navigation}) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [disabled, setDisabled] = useState(true);
   
-    const dayRef = useRef();
-    const addressRef = useRef();
-    const birthRef = useRef();
+
     const nicknameRef = useRef();
     const emailRef = useRef();
     const nameRef = useRef();
@@ -195,7 +193,6 @@ const UpdateRefri = ({route,navigation}) => {
           onChangeText={text => setIndate(text)}
           onSubmitEditing={() => {
             setIndate(Indate.trim());
-            birthRef.current.focus();
           }}
           onBlur={() => setIndate(Indate)}
           placeholder="구매일자"

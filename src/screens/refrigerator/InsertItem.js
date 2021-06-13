@@ -87,10 +87,9 @@ const InsertItem = ({ route, navigation }) => {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [disabled, setDisabled] = useState(true);
+  const [checkOCR, setcheckOCR] = useState(false);
+  const [checkBar, setcheckBar] = useState(false);
 
-  const dayRef = useRef();
-  const addressRef = useRef();
-  const birthRef = useRef();
   const nicknameRef = useRef();
   const emailRef = useRef();
   const nameRef = useRef();
@@ -99,13 +98,15 @@ const InsertItem = ({ route, navigation }) => {
     useEffect(() =>{
       console.log('insertitem useeffect')
       if(route.params!==undefined){
-      if(route.params.fkind !== undefined){
+      if(route.params.fkind !== undefined && !checkBar){
       //  console.log('insertitem useeffect : '+route.params.fkind);
         setPname(route.params.fname)
+        setcheckBar(true);
       }
-      if(route.params.OCRresponse !== undefined){
+      if(route.params.OCRresponse !== undefined && !checkOCR){
         //  console.log('insertitem useeffect : '+route.params.fkind);
           setEpdate(route.params.OCRresponse)
+          setcheckOCR(true);
         }
     }
     },);
@@ -225,7 +226,6 @@ const InsertItem = ({ route, navigation }) => {
           onChangeText={(text) => setIndate(removeWhitespace(text))}
           onSubmitEditing={() => {
             setIndate(Indate.trim());
-            birthRef.current.focus();
           }}
           onBlur={() => setIndate(Indate.trim())}
           placeholder="구매일자"
