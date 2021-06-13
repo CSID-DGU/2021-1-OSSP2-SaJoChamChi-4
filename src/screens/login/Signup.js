@@ -90,7 +90,7 @@ const Signup = ({ navigation }) => {
   };
 
   signUp =  (Id, password, name, nickname, email, birth, address, day)  => {
-    fetch('http://172.30.1.21:3344/login/Signup',{
+    fetch('http://34.64.235.196:3344/login/Signup',{
       method: "post",
       headers: {
         "content-Type": "application/json",
@@ -121,7 +121,7 @@ const Signup = ({ navigation }) => {
             setId(id.trim());
             nameRef.current.focus();
           }}
-          onBlur={() => setId(id.trim())}
+          onBlur={() =>{if(id != undefined)setId(id.trim())}}
           placeholder="Id"
           returnKeyType="next"
         />
@@ -134,7 +134,7 @@ const Signup = ({ navigation }) => {
             setName(name.trim());
             emailRef.current.focus();
           }}
-          onBlur={() => setName(name.trim())}
+          onBlur={() => {if(name != undefined)setName(name.trim())}}
           placeholder="Name"
           returnKeyType="next"
         />
@@ -156,7 +156,7 @@ const Signup = ({ navigation }) => {
             setNickname(nickname.trim());
             birthRef.current.focus();
           }}
-          onBlur={() => setNickname(nickname.trim())}
+          onBlur={() => {if(nickname != undefined)setNickname(nickname.trim())}}
           placeholder="Nickname"
           returnKeyType="next"
         />
@@ -169,7 +169,7 @@ const Signup = ({ navigation }) => {
             setBirth(birth.trim());
             addressRef.current.focus();
           }}
-          onBlur={() => setBirth(birth.trim())}
+          onBlur={() => {if(birth != undefined)setBirth(birth.trim())}}
           placeholder="Birth"
           returnKeyType="next"
         />
@@ -182,7 +182,7 @@ const Signup = ({ navigation }) => {
             setAddress(address.trim());
             dayRef.current.focus();
           }}
-          onBlur={() => setAddress(address.trim())}
+          onBlur={() => {if(address != undefined)setAddress(address.trim())}}
           placeholder="Address"
           returnKeyType="next"
         />
@@ -195,7 +195,7 @@ const Signup = ({ navigation }) => {
             setDay(day.trim());
             passwordRef.current.focus();
           }}
-          onBlur={() => setDay(day.trim())}
+          onBlur={() => {if(day != undefined)setDay(day.trim())}}
           placeholder="마트가는요일 : 1~7숫자입력 (월요일1)"
           returnKeyType="next"
         />

@@ -22,7 +22,7 @@ const MyGoodRecipe = ({navigation}) => {
     return(
         <Container>
         <KeyboardAwareScrollView extraScrollHeight={20} style={{marginBottom:30, width:width}}>
-            <Text style={{fontSize: 30, textAlign : 'center', fontWeight:'bold'}}> 내가 좋아요 누른 레시피 리스트 </Text>
+            <Text style={{fontSize: 30, textAlign : 'center', fontWeight:'bold', backgroundColor:'#3498db', color:'white'}}> 내가 좋아요 누른 레시피 리스트 </Text>
             <MyGoodRecipePresenter navigation = {navigation}/>
         </KeyboardAwareScrollView>
         <View style={{flexDirection: 'row', marginBottom:5}}>

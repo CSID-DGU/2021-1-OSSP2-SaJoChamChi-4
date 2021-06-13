@@ -31,7 +31,7 @@ class RefriListPresenter extends Component{
         }
       }
 click =  (user)  => {
-    fetch('http://172.30.1.21:3344/refri/getList',{
+    fetch('http://34.64.235.196:3344/refri/getList',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -60,7 +60,7 @@ click =  (user)  => {
  }
 
  delete =  (item, usr)  => {
-    fetch('http://172.30.1.21:3344/refri/deleteRefriItem',{
+    fetch('http://34.64.235.196:3344/refri/deleteRefriItem',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -80,20 +80,20 @@ click =  (user)  => {
         var date = new Date();
         const user = this.context;
 
-        return this.state.data.map((data)=> <View style={{flexDirection: 'row', width : '100%'}} >
-        <TouchableOpacity onPress={()=>this.props.navigation.navigate('UpdateRefri', {
+        return this.state.data.map((data, index)=> <View style={{flexDirection: 'row', width : '100%'}} >
+        <TouchableOpacity key={index} onPress={()=>this.props.navigation.navigate('UpdateRefri', {
               data : data
           })} style={{width: '10%', backgroundColor:"white",borderRadius : 20}}>
             <Text style={{fontSize:10, color:'blue', width:'100%', textAlign:'center'}}>수정</Text>
         </TouchableOpacity>  
-        <Text style={{fontSize: 14,width : '40%', textAlign: 'center'}}>{data.rf_Pname}</Text>
-        <Text style={{fontSize: 14, width : '10%', textAlign: 'center'}}>{data.rf_Number}</Text>
+        <Text key={index} style={{fontSize: 14,width : '40%', textAlign: 'center'}}>{data.rf_Pname}</Text>
+        <Text key={index} style={{fontSize: 14, width : '10%', textAlign: 'center'}}>{data.rf_Number}</Text>
         {this.getdate(data.rf_Epdate)<=5   ?      
-        <Text style={{fontSize: 14, width : '20%', textAlign: 'center', color:'red', fontWeight:'bold'}}>{this.getDDay(data.rf_Epdate)}</Text>
-        :  <Text style={{fontSize: 14, width : '20%', textAlign: 'center' }}>{this.getDDay(data.rf_Epdate)}</Text>}
-        <Text style={{marginBottom : 30, fontSize : 14, width : '10%', textAlign: 'center'}}>{data.rf_Frozen==0 ? '냉장' : '냉동'}</Text>
-        <TouchableOpacity onPress={this.delete.bind(this,data.rf_Pname, user.user.usr_Id)} style={{width: '10%', backgroundColor:"white",borderRadius : 20}}>
-            <Text style={{fontSize:14, color:'blue', width:'100%', textAlign:'center'}}>삭제</Text>
+        <Text key={index} style={{fontSize: 14, width : '20%', textAlign: 'center', color:'red', fontWeight:'bold'}}>{this.getDDay(data.rf_Epdate)}</Text>
+        :  <Text key={index} style={{fontSize: 14, width : '20%', textAlign: 'center' }}>{this.getDDay(data.rf_Epdate)}</Text>}
+        <Text key={index} style={{marginBottom : 30, fontSize : 14, width : '10%', textAlign: 'center'}}>{data.rf_Frozen==0 ? '냉장' : '냉동'}</Text>
+        <TouchableOpacity key={index} onPress={this.delete.bind(this,data.rf_Pname, user.user.usr_Id)} style={{width: '10%', backgroundColor:"white",borderRadius : 20}}>
+            <Text key={index} style={{fontSize:14, color:'blue', width:'100%', textAlign:'center'}}>삭제</Text>
         </TouchableOpacity>  
         </View>)
     }

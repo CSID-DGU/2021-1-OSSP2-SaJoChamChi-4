@@ -19,7 +19,7 @@ class MyGoodRecipePresenter extends Component{
     }
 
   click = (num) =>{
-    fetch('http://172.30.1.21:3344/recipe/MyGoodRecipe',{
+    fetch('http://34.64.235.196:3344/recipe/MyGoodRecipe',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -32,7 +32,7 @@ class MyGoodRecipePresenter extends Component{
   } 
   
   getinfo = async (num) =>{
-   res = await fetch('http://172.30.1.21:3344/recipe/getinfo',{
+   res = await fetch('http://34.64.235.196:3344/recipe/getinfo',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -45,7 +45,7 @@ class MyGoodRecipePresenter extends Component{
         return res;
   } 
   getingre =  async (num) =>{
-   res2 = await fetch('http://172.30.1.21:3344/recipe/getingre',{
+   res2 = await fetch('http://34.64.235.196:3344/recipe/getingre',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -59,7 +59,7 @@ class MyGoodRecipePresenter extends Component{
   } 
   
   getdetailrecipe = async (num) =>{
-   res3 = await fetch('http://172.30.1.21:3344/recipe/getdetailrecipe',{
+   res3 = await fetch('http://34.64.235.196:3344/recipe/getdetailrecipe',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -74,7 +74,7 @@ class MyGoodRecipePresenter extends Component{
 
   getGoodInfo = async (data) =>{
     const user = this.context;
-    await fetch('http://172.30.1.21:3344/recipegood/IsGood',{
+    await fetch('http://34.64.235.196:3344/recipegood/IsGood',{
         method: "post",
         headers :{
             "content-Type" : "application/json",

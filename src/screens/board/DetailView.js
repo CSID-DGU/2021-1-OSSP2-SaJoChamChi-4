@@ -73,7 +73,7 @@ const DetailView = ({route,navigation}) => {
     };
 
     const getnewData = async () =>{
-    res = await fetch('http://172.30.1.21:3344/board/Detail',{
+    res = await fetch('http://34.64.235.196:3344/board/Detail',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -86,7 +86,7 @@ const DetailView = ({route,navigation}) => {
     }
 
     const like = async () => {
-      fetch('http://172.30.1.21:3344/good/Insert',{
+      fetch('http://34.64.235.196:3344/good/Insert',{
         method: "post",
         headers :{
           "content-Type" : "application/json",
@@ -99,7 +99,7 @@ const DetailView = ({route,navigation}) => {
     };
     
     const unlike = async () => {
-      fetch('http://172.30.1.21:3344/good/Delete',{
+      fetch('http://34.64.235.196:3344/good/Delete',{
         method: "post",
         headers :{
           "content-Type" : "application/json",
@@ -144,7 +144,7 @@ const DetailView = ({route,navigation}) => {
       .utcOffset('+18:00')
       .format('YYYY-MM-DD HH:mm:ss');
       console.log('post comment : '+user.usr_Id);
-      fetch('http://172.30.1.21:3344/comment/insertComment',{
+      fetch('http://34.64.235.196:3344/comment/insertComment',{
         method: "post",
         headers :{
           "content-Type" : "application/json",
@@ -159,7 +159,7 @@ const DetailView = ({route,navigation}) => {
     };
 
     const deleteBoard = () => {
-      fetch('http://172.30.1.21:3344/board/deleteBoard',{
+      fetch('http://34.64.235.196:3344/board/deleteBoard',{
         method: "post",
         headers :{
           "content-Type" : "application/json",
@@ -184,7 +184,7 @@ const DetailView = ({route,navigation}) => {
     
     const updatePressed = async () => {
       try {
-        like();
+
       } catch (e) {
         Alert.alert("Error", e.message);
       }finally{
@@ -192,63 +192,108 @@ const DetailView = ({route,navigation}) => {
          params:{data:route.params.data, data2 : true}}]}));
       }
     };
-    
-    return(
+    return (
       <ScrollView>
         <Container>
-            <Text style={{fontSize: 24, textAlign : 'center', marginBottom:30}}> DetailView </Text>
-            <Text style={{fontSize: 24, textAlign : 'center'}}>쓴 사람: {route.params.data.usr_Name}{"\n"} </Text>
-            <Text style={{fontSize: 24, textAlign : 'center'}}>추천수: {route.params.data.b_Hits}{"\n"}  </Text>
-            <Text style={{fontSize: 24, textAlign : 'center'}}>제목: {route.params.data.b_Title}{"\n"}  </Text>
-            <Text style={{fontSize: 24, textAlign : 'center'}}>내용: {route.params.data.b_Content}{"\n"} </Text>
-            <Text style={{fontSize: 24, textAlign : 'center'}}>댓글{"\n"} </Text>
-            <ViewComment route = {route} navigation = {navigation}/>
-            <Input
-              label="Comment"
-              value={comment}
-              onChangeText={text => setComment(text)}
-              onSubmitEditing={() => {
-                console.log("comment: "+comment);
-                setComment(comment);
-                //contentRef.current.focus();
-              }}
-              onBlur={() => setComment(comment)}
-              placeholder="Comment"
-              returnKeyType="done"
-            />
-            <ErrorText>{errorMessage}</ErrorText>
-            <View style={{justifyContent:'center'}}>
-            <Button title="AddComment" onPress={_handleSignupButtonPress} disabled={disabled} containerStyle={{width:250, marginBottom:20}}/>
-            {route.params.data.b_Writer === user.usr_Id ?
-            <View style={{flexDirection:'row'}}><Button
-            title="게시글 수정"
-            onPress={updatePressed}
-            containerStyle={{ width: 125, marginBottom: 20, backgroundColor:`red`, text : 'black' }} />
-          <Button
-          title="게시글 삭제"
-          onPress={deletePressed}
-          containerStyle={{ width: 125, marginBottom: 20, backgroundColor:`red`, text : 'black' }}/>
+          <Text style={{ fontSize: 24, textAlign: "center", marginBottom: 10 }}>
+            DetailView
+          </Text>
+          <Container style={{ flex: 1, flexDirection: "row" }}>
+            <Text style={{ fontSize: 15, textAlign: "left", marginRight: 30 }}>
+              쓴 사람: {route.params.data.usr_Name}
+              {"\n"}{" "}
+            </Text>
+            <Text style={{ fontSize: 15, textAlign: "center" }}>
+              추천수: {route.params.data.b_Hits}
+              {"\n"}{" "}
+            </Text>
+          </Container>
+          <Text style={{ fontSize: 30, textAlign: "center", marginBottom: 20 }}>
+            제목: {route.params.data.b_Title}
+          </Text>
+          <Text
+            style={{
+              fontSize: 20,
+              textAlign: "center",
+              fontFamily: "Cochin",
+              marginBottom: 50,
+            }}
+          >
+            내용:{" "}
+            {route.params.data.b_Content +
+              ""}
+            {"\n"}{" "}
+          </Text>
+          <Text style={{ fontSize: 24, textAlign: "center" }}>댓글{"\n"} </Text>
+          <ViewComment route={route} />
+          <Input
+            label="Comment"
+            value={comment}
+            onChangeText={(text) => setComment(text)}
+            onSubmitEditing={() => {
+              console.log("comment: " + comment);
+              setComment(comment);
+              //contentRef.current.focus();
+            }}
+            onBlur={() => setComment(comment)}
+            placeholder="Comment"
+            returnKeyType="done"
+          />
+          <ErrorText>{errorMessage}</ErrorText>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              width: "100%",
+              justifyContent: "space-between",
+            }}>
+           {route.params.data.b_Writer === user.usr_Id ?
+            <View  style={{flex:1,flexDirection:'row', width: '70%', justifyContent: 'space-evenly'}}>
+              <Button
+                title="게시글 수정"
+                onPress={updatePressed}
+                containerStyle={{ width: 100, marginBottom: 20, backgroundColor:`red`, text : 'black' }} />
+              <Button
+                title="게시글 삭제"
+                onPress={deletePressed}
+                containerStyle={{ width: 100, marginBottom: 20, backgroundColor:`red`, text : 'black' }}/>
           </View> : null}
-
+          </View>
+          <View style={{flex:1,flexDirection:'row', width:'100%', justifyContent:"space-between"}}>
             {console.log("Detail View Frehsh", route)}
             {route.params.data2 == null?  <Button
-            title="좋아요"
+            title="like"
             onPress={likePressed}
-            containerStyle={{ width: 250, marginBottom: 20, backgroundColor:`yellow`, text : 'black' }} 
-
+            containerStyle={{ width: 100, marginBottom: 20, backgroundColor:`yellow`, text : 'black' }} 
           /> :
            <Button
-            title="좋아요취소"
+            title="unlike"
             onPress={unlikePressed}
-            containerStyle={{ width: 250, marginBottom: 20, backgroundColor:`red` }}
+            containerStyle={{ width: 100, marginBottom: 20, backgroundColor:`red` }}
           />
-            } 
-              <Button title="BoardList" onPress={()=>navigation.dispatch(CommonActions.reset({index : 1, routes:[ {name : 'BoardList'}]}))} containerStyle={{width:250, marginBottom:20}}/>
-              <Button title="Home" onPress={()=>navigation.navigate('Home')} containerStyle={{width:250}}/>
-            </View>
+            }  
+            <Button
+              title="AddComment"
+              onPress={_handleSignupButtonPress}
+              disabled={disabled}
+              containerStyle={{ width: 100, marginBottom: 20 }}
+            />
+            <Button
+              title="BoardList"
+              onPress={() => navigation.navigate("BoardList")}
+              containerStyle={{ width: 100, marginBottom: 20 }}
+            />
+          </View>
+          <View>
+            <Button
+              title="Home"
+              onPress={() => navigation.navigate("Home")}
+              containerStyle={{ width: 250 }}
+            />
+          </View>
         </Container>
       </ScrollView>
-    )
+    );
 }
 
 export default DetailView;

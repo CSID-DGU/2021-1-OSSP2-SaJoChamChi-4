@@ -7,7 +7,7 @@ import { validateEmail, removeWhitespace } from "../../utils/common";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import RNPickerSelect from 'react-native-picker-select';
 import {CommonActions} from "@react-navigation/native";
-
+import { validateDate } from "../../utils/common";
 const Container = styled.View`
   flex: 1;
   justify-content: center;
@@ -47,6 +47,18 @@ const pickerSelectStyles = StyleSheet.create({
       color: 'black',
       marginBottom: 10,
   },
+  inputAndroid:{
+    fontSize: 16,
+    paddingTop: 20,
+    paddingHorizontal: 10,
+    paddingBottom: 20,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 4,
+    backgroundColor: 'white',
+    color: 'black',
+    marginBottom: 10,
+   }
 });
 // input item -> fetch data + Barcode icon data to back with data with (barcode) + barcode matching with data
 
@@ -66,9 +78,7 @@ const UpdateRefri = ({route,navigation}) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [disabled, setDisabled] = useState(true);
   
-    const dayRef = useRef();
-    const addressRef = useRef();
-    const birthRef = useRef();
+
     const nicknameRef = useRef();
     const emailRef = useRef();
     const nameRef = useRef();
@@ -95,6 +105,10 @@ const UpdateRefri = ({route,navigation}) => {
             _errorMessage = '유통기한을 입력해주세요!';
           } else if (!Indate) {
             _errorMessage = '구매일자를 입력해주세요';
+          }else if(!validateDate(Epdate)){
+            _errorMessage='날짜는 YYYY-MM-DD형식으로 입력해주세요'
+          }else if(!validateDate(Indate)){
+            _errorMessage='날짜는 YYYY-MM-DD형식으로 입력해주세요'
           }else if (!Frozen) {
             _errorMessage = '냉동/냉장을 선택하세요';
           }else if (!Foodid) {
@@ -128,7 +142,7 @@ const UpdateRefri = ({route,navigation}) => {
       };
     
       Insert =  (Pname, Number, Epdate, Indate, Frozen, Foodid, Fkind, id)  => {
-        fetch('http://172.30.1.21:3344/refri/Update',{
+        fetch('http://34.64.235.196:3344/refri/Update',{
           method: "post",
           headers :{
               "content-Type" : "application/json",
@@ -179,7 +193,6 @@ const UpdateRefri = ({route,navigation}) => {
           onChangeText={text => setIndate(text)}
           onSubmitEditing={() => {
             setIndate(Indate.trim());
-            birthRef.current.focus();
           }}
           onBlur={() => setIndate(Indate)}
           placeholder="구매일자"
@@ -226,6 +239,7 @@ const UpdateRefri = ({route,navigation}) => {
          {label : '목살', value:'35'}, {label : '기타', value:'36'}, {label : '등심', value:'37'}, {label : '돈까스', value:'38'},
          {label : '닭가슴살', value:'39'}, {label : '닭다리', value:'40'}, {label : '닭', value:'41'}, {label : '소고기', value:'42'},
          {label : '오리고기', value:'43'}, {label : '돼지', value:'44'}]}/>
+        <ErrorText>{errorMessage}</ErrorText>
         <Button
           title="수정"
           onPress={_handleSignupButtonPress}

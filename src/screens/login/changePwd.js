@@ -82,7 +82,7 @@ const changePwd = ({ navigation, route }) => {
   };
 
   change =  (Id, password, name, email, usr_Id)  => {
-    fetch('http://172.30.1.21:3344/login/changePwd',{
+    fetch('http://34.64.235.196:3344/login/changePwd',{
       method: "post",
       headers: {
         "content-Type": "application/json",

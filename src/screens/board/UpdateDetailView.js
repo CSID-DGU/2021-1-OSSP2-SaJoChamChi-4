@@ -76,7 +76,7 @@ const UpdateDetailView = ({navigation, route}) => {
     };
   
   const updateBoard =  (title,content)  => {
-      fetch('http://172.30.1.21:3344/board/updateBoard',{
+      fetch('http://34.64.235.196:3344/board/updateBoard',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -129,17 +129,6 @@ const UpdateDetailView = ({navigation, route}) => {
     );
   };
   
-
-/*
-const insertRecipe = ({navigation}) => {
-    return(
-        <Container>
-            <Text style={{fontSize: 24, textAlign : 'center'}}> insertRecipe </Text>
-            <Button title="Home" onPress={()=>navigation.navigate('Home')}/>
-        </Container>
-    )
-}
-*/
 
 
 export default UpdateDetailView;

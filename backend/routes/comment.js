@@ -25,7 +25,7 @@ router.post("/insertComment",(req,res)=>{
 
 router.post("/getComment",(req,res)=>{
     var co_Bid = req.body.c_bid;
-    var sql = 'SELECT * FROM COMMENT where co_Bid=?'
+    var sql = 'SELECT co_Id, co_Writer, co_Time, co_Content, co_Bid, usr_Nickname FROM COMMENT, user where co_Bid=? and usr_Id=co_Writer'
     db.query(sql, [co_Bid], (err, rows)=>{
         if(err) console.log(err);
         else{

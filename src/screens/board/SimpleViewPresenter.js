@@ -15,7 +15,7 @@ class SimpleViewPresenter extends Component{
     constructor(props){
         super(props);
         this.state = { data: [], data2 :[]};
-        fetch('http://172.30.1.21:3344/board/allBoard',{
+        fetch('http://34.64.235.196:3344/board/allBoard',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -44,7 +44,7 @@ class SimpleViewPresenter extends Component{
     getGoodInfo = async (data) =>{
         const user = this.context;
 
-     res = await fetch('http://172.30.1.21:3344/good/IsGood',{
+     res = await fetch('http://34.64.235.196:3344/good/IsGood',{
             method: "post",
             headers :{
                 "content-Type" : "application/json",
