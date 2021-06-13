@@ -10,7 +10,7 @@ class SimpleViewPresenter extends Component {
     super(props);
     //this.state = {clicked:false, data: [], data2:[], clicked2:false, user:user};
     this.state = { data: [] };
-    fetch("http://192.168.0.190:3344/board/allBoard", {
+    fetch("http://172.30.1.34:3344/board/allBoard", {
       method: "post",
       headers: {
         "content-Type": "application/json",
@@ -42,9 +42,9 @@ class SimpleViewPresenter extends Component {
 
   render() {
     return this.state.data.map((data) => (
-      <View style={{ flexDirection: "row", width: "100%" }}>
+      <View style={{ flexDirection: "row", width: "100%", height: "8%" }}>
         <Text
-          style={{ fontSize: 20, width: "50%", textAlign: "center" }}
+          style={{ fontSize: 20, width: "45%", textAlign: "center" }}
           onPress={this.onPressHandle.bind(this, data)}
         >
           {data.b_Title}

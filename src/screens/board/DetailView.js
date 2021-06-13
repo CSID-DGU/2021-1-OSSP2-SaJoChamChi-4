@@ -87,7 +87,7 @@ const DetailView = ({ route, navigation }) => {
   const postComment = (comment) => {
     var date = moment().utcOffset("+09:00").format("YYYY-MM-DD HH:mm:ss");
     console.log("post comment : " + user.usr_Id);
-    fetch("http://192.168.0.190:3344/comment/insertComment", {
+    fetch("http://172.30.1.34:3344/comment/insertComment", {
       method: "post",
       headers: {
         "content-Type": "application/json",
@@ -104,24 +104,33 @@ const DetailView = ({ route, navigation }) => {
   return (
     <ScrollView>
       <Container>
-        <Text style={{ fontSize: 24, textAlign: "center", marginBottom: 30 }}>
-          {" "}
-          DetailView{" "}
+        <Text style={{ fontSize: 24, textAlign: "center", marginBottom: 10 }}>
+          DetailView
         </Text>
-        <Text style={{ fontSize: 24, textAlign: "center" }}>
-          쓴 사람: {route.params.data.usr_Name}
-          {"\n"}{" "}
-        </Text>
-        <Text style={{ fontSize: 24, textAlign: "center" }}>
-          추천수: {route.params.data.b_Hits}
-          {"\n"}{" "}
-        </Text>
-        <Text style={{ fontSize: 24, textAlign: "center" }}>
+        <Container style={{ flex: 1, flexDirection: "row" }}>
+          <Text style={{ fontSize: 15, textAlign: "left", marginRight: 30 }}>
+            쓴 사람: {route.params.data.usr_Name}
+            {"\n"}{" "}
+          </Text>
+          <Text style={{ fontSize: 15, textAlign: "center" }}>
+            추천수: {route.params.data.b_Hits}
+            {"\n"}{" "}
+          </Text>
+        </Container>
+        <Text style={{ fontSize: 30, textAlign: "center", marginBottom: 20 }}>
           제목: {route.params.data.b_Title}
-          {"\n"}{" "}
         </Text>
-        <Text style={{ fontSize: 24, textAlign: "center" }}>
-          내용: {route.params.data.b_Content}
+        <Text
+          style={{
+            fontSize: 20,
+            textAlign: "center",
+            fontFamily: "Cochin",
+            marginBottom: 50,
+          }}
+        >
+          내용:{" "}
+          {route.params.data.b_Content +
+            "asfjldfsjlkafljkafdjlafdsjldfjlksklaflkljdsfljkdafjlkdsfkljadljkajldfsjlfsjksfjlfsljlajfafdsaflkdsaflkfskllksdklsklsdfalkkldklklasfkldklsfaklfkllkfkldklasfklkldfklalkskladsfkldsklfklfkldklklklkl"}
           {"\n"}{" "}
         </Text>
         <Text style={{ fontSize: 24, textAlign: "center" }}>댓글{"\n"} </Text>
@@ -140,23 +149,25 @@ const DetailView = ({ route, navigation }) => {
           returnKeyType="done"
         />
         <ErrorText>{errorMessage}</ErrorText>
-        <View>
+        <View style={{ flex: 2, flexDirection: "row" }}>
           <Button
             title="like"
             onPress={likePressed}
-            containerStyle={{ width: 250, marginBottom: 20 }}
+            containerStyle={{ width: 140, marginBottom: 20 }}
           />
           <Button
             title="AddComment"
             onPress={_handleSignupButtonPress}
             disabled={disabled}
-            containerStyle={{ width: 250, marginBottom: 20 }}
+            containerStyle={{ width: 140, marginBottom: 20 }}
           />
           <Button
             title="BoardList"
             onPress={() => navigation.navigate("BoardList")}
-            containerStyle={{ width: 250, marginBottom: 20 }}
+            containerStyle={{ width: 140, marginBottom: 20 }}
           />
+        </View>
+        <View>
           <Button
             title="Home"
             onPress={() => navigation.navigate("Home")}
