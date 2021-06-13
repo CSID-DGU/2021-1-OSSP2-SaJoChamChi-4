@@ -71,7 +71,7 @@ const findId = ({ navigation }) => {
   };
 
   getID  =  (name, email)  => {
-    fetch('http://172.30.1.21:3344/login/getId',{
+    fetch('http://34.64.235.196:3344/login/getId',{
       method: "post",
       headers: {
         "content-Type": "application/json",
@@ -101,7 +101,7 @@ const findId = ({ navigation }) => {
             setName(name.trim());
             emailRef.current.focus();
           }}
-          onBlur={() => setName(name.trim())}
+          onBlur={() => {if(name != undefined)setName(name.trim())}}
           placeholder="Name"
           returnKeyType="next"
         />

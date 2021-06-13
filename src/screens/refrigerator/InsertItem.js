@@ -7,6 +7,7 @@ import { validateEmail, removeWhitespace } from "../../utils/common";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import RNPickerSelect from 'react-native-picker-select';
 import {CommonActions, StackActions } from "@react-navigation/native";
+import { validateDate } from "../../utils/common";
 
 const Container = styled.View`
   flex: 1;
@@ -63,13 +64,23 @@ const pickerSelectStyles = StyleSheet.create({
 // input item -> fetch data + Barcode icon data to back with data with (barcode) + barcode matching with data
 
 const InsertItem = ({ route, navigation }) => {
+
+  function getToday(){
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = ("0" + (1 + date.getMonth())).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+
+    return year + "-" + month + "-" + day;
+}
+
   const user = useContext(UserContext);
 
   const [id, setId] = useState(user.user.usr_Id);
   const [Pname, setPname] = useState("");
   const [Number, setNumber] = useState("");
   const [Epdate, setEpdate] = useState("");
-  const [Indate, setIndate] = useState("");
+  const [Indate, setIndate] = useState(getToday());
   const [Frozen, setFrozen] = useState("");
   const [Foodid, setFoodid] = useState("");
   const [Fkind, setFkind] = useState("");
@@ -92,6 +103,10 @@ const InsertItem = ({ route, navigation }) => {
       //  console.log('insertitem useeffect : '+route.params.fkind);
         setPname(route.params.fname)
       }
+      if(route.params.OCRresponse !== undefined){
+        //  console.log('insertitem useeffect : '+route.params.fkind);
+          setEpdate(route.params.OCRresponse)
+        }
     }
     },);
  
@@ -107,6 +122,10 @@ const InsertItem = ({ route, navigation }) => {
             _errorMessage = '유통기한을 입력해주세요!';
           } else if (!Indate) {
             _errorMessage = '구매일자를 입력해주세요';
+          }else if(!validateDate(Epdate)){
+            _errorMessage='날짜는 YYYY-MM-DD형식으로 입력해주세요'
+          }else if(!validateDate(Indate)){
+            _errorMessage='날짜는 YYYY-MM-DD형식으로 입력해주세요'
           }else if (!Frozen) {
             _errorMessage = '냉동/냉장을 선택하세요';
           }else if (!Foodid) {
@@ -129,7 +148,7 @@ const InsertItem = ({ route, navigation }) => {
       }, [Pname, Number, Epdate, Indate, errorMessage]);
 
       Insert =  (Pname, Number, Epdate, Indate, Frozen, Foodid, Fkind, id)  => {
-        fetch('http://172.30.1.21:3344/refri/Insert',{
+        fetch('http://34.64.235.196:3344/refri/Insert',{
           method: "post",
           headers :{
               "content-Type" : "application/json",
@@ -250,9 +269,9 @@ const InsertItem = ({ route, navigation }) => {
          {label : '목살', value:'35'}, {label : '기타', value:'36'}, {label : '등심', value:'37'}, {label : '돈까스', value:'38'},
          {label : '닭가슴살', value:'39'}, {label : '닭다리', value:'40'}, {label : '닭', value:'41'}, {label : '소고기', value:'42'},
          {label : '오리고기', value:'43'}, {label : '돼지', value:'44'}]}/>
-                    
+        <ErrorText>{errorMessage}</ErrorText>    
         <Button title="바코드 인식" onPress={()=>navigation.navigate('Barcode')} containerStyle={{width:300,  marginBottom: 10}}/>
-
+        <Button title="OCR" onPress={()=>navigation.navigate('OCR')} containerStyle={{width:300,  marginBottom: 10}}/>
         <Button
           title="추가"
           onPress={_handleSignupButtonPress}

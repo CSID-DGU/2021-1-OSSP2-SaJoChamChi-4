@@ -61,7 +61,7 @@ const findPwd = ({ navigation }) => {
   }, [name, email, errorMessage]);
 
   check =  (Id, name, email)  => {
-    fetch('http://172.30.1.21:3344/login/userCheck',{
+    fetch('http://34.64.235.196:3344/login/userCheck',{
       method: "post",
       headers: {
         "content-Type": "application/json",
@@ -106,7 +106,7 @@ const findPwd = ({ navigation }) => {
             setId(id.trim());
             nameRef.current.focus();
           }}
-          onBlur={() => setId(id.trim())}
+          onBlur={() => {if(id != undefined)setId(id.trim())}}
           placeholder="Id"
           returnKeyType="next"
         />
@@ -119,7 +119,7 @@ const findPwd = ({ navigation }) => {
             setName(name.trim());
             emailRef.current.focus();
           }}
-          onBlur={() => setName(name.trim())}
+          onBlur={() => {if(name != undefined)setName(name.trim())}}
           placeholder="Name"
           returnKeyType="next"
         />

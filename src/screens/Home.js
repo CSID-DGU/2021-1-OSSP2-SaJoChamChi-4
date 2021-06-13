@@ -60,7 +60,7 @@ const Home = ({navigation}) => {
     //const promise = getday();
     useEffect(() => {
       const  getday = () =>{
-        const d = fetch('http://172.30.1.21:3344/token',{
+        const d = fetch('http://34.64.235.196:3344/token',{
             method: "post",
             headers :{
                 "content-Type" : "application/json",

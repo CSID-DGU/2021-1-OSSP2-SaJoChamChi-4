@@ -51,7 +51,7 @@ app.use("/test",testRouter);
 app.use("/login",loginRouter);
 app.use('/board',boardRouter);
 app.use('/comment',commentRouter);
-app.use('/recipe',RecipeRouter);
+app.use('/Recipe',RecipeRouter);
 app.use("/refri",refriRouter);
 app.use("/barcode",barcodeRouter);
 app.use("/good", goodRouter);

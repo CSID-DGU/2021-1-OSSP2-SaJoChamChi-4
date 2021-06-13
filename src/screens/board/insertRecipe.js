@@ -81,7 +81,7 @@ const insertRecipe = ({navigation}) => {
       .utcOffset('+05:30')
       .format('YYYY-MM-DD hh:mm:ss');
       console.log('title : '+title);
-      fetch('http://172.30.1.21:3344/board/insertBoard',{
+      fetch('http://34.64.235.196:3344/board/insertBoard',{
         method: "post",
         headers :{
             "content-Type" : "application/json",
@@ -136,17 +136,5 @@ const insertRecipe = ({navigation}) => {
     );
   };
   
-
-/*
-const insertRecipe = ({navigation}) => {
-    return(
-        <Container>
-            <Text style={{fontSize: 24, textAlign : 'center'}}> insertRecipe </Text>
-            <Button title="Home" onPress={()=>navigation.navigate('Home')}/>
-        </Container>
-    )
-}
-*/
-
 
 export default insertRecipe;
