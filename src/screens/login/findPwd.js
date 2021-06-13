@@ -32,7 +32,6 @@ const findPwd = ({ navigation }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [disabled, setDisabled] = useState(true);
 
-
   const emailRef = useRef();
   const nameRef = useRef();
 
@@ -45,7 +44,7 @@ const findPwd = ({ navigation }) => {
         _errorMessage = "Please enter your name.";
       } else if (!validateEmail(email)) {
         _errorMessage = "Please verify your email.";
-      }else{
+      } else {
         _errorMessage = "";
       }
       setErrorMessage(_errorMessage);
@@ -55,13 +54,11 @@ const findPwd = ({ navigation }) => {
   }, [name, email]);
 
   useEffect(() => {
-    setDisabled(
-      !(name && email && !errorMessage)
-    );
+    setDisabled(!(name && email && !errorMessage));
   }, [name, email, errorMessage]);
 
-  check =  (Id, name, email)  => {
-    fetch('http://172.30.1.21:3344/login/userCheck',{
+  check = (Id, name, email) => {
+    fetch("http://192.168.0.190:3344/login/userCheck", {
       method: "post",
       headers: {
         "content-Type": "application/json",
@@ -71,15 +68,24 @@ const findPwd = ({ navigation }) => {
         name: name,
         email: email,
       }),
-    }).then((response) => response.json()).then((response) => {
-      console.log(response);
-        if(response.length==0){
-            Alert.alert("해당 정보로 유저정보를 찾을 수 없습니다.!\n 다시확인해주세요");
-        }else{
-            navigation.navigate('changePwd', { id : response[0].user_Id, name : response[0].usr_Name,
-            email : response[0].usr_Email, usr_Id : response[0].usr_Id, pwd : response[0].usr_Pwd});
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+        if (response.length == 0) {
+          Alert.alert(
+            "해당 정보로 유저정보를 찾을 수 없습니다.!\n 다시확인해주세요"
+          );
+        } else {
+          navigation.navigate("changePwd", {
+            id: response[0].user_Id,
+            name: response[0].usr_Name,
+            email: response[0].usr_Email,
+            usr_Id: response[0].usr_Id,
+            pwd: response[0].usr_Pwd,
+          });
         }
-    });
+      });
   };
 
   const _handleSignupButtonPress = async () => {
@@ -92,8 +98,6 @@ const findPwd = ({ navigation }) => {
       spinner.stop();
     }
   };
-
-   
 
   return (
     <KeyboardAwareScrollView extraScrollHeight={20}>
@@ -137,9 +141,12 @@ const findPwd = ({ navigation }) => {
           title="비밀번호 찾기"
           onPress={_handleSignupButtonPress}
           disabled={disabled}
-          containerStyle={{marginBottom:20}}
+          containerStyle={{ marginBottom: 20 }}
         />
-        <Button title="로그인화면으로 이동" onPress={() => navigation.navigate("Login")} />
+        <Button
+          title="로그인화면으로 이동"
+          onPress={() => navigation.navigate("Login")}
+        />
       </Container>
     </KeyboardAwareScrollView>
   );

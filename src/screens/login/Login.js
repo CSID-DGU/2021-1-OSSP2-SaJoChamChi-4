@@ -27,10 +27,6 @@ const ErrorText = styled.Text`
   color: ${({ theme }) => theme.errorText};
 `;
 
-
-
-
-
 const Login = ({ navigation }) => {
   const { user, dispatch } = useContext(UserContext);
   const { spinner } = useContext(ProgressContext);
@@ -44,7 +40,7 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     //console.log("user useEffect");
-    if(user[0]!= undefined) dispatch(user[0]);
+    if (user[0] != undefined) dispatch(user[0]);
   }, [user]);
 
   useEffect(() => {
@@ -71,7 +67,7 @@ const Login = ({ navigation }) => {
       login(ID, password);
       console.log("user state : ", user1);
       console.log("context: ", user.usr_Id);
-     // login(ID, password);
+      // login(ID, password);
       console.log("user state : ", user1);
       console.log("context: ", user.usr_Id);
       spinner.start();
@@ -85,29 +81,28 @@ const Login = ({ navigation }) => {
     }
   };
 
-  
-  login = async (Id, password)  => {
-     await fetch('http://172.30.1.21:3344/login/Login',{
-        method: "post",
-        headers :{
-            "content-Type" : "application/json",
-        },
-        body : JSON.stringify({
-            id : Id,
-            pwd : password,
-        })
-   }).then(response=>response.json()).then((response) => {
-    if(response.length==0){
-      Alert.alert("정보가 틀립니다.\n 아이디와 비밀번호를 확인해주세요.")
-    } 
-    setUser(response); console.log("response",user1);}
-   );
+  login = async (Id, password) => {
+    await fetch("http://192.168.0.190:3344/login/Login", {
+      method: "post",
+      headers: {
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: Id,
+        pwd: password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.length == 0) {
+          Alert.alert("정보가 틀립니다.\n 아이디와 비밀번호를 확인해주세요.");
+        }
+        setUser(response);
+        console.log("response", user1);
+      });
 
     console.log("loginfunction : ", user1);
-};
- 
-
-
+  };
 
   return (
     <KeyboardAwareScrollView
@@ -155,29 +150,28 @@ const Login = ({ navigation }) => {
           onPress={_handleLoginButtonPress}
           disabled={disabled}
         />
-        <View style={{flexDirection: 'row'}}>
-        <Button
-          title="아이디 찾기"
-          onPress={() => navigation.navigate("findId")}
-          isFilled={false}
-          containerStyle={{width:100}}
-        />
-        <Text>       </Text>
-        <Button
-          title="회원가입"
-          onPress={() => navigation.navigate("Signup")}
-          isFilled={false}
-          containerStyle={{width:100}}
-        />
-        <Text>       </Text>
-        <Button
-          title="비밀번호 찾기"
-          onPress={() => navigation.navigate("findPwd")}
-          isFilled={false}
-          containerStyle={{width:110}}
-        />        
+        <View style={{ flexDirection: "row" }}>
+          <Button
+            title="아이디 찾기"
+            onPress={() => navigation.navigate("findId")}
+            isFilled={false}
+            containerStyle={{ width: 100 }}
+          />
+          <Text> </Text>
+          <Button
+            title="회원가입"
+            onPress={() => navigation.navigate("Signup")}
+            isFilled={false}
+            containerStyle={{ width: 100 }}
+          />
+          <Text> </Text>
+          <Button
+            title="비밀번호 찾기"
+            onPress={() => navigation.navigate("findPwd")}
+            isFilled={false}
+            containerStyle={{ width: 110 }}
+          />
         </View>
-       
       </Container>
     </KeyboardAwareScrollView>
   );

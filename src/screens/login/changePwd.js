@@ -38,12 +38,11 @@ const changePwd = ({ navigation, route }) => {
 
   const passwordConfirmRef = useRef();
 
-
   const didMountRef = useRef();
-  useEffect(()=>{
-    console.log("Route",route);
-    console.log("value" ,route.params.id);
-  },[])
+  useEffect(() => {
+    console.log("Route", route);
+    console.log("value", route.params.id);
+  }, []);
   useEffect(() => {
     if (didMountRef.current) {
       let _errorMessage = "";
@@ -51,7 +50,7 @@ const changePwd = ({ navigation, route }) => {
         _errorMessage = "Please enter your name.";
       } else if (password.length < 7) {
         _errorMessage = "The password must contain 6 characters at least.";
-      }else if (password === route.params.usr_Pwd) {
+      } else if (password === route.params.usr_Pwd) {
         _errorMessage = "can't use that password";
       } else if (password !== passwordConfirm) {
         _errorMessage = "Passwords need to match.";
@@ -81,8 +80,8 @@ const changePwd = ({ navigation, route }) => {
     }
   };
 
-  change =  (Id, password, name, email, usr_Id)  => {
-    fetch('http://172.30.1.21:3344/login/changePwd',{
+  change = (Id, password, name, email, usr_Id) => {
+    fetch("http://192.168.0.190:3344/login/changePwd", {
       method: "post",
       headers: {
         "content-Type": "application/json",
@@ -92,45 +91,47 @@ const changePwd = ({ navigation, route }) => {
         pwd: password,
         name: name,
         email: email,
-        usr_Id : usr_Id
+        usr_Id: usr_Id,
       }),
-    }).then((response) => response.json()).then((response) => {
-       console.log("데이터 넘어오는거 확인", route, id,name );
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("데이터 넘어오는거 확인", route, id, name);
         Alert.alert("비밀번호가 변경되었습니다.\n 로그인해주세요!");
         navigation.navigate("Login");
-    });
+      });
   };
 
   return (
-      <Container>
-        <Input
-          label="Password"
-          value={password}
-          onChangeText={(text) => setPassword(removeWhitespace(text))}
-          onSubmitEditing={() => passwordConfirmRef.current.focus()}
-          placeholder="7자리이상의 비밀번호"
-          returnKeyType="done"
-          isPassword
-        />
-        <Input
-          ref={passwordConfirmRef}
-          label="Password Confirm"
-          value={passwordConfirm}
-          onChangeText={(text) => setPasswordConfirm(removeWhitespace(text))}
-          onSubmitEditing={_handleSignupButtonPress}
-          placeholder="비밀번호 재확인"
-          returnKeyType="done"
-          isPassword
-        />
-        <ErrorText>{errorMessage}</ErrorText>
-        <Button
-          title="변경하기"
-          onPress={_handleSignupButtonPress}
-          disabled={disabled}
-          containerStyle={{marginBotton:20}}
-        />
-        <Button title="GoBack" onPress={() => navigation.navigate("Login")} />
-      </Container>
+    <Container>
+      <Input
+        label="Password"
+        value={password}
+        onChangeText={(text) => setPassword(removeWhitespace(text))}
+        onSubmitEditing={() => passwordConfirmRef.current.focus()}
+        placeholder="7자리이상의 비밀번호"
+        returnKeyType="done"
+        isPassword
+      />
+      <Input
+        ref={passwordConfirmRef}
+        label="Password Confirm"
+        value={passwordConfirm}
+        onChangeText={(text) => setPasswordConfirm(removeWhitespace(text))}
+        onSubmitEditing={_handleSignupButtonPress}
+        placeholder="비밀번호 재확인"
+        returnKeyType="done"
+        isPassword
+      />
+      <ErrorText>{errorMessage}</ErrorText>
+      <Button
+        title="변경하기"
+        onPress={_handleSignupButtonPress}
+        disabled={disabled}
+        containerStyle={{ marginBotton: 20 }}
+      />
+      <Button title="GoBack" onPress={() => navigation.navigate("Login")} />
+    </Container>
   );
 };
 

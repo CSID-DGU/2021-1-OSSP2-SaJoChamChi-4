@@ -29,11 +29,9 @@ const findId = ({ navigation }) => {
   const [name, setName] = useState();
   const [email, setEmail] = useState("");
 
-
   const [errorMessage, setErrorMessage] = useState("");
   const [disabled, setDisabled] = useState(true);
 
- 
   const nicknameRef = useRef();
   const emailRef = useRef();
 
@@ -54,15 +52,13 @@ const findId = ({ navigation }) => {
   }, [name, email]);
 
   useEffect(() => {
-    setDisabled(
-      !(name && email && !errorMessage)
-    );
+    setDisabled(!(name && email && !errorMessage));
   }, [name, email, errorMessage]);
 
   const _handleSignupButtonPress = async () => {
     try {
       spinner.start();
-      getID(name,email);
+      getID(name, email);
     } catch (e) {
       Alert.alert("Signup Error", e.message);
     } finally {
@@ -70,8 +66,8 @@ const findId = ({ navigation }) => {
     }
   };
 
-  getID  =  (name, email)  => {
-    fetch('http://172.30.1.21:3344/login/getId',{
+  getID = (name, email) => {
+    fetch("http://192.168.0.190:3344/login/getId", {
       method: "post",
       headers: {
         "content-Type": "application/json",
@@ -80,49 +76,53 @@ const findId = ({ navigation }) => {
         name: name,
         email: email,
       }),
-    }).then((response) => response.json()).then((response) => {
+    })
+      .then((response) => response.json())
+      .then((response) => {
         console.log(response);
-        if(response.length==0){
-            Alert.alert("해당정보로 아이디를 찾을 수 없습니다.");
+        if (response.length == 0) {
+          Alert.alert("해당정보로 아이디를 찾을 수 없습니다.");
+        } else {
+          Alert.alert(
+            response[0].user_Id + "입니다.\n 해당정보를 이용해 로그인해주세요"
+          );
+          navigation.navigate("Login");
         }
-        else{
-            Alert.alert(response[0].user_Id+"입니다.\n 해당정보를 이용해 로그인해주세요");
-            navigation.navigate("Login");
-        }});
+      });
   };
 
   return (
-      <Container>
-        <Input
-          label="Name"
-          value={name}
-          onChangeText={(text) => setName(removeWhitespace(text))}
-          onSubmitEditing={() => {
-            setName(name.trim());
-            emailRef.current.focus();
-          }}
-          onBlur={() => setName(name.trim())}
-          placeholder="Name"
-          returnKeyType="next"
-        />
-        <Input
-          ref={emailRef}
-          label="Email"
-          value={email}
-          onChangeText={(text) => setEmail(removeWhitespace(text))}
-          onSubmitEditing={() => _handleSignupButtonPress}
-          placeholder="Email"
-          returnKeyType="done"
-        />
-        <ErrorText>{errorMessage}</ErrorText>
-        <Button
-          title="아이디 찾기"
-          onPress={_handleSignupButtonPress}
-          disabled={disabled}
-          containerStyle={{marginBottom:20}}
-        />
-        <Button title="GoBack" onPress={() => navigation.navigate("Login")} />
-      </Container>
+    <Container>
+      <Input
+        label="Name"
+        value={name}
+        onChangeText={(text) => setName(removeWhitespace(text))}
+        onSubmitEditing={() => {
+          setName(name.trim());
+          emailRef.current.focus();
+        }}
+        onBlur={() => setName(name.trim())}
+        placeholder="Name"
+        returnKeyType="next"
+      />
+      <Input
+        ref={emailRef}
+        label="Email"
+        value={email}
+        onChangeText={(text) => setEmail(removeWhitespace(text))}
+        onSubmitEditing={() => _handleSignupButtonPress}
+        placeholder="Email"
+        returnKeyType="done"
+      />
+      <ErrorText>{errorMessage}</ErrorText>
+      <Button
+        title="아이디 찾기"
+        onPress={_handleSignupButtonPress}
+        disabled={disabled}
+        containerStyle={{ marginBottom: 20 }}
+      />
+      <Button title="GoBack" onPress={() => navigation.navigate("Login")} />
+    </Container>
   );
 };
 
