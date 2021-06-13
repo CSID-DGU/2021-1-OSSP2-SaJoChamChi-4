@@ -103,7 +103,7 @@
     npm install cors
     npm install prop-types
 
-2021-1-OSSP2-SaJoChamChi-4 폴더에서 expo start, backend 폴더에서 npm start
+2021-1-OSSP2-SaJoChamChi-4 폴더에서 npm start, backend 폴더에서 node app.js
 
 ## 팀원
  * 2017112134 이호준 (팀장)
