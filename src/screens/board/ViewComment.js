@@ -40,7 +40,9 @@ class ViewComment extends Component{
             }),
         });
         Alert.alert("댓글 삭제되었습니다!");
-        this.props.navigation.dispatch(CommonActions.reset({index : 1, routes:[ {name : 'BoardList'}, {name : 'DetailView'}]}));
+        this.props.navigation.dispatch(CommonActions.reset({index : 1, routes:[ {name : 'BoardList'}, {name : 'DetailView', params:{data : this.props.route.params.data, data2:
+        this.props.route.params.data2}}]}));
+        
     };
 
     render(){
