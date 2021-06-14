@@ -48,7 +48,7 @@ click =  (user)  => {
     return result;
   };
   render() {
-    return this.state.data.map((data) => (
+    return this.state.data.length==0 ?  <View style={{justifyContent:'center',marginTop:100}}><Text style={{textAlign:'center', fontSize:20,color:'red'}}>유통기한이 임박한 음식물이 없습니다</Text></View>:this.state.data.map((data) => (
       <View style={{ flexDirection: "row", width: "100%" }}>
         {this.getdate(data.rf_Epdate) <= 5 ? (
           <Text style={{ fontSize: 15, width: "40%", textAlign: "center" }}>

@@ -101,7 +101,7 @@ class EpdateRecipePresenter extends Component{
     render(){
         var {height, width} = Dimensions.get('window');
         console.log(this.state.data);
-        return this.state.data.map((data)=>
+        return this.state.data.length==0 ?  <View style={{justifyContent:'center',marginTop:100}}><Text style={{textAlign:'center', fontSize:20,color:'red'}}>냉장고에 음식물을 추가해주세요</Text></View>:this.state.data.map((data)=>
         <View style={{height:220, textAlign: 'center', marginBottom:15}} >
             <TouchableOpacity onPress ={this.onPressHandle.bind(this,data.id, data.summary)}>
             <Image source={{uri:data.img}} style={{width:width,height:200}} ></Image>
