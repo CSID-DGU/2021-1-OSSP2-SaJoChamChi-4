@@ -225,7 +225,7 @@ const DetailView = ({route,navigation}) => {
             {"\n"}{" "}
           </Text>
           <Text style={{ fontSize: 24, textAlign: "center" }}>댓글{"\n"} </Text>
-          <ViewComment route={route} />
+          <ViewComment route={route}  navigation={navigation}/>
           <Input
             label="Comment"
             value={comment}

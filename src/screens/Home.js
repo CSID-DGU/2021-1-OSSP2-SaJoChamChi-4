@@ -226,7 +226,7 @@ async function sendPushNotification(expoPushToken,data) {
   const message = {
     to: expoPushToken,
     sound: 'default',
-    title: '광고',
+    title: '알람',
     body: data,
     data: { someData: 'goes here' },
   };
