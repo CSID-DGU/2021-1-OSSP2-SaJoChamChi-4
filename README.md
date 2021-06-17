@@ -103,7 +103,8 @@
     npm install cors
     npm install prop-types
 
-2021-1-OSSP2-SaJoChamChi-4 폴더에서 npm start, backend 폴더에서 node app.js
+2021-1-OSSP2-SaJoChamChi-4 폴더에서 npm start로 실행시킨다.
+현재 외부서버가 항시 열려 있습니다. 회원가입 후 로그인이 되지않을 경우 서버에 문제가 있기에 관리자에게 연락을 주시면 됩니다. (cajun7@naver.com)
 
 ## 팀원
  * 2017112134 이호준 (팀장)
